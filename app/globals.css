@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+
+@font-face {
+  font-family: 'Jomolhari';
+  src: url('/Fonts/Jomolhari-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+.jomol{
+font-family: "Jomolhari" , sans-serif;
+}
+
+

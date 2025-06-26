@@ -8,9 +8,19 @@
   font-style: normal;
   font-display: swap;
 }
+@font-face {
+  font-family: 'Roboto';
+  src: url('/Fonts/Roboto-VariableFont_wdth,wght.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
 
 .jomol{
 font-family: "Jomolhari" , sans-serif;
+}
+.roboto{
+font-family: "Roboto" , sans-serif;
 }
 
 

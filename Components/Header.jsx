@@ -37,7 +37,7 @@ const Header = () => {
           : 'bg-[#E32121]'
       }`}
     >
-      <div className=" max-w-[110rem] mx-auto px-4 sm:px-6 lg:px-8">
+      <div className=" max-w-[118rem] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between py-2 ">
           {/* Logo */}
           <div className="flex-shrink-0">

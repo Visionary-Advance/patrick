@@ -1,5 +1,6 @@
 'use client'
 
+
 import { useEffect, useRef, useState } from 'react';
 
 export default function StatsGroup() {
@@ -68,18 +69,18 @@ export default function StatsGroup() {
     // Animate the red lines (loading bar effect)
     linesRef.current.forEach((line) => {
       if (line) {
-        // Reset width first
-        line.style.width = '0px';
+        // Start with 1px width so the bar is visible from the beginning
+        line.style.width = '1px';
         
-        const lineDuration = 1000;
+        const lineDuration = 2000;
         const lineStartTime = Date.now();
-        const targetWidth = 60; // w-10 = 2.5rem = 40px
+        const targetWidth = 65;
         
         const animateLine = () => {
           const elapsed = Date.now() - lineStartTime;
-          const progress = Math.min(elapsed / lineDuration, 2);
+          const progress = Math.min(elapsed / lineDuration, 1);
           const easeOut = 1 - Math.pow(1 - progress, 3);
-          const currentWidth = targetWidth * easeOut;
+          const currentWidth = 1 + ((targetWidth - 1) * easeOut); // Start from 1px, animate to 40px
           
           line.style.width = Math.floor(currentWidth) + 'px';
           
@@ -93,7 +94,7 @@ export default function StatsGroup() {
         // Start line animation with a delay
         setTimeout(() => {
           animateLine();
-        }, 200);
+        }, 10);
       }
     });
   };
@@ -127,7 +128,7 @@ export default function StatsGroup() {
 
   return (
     <div className="max-w-7xl mx-auto mt-10" ref={containerRef}>
-      <div className="flex flex-col sm:flex-row justify-between items-start gap-8">
+      <div className="flex flex-col  sm:flex-row justify-between items-start gap-8">
         {stats.map((stat, index) => (
           <div key={index} className="flex-1 flex flex-col items-center">
             <div className="text-left">
@@ -141,7 +142,7 @@ export default function StatsGroup() {
               <div 
                 ref={el => linesRef.current[index] = el}
                 className="bg-[#E32121] h-0.5"
-                style={{ width: '0px', minHeight: '2px' }}
+                style={{ width: '1px', minHeight: '2px' }}
               ></div>
             </div>
           </div>

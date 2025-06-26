@@ -1,4 +1,8 @@
+import About from "@/Components/About";
 import Button from "@/Components/Button";
+import FirstSteps from "@/Components/FirstSteps";
+import LaFire from "@/Components/LaFire";
+import Services from "@/Components/Services";
 import StatsGroup from "@/Components/Stats";
 
 
@@ -24,7 +28,15 @@ export default function Home() {
 
   {/* Transition div */}
 
-  <div className="h-0.5 w-1/3 mx-auto mt-10 bg-black/50"></div>
+  <div className="h-0.5 w-1/6 mx-auto mt-10 bg-black/25"></div>
+
+  <Services />
+
+  <About />
+
+  <LaFire />
+
+  <FirstSteps />
   
   </>
   );

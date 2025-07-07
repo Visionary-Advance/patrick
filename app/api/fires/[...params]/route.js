@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from 'next/server';
 // Global cache that persists across requests
 const cache = new LRUCache({
   max: 100,
-  ttl: 10 * 60 * 1000, // 10 minutes
+  ttl: 10 * 60 * 20, // 10 minutes
 });
 
 const MAP_KEY = process.env.NASA_FIRMS_API_KEY || '189eab2d38f449abfe5ce4a50870c25a';

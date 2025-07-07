@@ -3,8 +3,10 @@ import Link from 'next/link';
 import { FaFacebook, FaInstagram } from 'react-icons/fa';
 
 const Footer = () => {
+
+ const getCurrentYear = () => new Date().getFullYear();
   return (
-    <footer className="bg-[#E32121] jomol text-white px-6 py-12">
+    <footer className="bg-[#E32121] jomol text-white px-6 pb-4 pt-12">
       <div className="max-w-[1700px] mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-x-6">
           {/* Logo and Tagline Section */}
@@ -12,7 +14,7 @@ const Footer = () => {
             <div className="flex items-center mb-4">
              <img className='w-20' src='/Img/Patrick_Logo.webp'/>
             </div>
-            <p className="text-lg leading-relaxed">
+            <p className="text-lg leading-relaxed me-10">
               "Where Experience and <br/>Professionalism <br/> Make the Difference" Since 1971
             </p>
           </div>
@@ -50,6 +52,7 @@ const Footer = () => {
               <li><Link href="https://www.blm.gov" className="hover:underline">BLM</Link></li>
               <li><Link href="https://www.roman.gov" className="hover:underline">ROMAN</Link></li>
               <li><Link href="https://www.fs.usda.gov" className="hover:underline">US Forest Service</Link></li>
+              <li><Link href="https://weather.com" className="hover:underline">The Weather Channel</Link></li>
             </ul>
           </div>
        
@@ -58,19 +61,21 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-x-8 mt-2">
           <div>
             <ul className="space-y-2">
-              <li><Link href="https://www.oregon.gov/odf" className="hover:underline">Oregon Department of Forestry</Link></li>
+              <li><Link href="https://www.oregon.gov/odf" className="hover:underline">ODF</Link></li>
               <li><Link href="https://inciweb.nwcg.gov" className="hover:underline">Inciweb</Link></li>
+               
+              <li><Link href="https://www.nifc.gov/nicc" className="hover:underline">NW Interagency</Link></li>
+               <li><Link href="https://www.fs.usda.gov" className="hover:underline">USFS</Link></li>
             </ul>
           </div>
           <div>
             <ul className="space-y-2 mt-2 ">
-              <li><Link href="https://weather.com" className="hover:underline">The Weather Channel</Link></li>
-              <li><Link href="https://www.nifc.gov/nicc" className="hover:underline">NW Interagency</Link></li>
+             
             </ul>
           </div>
           <div>
             <ul className="space-y-2 mt-2">
-              <li><Link href="https://www.fs.usda.gov" className="hover:underline">USFS</Link></li>
+             
             </ul>
           </div>
         </div>
@@ -90,7 +95,10 @@ const Footer = () => {
 
         {/* Divider */}
         <div className="border-t border-1 border-white/90 my-2"></div>
-
+        <div className='text-white text-center'>
+          <p>Copyright © {getCurrentYear()} Patrick Envirionmental. All rights reserved.</p>
+          <p>Powered by <span className='text-[#008070] font-bold'><Link target='_blank' rel='nofollow' href={'https://visionaryadvance.com'}>Visionary Advance</Link></span></p>
+        </div>
       </div>
     </footer>
   );

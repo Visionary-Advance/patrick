@@ -3,9 +3,11 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
   const isHomepage = pathname === '/';
 
@@ -21,6 +23,19 @@ const Header = () => {
     }
   }, [isHomepage]);
 
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMobileMenuOpen]);
+
   const navItems = [
     { name: 'Home', href: '/' },
     { name: 'About', href: '/about' },
@@ -29,6 +44,42 @@ const Header = () => {
     { name: 'Gallery', href: '/gallery' },
     { name: 'Employment', href: '/employment' },
   ];
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
+  // Animation variants for the mobile menu items
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { 
+      y: 50, 
+      opacity: 0 
+    },
+    visible: { 
+      y: 0, 
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+        damping: 15
+      }
+    }
+  };
 
   return (
     <header 
@@ -63,35 +114,69 @@ const Header = () => {
             ))}
           </nav>
 
-          {/* Contact Button */}
-          <div className="flex-shrink-0">
-            <Link
-              href="/contact"
-              className="bg-white jomol text-black px-2 py-1  font-medium hover:bg-gray-100 transition-colors duration-200"
-            >
-              Contact Us
-            </Link>
-          </div>
+         
 
           {/* Mobile menu button */}
           <div className="md:hidden">
             <button
               type="button"
-              className="text-white hover:text-gray-200 focus:outline-none focus:text-gray-200"
+              onClick={toggleMobileMenu}
+              className="text-white hover:text-gray-200 focus:outline-none focus:text-gray-200 z-60 relative"
               aria-label="Toggle navigation"
             >
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                {isMobileMenuOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
               </svg>
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Navigation (you can expand this if needed) */}
-      <div className="md:hidden">
-        {/* Add mobile menu content here if needed */}
-      </div>
+      {/* Mobile Navigation with Framer Motion */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="md:hidden fixed inset-0 bg-[#E32121]/85 z-40 flex flex-col justify-center items-center"
+          >
+            <motion.nav
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              className="flex flex-col space-y-8 text-center"
+            >
+              {navItems.map((item) => (
+                <motion.div key={item.name} variants={itemVariants}>
+                  <Link
+                    href={item.href}
+                    onClick={closeMobileMenu}
+                    className="text-white jomol text-3xl font-medium hover:text-gray-200 transition-colors duration-200 block"
+                  >
+                    {item.name}
+                  </Link>
+                </motion.div>
+              ))}
+              
+              <motion.div variants={itemVariants} className="pt-8">
+                <Link
+                  href="/contact"
+                  onClick={closeMobileMenu}
+                  className="bg-white jomol text-black px-8 py-3 text-xl font-medium hover:bg-gray-100 transition-colors duration-200 inline-block"
+                >
+                  Contact Us
+                </Link>
+              </motion.div>
+            </motion.nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 };

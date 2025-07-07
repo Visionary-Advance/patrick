@@ -1,9 +1,9 @@
 'use client'
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 
 export default function Careers() {
-  const [openFaq, setOpenFaq] = useState(null);
+ 
 
   const jobLocations = [
     "Wildland Firefighter - Springfield, OR",
@@ -11,8 +11,37 @@ export default function Careers() {
     "Wildland Firefighter - Redmond, OR",
     "Wildland Firefighter - Ellensburg, WA",
   ];
+  const [faqVisibility, setFaqVisibility] = useState({});
+  
+    
+    const faqRefs = useRef([]);
+  
+ 
+  
 
-  const faqItems = [
+  
+    useEffect(() => {
+      Object.keys(faqVisibility).forEach((key) => {
+        if (faqVisibility[key]) {
+          faqRefs.current[key].style.maxHeight = `${faqRefs.current[key].scrollHeight}px`;
+        } else {
+          faqRefs.current[key].style.maxHeight = "0px";
+        }
+      });
+    }, [faqVisibility]);
+  
+    const toggleDropdown = () => {
+      setDropdownVisible(!isDropdownVisible);
+    };
+  
+    const toggleFaq = (index) => {
+      setFaqVisibility((prevState) => ({
+        ...prevState,
+        [index]: !prevState[index],
+      }));
+    };
+
+  const faqs = [
     {
       question: "How Much do Wildland Firefighters make?",
       answer:
@@ -40,9 +69,7 @@ export default function Careers() {
     },
   ];
 
-  const toggleFaq = (index) => {
-    setOpenFaq(openFaq === index ? null : index);
-  };
+  
 
   return (
     <div className=" ">
@@ -78,7 +105,7 @@ export default function Careers() {
       {/* About Section */}
       <section className="bg-red-600 text-white py-16 jomol ">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl lg:text-6xl font-bold mb-8">About</h2>
+          <h2 className="text-4xl lg:text-5xl font-bold mb-8">About</h2>
           <p className="text-lg lg:text-xl leading-relaxed max-w-5xl mx-auto mb-12">
             PatRick Environmental Inc. dba PatRick Corp. was established in 1971
             by Rick Dice as a partner. In 1974, PatRick Corp. was incorporated.
@@ -101,10 +128,10 @@ export default function Careers() {
       {/* Firefighters Needed Section */}
       <section className="container max-w-5xl mx-auto px-4 jomol py-16 lg:py-24">
         <div className="text-center mb-16">
-          <h2 className="text-4xl lg:text-6xl font-bold text-black mb-8">
+          <h2 className="text-4xl lg:text-5xl font-bold text-black mb-8">
             Wildland Firefighters Needed
           </h2>
-          <p className="text-xl lg:text-2xl text-black leading-relaxed max-w-5xl mx-auto">
+          <p className="text-xl  text-black leading-relaxed max-w-5xl mx-auto">
             We are excited to get the 2025 fire season underway. All bases will
             be hosting a REFRESHER training in January for returning
             firefighters who are ready and available to start fighting fire. If
@@ -180,14 +207,14 @@ export default function Careers() {
       {/* Employee Experiences */}
       <section className="container mx-auto px-4 py-16 lg:py-24 jomol">
         <div className="text-center">
-          <h2 className="text-4xl lg:text-6xl font-bold text-black mb-12">
+          <h2 className="text-4xl lg:text-5xl font-bold text-black mb-12">
             Employee Experiences
           </h2>
           <div className="relative max-w-6xl mx-auto">
             <div className="text-red-600 text-8xl lg:text-9xl font-bold absolute -top-8 -left-4 lg:-left-8">
               "
             </div>
-            <p className="text-2xl lg:text-3xl text-black leading-relaxed italic px-8 lg:px-16">
+            <p className="text-2xl  text-black leading-relaxed italic px-8 lg:px-16">
               This is hands down my favorite job. I woke up every morning
               excited for the adventure that awaited me. We were always fed well
               and throughout our adventures through dense forests my coworkers
@@ -202,33 +229,28 @@ export default function Careers() {
       </section>
 
       {/* FAQ Section */}
-      <section className="mx-auto max-w-4xl jomol px-4 py-16 lg:py-24">
-        <h2 className="text-3xl lg:text-5xl font-bold text-black mb-12">
-          Frequently Asked Questions
-        </h2>
-        <div className="max-w-4xl mx-auto">
-          <div className="space-y-4">
-            {faqItems.map((item, index) => (
-              <div key={index} className="border-b border-gray-300">
-                <button
-                  onClick={() => toggleFaq(index)}
-                  className="w-full text-left py-6 flex items-center justify-between text-xl lg:text-2xl font-semibold text-black hover:text-red-600 transition-colors duration-200"
-                >
-                  <span>{item.question}</span>
-                  <span className="text-2xl transition-transform duration-200" style={{
-                    transform: openFaq === index ? 'rotate(180deg)' : 'rotate(0deg)'
-                  }}>
-                    ↓
-                  </span>
-                </button>
-                {openFaq === index && (
-                  <div className="pb-6 text-lg text-black leading-relaxed">
-                    {item.answer}
-                  </div>
-                )}
+      <section className="max-w-5xl jomol mx-auto mt-10 mb-20">
+        <h2 className="text-4xl font-bold mb-5">Frequently Asked Questions</h2>
+        <div className="faq-section">
+          {faqs.map((faq, index) => (
+            <div key={index} className="mb-4 border-b pb-4">
+              <button
+                onClick={() => toggleFaq(index)}
+                className="cursor-pointer font-semibold text-xl w-full text-left hover:text-[#E31131] transition-colors py-2"
+              >
+                {faq.question}
+              </button>
+              <div
+                ref={(el) => (faqRefs.current[index] = el)}
+                className="overflow-hidden transition-max-height duration-500 ease-in-out"
+                style={{ maxHeight: faqVisibility[index] ? faqRefs.current[index]?.scrollHeight : 0 }}
+              >
+                <p className="mt-2 text-gray-700 text-lg p-4 rounded">
+                  {faq.answer}
+                </p>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </section>
     </div>

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Button from "./Button";
 
 export default function About() {
@@ -39,9 +40,11 @@ export default function About() {
         agencies with the skills, equipment, and dedication it takes to
         make a real difference on the ground.
       </p>
+      <Link href={"/about"}>
       <div className="mt-5">
-        <Button text={"Read More"} color={"bg-[#E32121] text-white"} />
+        <Button text={"Read More"} color={"bg-[#E84D2F] text-white"} />
       </div>
+      </Link>
     </div>
     <div className="col-span-1 overflow-hidden order-1 lg:order-2 lg:ms-8">
       <img 

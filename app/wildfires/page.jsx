@@ -13,7 +13,7 @@ export default function WildfirePage(){
     image: "/Img/Updates.jpg",
     alt: "Facebook Updates Picture",
     buttonText: "View",
-    buttonColor: "bg-[#E32121] text-white px-5",
+    buttonColor: "bg-[#E84D2F] text-white px-5",
     href:"https://www.facebook.com/PatRickWildfire/"
   },
   {
@@ -22,7 +22,7 @@ export default function WildfirePage(){
     image: "/Img/WildfireMap.png",
     alt: "Wildfire Map Picture",
     buttonText: "View Map",
-    buttonColor: "bg-[#E32121] text-white px-5",
+    buttonColor: "bg-[#E84D2F] text-white px-5",
     href:"/wildfires/map"
   }
 ];

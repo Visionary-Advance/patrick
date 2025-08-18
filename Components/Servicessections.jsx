@@ -36,7 +36,7 @@ function ServiceTabs({ services }) {
               </div>
               
               <div 
-                className="absolute bottom-0 h-0.5 bg-red-600 transition-all duration-500 ease-out"
+                className="absolute bottom-0 h-0.5 bg-[#E84D2F] transition-all duration-500 ease-out"
                 style={{
                   width: `${100 / services.length}%`,
                   left: `${(activeIndex * 100) / services.length}%`,
@@ -62,7 +62,7 @@ function ServiceTabs({ services }) {
                     {service.shortTitle}
                   </h2>
 
-                  <div className="w-24 md:w-32 h-1 bg-red-600"></div>
+                  <div className="w-24 md:w-32 h-1 bg-[#E84D2F]"></div>
 
                   <p
                     className="text-lg md:text-xl font-normal text-black leading-relaxed"

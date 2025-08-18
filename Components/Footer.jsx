@@ -6,7 +6,7 @@ const Footer = () => {
 
  const getCurrentYear = () => new Date().getFullYear();
   return (
-    <footer className="bg-[#E32121] jomol text-white px-6 pb-4 pt-12">
+    <footer className="bg-[#E84D2F] jomol text-white px-6 pb-4 pt-12">
       <div className="max-w-[1700px] mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-x-6">
           {/* Logo and Tagline Section */}

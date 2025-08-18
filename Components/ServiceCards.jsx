@@ -2,43 +2,16 @@
 
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-
+import { servicesData } from '@/lib/servicesData';
 
 export default function ServiceCards(){
 
-const cards = [
-    {
-      image: "/Img/Services_Pic.jpg",
-      title: "Wildland Fire Fighting",
-      description: "Trained crews fighting wildfires to protect land and homes."
-    },
-    {
-      image: "/Img/Brush.jpg",
-      title: "Brush Trimming",
-      description: "Clearing brush to reduce wildfire risks and improve safety."
-    },
-    {
-      image: "/Img/Consult_Img.JPG",
-      title: "Consulting",
-      description: "Expert advice for wildfire management and fuel plans."
-    },
-    {
-      image: "/Img/Emergency.jpg",
-      title: "Emergency Services",
-      description: "Fast-response teams ready for wildfires and natural disasters."
-    },
-    {
-      image: "/Img/Services_Pic.jpg",
-      title: "Snow Removal",
-      description: "Clearing snow to keep roads, lots, and properties safe in winter."
-    },
-    {
-      image: "/Img/Services_Pic.jpg",
-      title: "Video Pyrotechnics",
-      description: "Safe, controlled fire effects for film, TV, and media projects."
-    },
-    
-  ];
+const cards = servicesData.map(service => ({
+  image: service.content.image,
+  title: service.shortTitle,
+  shortDesc: service.shortDesc,
+  id: service.id
+}));
 
   const bordersRef = useRef([]);
     const containerRef = useRef(null);
@@ -105,14 +78,12 @@ const cards = [
         }
       };
     }, [hasAnimated]);
+    
     return(
-
-
         <>
-        
         <div className="lg:grid-cols-3 grid gap-y-20 gap-x-10 md:grid-cols-2 grid-cols-1 mt-20 justify-items-center" ref={containerRef}>
   {cards.map((service, index) => (
-    <Link key={index} href={"#"}>
+    <Link key={index} href={`/services/${service.id}`}>
       <div className="w-full max-w-[500px] aspect-[500/380] col-span-1 relative">
         <div className='overflow-hidden w-full h-full'>
           <img 
@@ -124,26 +95,16 @@ const cards = [
         <div className="bg-white p-4 left-1/2 -translate-x-1/2 absolute w-10/12 lg:w-8/12 -bottom-7 shadow-black shadow">
           <div 
             ref={el => bordersRef.current[index] = el}
-            className="bg-[#E32121] absolute left-0 top-0 w-[3px]"
+            className="bg-[#E84D2F] absolute left-0 top-0 w-[3px]"
             style={{ height: '1px' }}
           ></div>
           <h4 className="jomol text-2xl">{service.title}</h4>
-          <p className="roboto text-sm w-10/12">{service.description}</p>
+          <p className="roboto text-sm w-10/12">{service.shortDesc}</p>
         </div>
       </div>
     </Link>
   ))}
 </div>
-        
-        
         </>
-
-
-
-
     );
 }
-
-
-
-

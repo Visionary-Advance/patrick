@@ -33,7 +33,7 @@ export default function Services() {
   return (
     <>
       <div className="max-w-[100rem] w-[90%] mx-auto mt-7">
-        <h3 className="text-[#E32121] jomol text-4xl">Our Services</h3>
+        <h3 className="text-[#E84D2F] jomol text-4xl">Our Services</h3>
         <div className="bg-gray-400 h-0.5 w-12 mt-2  "></div>
         
         <p className="lg:w-1/3 my-2 roboto">

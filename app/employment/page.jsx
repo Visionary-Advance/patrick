@@ -85,25 +85,26 @@ export default function Careers() {
               forest fire! Exciting outdoor job includes travel, expenses, and
               an experience of a lifetime. No experience required, training
               provided. We provide all your gear except boots and a personal
-              bag. Must be 18yrs old EEO Fill out online job application by
-              clicking on the button below. Call us at: 1-800-782-4119
+              bag. Must be 18yrs old. Fill out online job application by
+              clicking on the button below. Call us at: 1-800-782-4119. EEO
+              
             </p>
-            <button className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 text-lg rounded-lg transition-colors duration-200 font-medium">
+            <button className="bg-[#E84D2F] cursor-pointer hover:bg-red-700 text-white px-8 py-3 text-lg rounded-lg transition-colors duration-200 font-medium">
               View
             </button>
           </div>
           <div className="flex justify-center h-96">
             <img
-              src="https://cdn.builder.io/api/v1/image/assets%2Fcf3eb36c953942aabcbb2405ca711ac1%2Fe44864085ed84b379c9a81a511c6f153?format=webp&width=800"
+              src="/Img/Difference.jpg"
               alt="Wildland firefighter in action"
-              className="w-full max-w-lg  rounded-lg shadow-lg"
+              className="w-full max-w-lg object-fill rounded-lg shadow-lg"
             />
           </div>
         </div>
       </section>
 
       {/* About Section */}
-      <section className="bg-red-600 text-white py-16 jomol ">
+      <section className="bg-[#E84D2F] text-white py-16 jomol ">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-4xl lg:text-5xl font-bold mb-8">About</h2>
           <p className="text-lg lg:text-xl leading-relaxed max-w-5xl mx-auto mb-12">
@@ -117,9 +118,9 @@ export default function Careers() {
             the difference, Since 1972". PatRick has continually requested
             higher standards and more compliance with existing agreements and or
             contracts. Today PatRick Corp. is a family run business with five
-            offices and between 200-350 employees every year during fire season.
+            offices and between 300-400 employees every year during fire season.
           </p>
-          <button className="bg-white text-black border-2 border-white hover:bg-gray-100 px-8 py-3 text-lg rounded-lg transition-colors duration-200 font-medium">
+          <button className="bg-white cursor-pointer text-black border-2 border-white hover:bg-gray-100 px-8 py-3 text-lg rounded-lg transition-colors duration-200 font-medium">
             Apply Now
           </button>
         </div>
@@ -139,11 +140,9 @@ export default function Careers() {
             all other RETURNING firefighters, please wait until you are
             available to work before filling out an application. Applications
             are only valid for 60 days. For NEW potential firefighters, our
-            basic training will begin at each base starting in January and
-            continuing every month until fire season is over. You are welcome to
+            basic training will begin at each base starting in Spring depending on the base. You are welcome to
             check back for dates and fill out an application at that time.
-            Again, applications are only valid for 60 days. We will not be
-            scheduling interviews until that time. Look forward to expanding our
+            Again, applications are only valid for 60 days. Look forward to expanding our
             PatRick family.
           </p>
         </div>
@@ -159,7 +158,7 @@ export default function Careers() {
               for a dispatch!
             </p>
             <p>• Must be able to travel out of state.</p>
-            <p>• Need to be located 2-3 hours from a base for dispatch.</p>
+            <p>• Need to be located 2.5 hours or closer from a base for dispatch.</p>
             <p>
               • Can be gone 14 - 30 days at a time working 10 - 16 hour shifts.
             </p>
@@ -174,7 +173,7 @@ export default function Careers() {
                 <h3 className="text-xl lg:text-2xl font-medium text-black">
                   {location}
                 </h3>
-                <button className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-lg transition-colors duration-200 font-medium">
+                <button className="bg-[#E84D2F] hover:bg-red-700 cursor-pointer text-white px-6 py-2 rounded-lg transition-colors duration-200 font-medium">
                   Apply
                 </button>
               </div>
@@ -211,7 +210,7 @@ export default function Careers() {
             Employee Experiences
           </h2>
           <div className="relative max-w-6xl mx-auto">
-            <div className="text-red-600 text-8xl lg:text-9xl font-bold absolute -top-8 -left-4 lg:-left-8">
+            <div className="text-[#E84D2F] text-8xl lg:text-9xl font-bold absolute -top-8 -left-4 lg:-left-8">
               "
             </div>
             <p className="text-2xl  text-black leading-relaxed italic px-8 lg:px-16">
@@ -221,7 +220,7 @@ export default function Careers() {
               and I bonded like brothers. I learned so many valuable lessons
               that I can apply to any aspect of my life.
             </p>
-            <div className="text-red-600 text-8xl lg:text-9xl font-bold absolute -bottom-8 -right-4 lg:-right-8">
+            <div className="text-[#E84D2F]  text-8xl lg:text-9xl font-bold absolute -bottom-8 -right-4 lg:-right-8">
               "
             </div>
           </div>
@@ -236,7 +235,7 @@ export default function Careers() {
             <div key={index} className="mb-4 border-b pb-4">
               <button
                 onClick={() => toggleFaq(index)}
-                className="cursor-pointer font-semibold text-xl w-full text-left hover:text-[#E31131] transition-colors py-2"
+                className="cursor-pointer font-semibold text-xl w-full text-left hover:text-[#E84D2F]  transition-colors py-2"
               >
                 {faq.question}
               </button>

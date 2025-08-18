@@ -3,6 +3,7 @@ import Button from "@/Components/Button";
 import FirstSteps from "@/Components/FirstSteps";
 import LaFire from "@/Components/LaFire";
 import Services from "@/Components/Services";
+import ShareExp from "@/Components/ShareExp";
 import StatsGroup from "@/Components/Stats";
 
 
@@ -12,11 +13,11 @@ export default function Home() {
   <>
   <div className="">
     <div className="bg-black/30 w-full h-screen absolute top-0 left-0"></div>
-    <img className="w-full h-screen object-cover" src="/Img/Landing.JPG" alt="Picture of Fighting Fires"/>
+    <img className="w-full h-screen object-cover" src="/Img/New_Header.jpg" alt="Picture of Fighting Fires"/>
     <div className="absolute bottom-7 max-w-[110rem] mx-auto px-4 sm:px-6 lg:px-8">
     <h1 className="jomol text-white text-4xl">"Where Experience and Professionalism <br/> Make The Difference" Since 1971</h1>
     <div className=" mt-5 space-x-2">
-    <Button text={"Apply Now"} color={"bg-[#E32121] text-white"} />
+    <Button text={"Apply Now"} color={"bg-[#E84D2F] text-white"} />
     <Button text={"Read More"} color={"bg-white text-black"}/>
     </div>
     </div>
@@ -35,6 +36,8 @@ export default function Home() {
   <About />
 
   <LaFire />
+
+  <ShareExp />
 
   <FirstSteps />
   

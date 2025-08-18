@@ -145,7 +145,7 @@ export default function ContactForm() {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full h-12 bg-red-600 hover:bg-red-700 text-white text-xl font-normal rounded-none border-none disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            className="w-full h-12 bg-[#E84D2F] hover:bg-red-700 text-white text-xl font-normal rounded-none border-none disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             disabled={form.formState.isSubmitting}
           >
             {form.formState.isSubmitting ? "SUBMITTING..." : "SUBMIT"}

@@ -33,7 +33,13 @@ export default function StatsGroup() {
       suffix: "+",
       label: "States Served",
       type: "normal"
-    }
+    },
+    {
+      number: 2,
+      suffix: "+",
+      label: "Countries Served",
+      type: "normal"
+    },
   ];
 
   const animateNumbers = () => {
@@ -134,14 +140,14 @@ export default function StatsGroup() {
             <div className="text-left">
               <h3 
                 ref={el => statsRef.current[index] = el}
-                className="text-[#E32121] text-5xl jomol"
+                className="text-[#E84D2F] text-5xl jomol"
               >
                 0{stat.suffix}
               </h3>
               <p className="jomol -mt-1">{stat.label}</p>
               <div 
                 ref={el => linesRef.current[index] = el}
-                className="bg-[#E32121] h-0.5"
+                className="bg-[#E84D2F] h-0.5"
                 style={{ width: '1px', minHeight: '2px' }}
               ></div>
             </div>

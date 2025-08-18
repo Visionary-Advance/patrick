@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -8,6 +8,9 @@ import { motion, AnimatePresence } from 'framer-motion';
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [isMobileDropdownOpen, setIsMobileDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
   const pathname = usePathname();
   const isHomepage = pathname === '/';
 
@@ -22,6 +25,18 @@ const Header = () => {
       return () => window.removeEventListener('scroll', handleScroll);
     }
   }, [isHomepage]);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
@@ -41,7 +56,15 @@ const Header = () => {
     { name: 'About', href: '/about' },
     { name: 'Services', href: '/services' },
     { name: 'Wildfires', href: '/wildfires' },
-    { name: 'Gallery', href: '/gallery' },
+    { 
+      name: 'More', 
+      href: '/gallery',
+      hasDropdown: true,
+      dropdownItems: [
+        { name: 'Gallery', href: '/gallery' },
+        { name: 'Memorial', href: '/memorial' }
+      ]
+    },
     { name: 'Employment', href: '/employment' },
   ];
 
@@ -51,6 +74,19 @@ const Header = () => {
 
   const closeMobileMenu = () => {
     setIsMobileMenuOpen(false);
+    setIsMobileDropdownOpen(false); // Also close mobile dropdown
+  };
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const closeDropdown = () => {
+    setIsDropdownOpen(false);
+  };
+
+  const toggleMobileDropdown = () => {
+    setIsMobileDropdownOpen(!isMobileDropdownOpen);
   };
 
   // Animation variants for the mobile menu items
@@ -81,12 +117,39 @@ const Header = () => {
     }
   };
 
+  // Dropdown animation variants
+  const dropdownVariants = {
+    hidden: { 
+      opacity: 0, 
+      y: -10,
+      scale: 0.95
+    },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.2,
+        ease: "easeOut"
+      }
+    },
+    exit: {
+      opacity: 0,
+      y: -10,
+      scale: 0.95,
+      transition: {
+        duration: 0.15,
+        ease: "easeIn"
+      }
+    }
+  };
+
   return (
     <header 
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-linear ${
         isHomepage 
-          ? (isScrolled ? 'bg-[#E32121]' : 'bg-transparent')
-          : 'bg-[#E32121]'
+          ? (isScrolled ? 'bg-[#E84D2F]' : 'bg-transparent')
+          : 'bg-[#E84D2F]'
       }`}
     >
       <div className=" max-w-[118rem] mx-auto px-4 sm:px-6 lg:px-8">
@@ -101,18 +164,75 @@ const Header = () => {
           </div>
 
           {/* Navigation */}
-          <nav className="hidden md:flex space-x-3">
+           <nav className="hidden md:flex mt-3 space-x-3">
             {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="text-white jomol hover:text-gray-200 px-3 py-2 text-lg font-medium transition-colors duration-200 relative group"
-              >
-                {item.name}
-                <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center"></span>
-              </Link>
+              <div key={item.name} className="relative" ref={item.hasDropdown ? dropdownRef : null}>
+                {item.hasDropdown ? (
+                  // Dropdown item
+                  <div>
+                    <button
+                      onClick={toggleDropdown}
+                      className="text-white jomol hover:text-gray-200 px-3 py-2 text-lg font-medium transition-colors duration-200 relative group flex items-center -mt-2"
+                    >
+                      {item.name}
+                      <svg 
+                        className={`ml-1 h-4 w-4 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`}
+                        fill="none" 
+                        viewBox="0 0 24 24" 
+                        stroke="currentColor"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                      <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center"></span>
+                    </button>
+                    
+                    {/* Dropdown Menu */}
+                    <AnimatePresence>
+                      {isDropdownOpen && (
+                        <motion.div
+                          variants={dropdownVariants}
+                          initial="hidden"
+                          animate="visible"
+                          exit="exit"
+                          className="absolute top-full left-0 mt-1 w-48 bg-white rounded-md shadow-lg py-1 z-50"
+                        >
+                          {item.dropdownItems.map((dropdownItem) => (
+                            <Link
+                              key={dropdownItem.name}
+                              href={dropdownItem.href}
+                              onClick={closeDropdown}
+                              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors duration-200 jomol"
+                            >
+                              {dropdownItem.name}
+                            </Link>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ) : (
+                  // Regular nav item
+                  <Link
+                    href={item.href}
+                    className="text-white jomol hover:text-gray-200 px-3 py-2 text-lg font-medium transition-colors duration-200 relative group"
+                  >
+                    {item.name}
+                    <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center"></span>
+                  </Link>
+                )}
+              </div>
             ))}
           </nav>
+
+          {/* Contact Button */}
+          <div className="hidden lg:block flex-shrink-0">
+            <Link
+              href="/contact"
+              className="bg-white jomol text-black px-2 py-1  font-medium hover:bg-gray-100 transition-colors duration-200"
+            >
+              Contact Us
+            </Link>
+          </div>
 
          
 
@@ -144,7 +264,7 @@ const Header = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="md:hidden fixed inset-0 bg-[#E32121]/85 z-40 flex flex-col justify-center items-center"
+            className="md:hidden fixed inset-0 bg-[#E84D2F]/85 z-40 flex flex-col justify-center items-center"
           >
             <motion.nav
               variants={containerVariants}
@@ -154,13 +274,56 @@ const Header = () => {
             >
               {navItems.map((item) => (
                 <motion.div key={item.name} variants={itemVariants}>
-                  <Link
-                    href={item.href}
-                    onClick={closeMobileMenu}
-                    className="text-white jomol text-3xl font-medium hover:text-gray-200 transition-colors duration-200 block"
-                  >
-                    {item.name}
-                  </Link>
+                  {item.hasDropdown ? (
+                    // Mobile dropdown items
+                    <div className="flex flex-col space-y-4">
+                      <button
+                        onClick={toggleMobileDropdown}
+                        className="text-white jomol text-3xl font-medium hover:text-gray-200 transition-colors duration-200 flex items-center justify-center"
+                      >
+                        {item.name}
+                        <svg 
+                          className={`ml-2 h-6 w-6 transition-transform duration-200 ${isMobileDropdownOpen ? 'rotate-180' : ''}`}
+                          fill="none" 
+                          viewBox="0 0 24 24" 
+                          stroke="currentColor"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </button>
+                      
+                      <AnimatePresence>
+                        {isMobileDropdownOpen && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.3 }}
+                            className="flex flex-col space-y-4 overflow-hidden"
+                          >
+                            {item.dropdownItems.map((dropdownItem) => (
+                              <Link
+                                key={dropdownItem.name}
+                                href={dropdownItem.href}
+                                onClick={closeMobileMenu}
+                                className="text-white jomol text-2xl font-medium hover:text-gray-200 transition-colors duration-200 block"
+                              >
+                                {dropdownItem.name}
+                              </Link>
+                            ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      onClick={closeMobileMenu}
+                      className="text-white jomol text-3xl font-medium hover:text-gray-200 transition-colors duration-200 block"
+                    >
+                      {item.name}
+                    </Link>
+                  )}
                 </motion.div>
               ))}
               

@@ -40,10 +40,14 @@ const TimelineScrollAnimation = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Set initial states
+      // Set initial states with smaller mobile transforms
       gsap.set(".timeline-item", { opacity: 0, y: 50 });
       gsap.set(".timeline-line", { scaleY: 0, transformOrigin: "top center" });
       gsap.set(".timeline-dot", { opacity: 0 });
+      
+      // Set initial states for year and content with smaller mobile transforms
+      gsap.set(".year", { x: -15, opacity: 0 }); // Smaller initial offset
+      gsap.set(".content", { x: 15, opacity: 0 }); // Smaller initial offset
       
       // Animate the timeline line and dot together
       const tl = gsap.timeline({
@@ -81,42 +85,36 @@ const TimelineScrollAnimation = () => {
           }
         });
 
-        // Animate the year number (from left)
-        gsap.fromTo(item.querySelector(".year"), 
-          { x: -30, opacity: 0 },
-          {
-            x: 0,
-            opacity: 1,
-            duration: 0.8,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: item,
-              start: "top 80%",
-              toggleActions: "play none none reverse",
-            }
+        // Animate the year number with smaller transform
+        gsap.to(item.querySelector(".year"), {
+          x: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: item,
+            start: "top 80%",
+            toggleActions: "play none none reverse",
           }
-        );
+        });
 
-        // Animate the content (from right)
-        gsap.fromTo(item.querySelector(".content"), 
-          { x: 30, opacity: 0 },
-          {
-            x: 0,
-            opacity: 1,
-            duration: 0.8,
-            delay: 0.2,
-            ease: "power2.out",
-            scrollTrigger: {
-              trigger: item,
-              start: "top 75%",
-              toggleActions: "play none none reverse",
-            }
+        // Animate the content with smaller transform
+        gsap.to(item.querySelector(".content"), {
+          x: 0,
+          opacity: 1,
+          duration: 0.8,
+          delay: 0.2,
+          ease: "power2.out",
+          scrollTrigger: {
+            trigger: item,
+            start: "top 75%",
+            toggleActions: "play none none reverse",
           }
-        );
+        });
 
         // Animate the image
         gsap.fromTo(item.querySelector(".timeline-image"), 
-          { scale: 0.8, opacity: 0 },
+          { scale: 0.9, opacity: 0 }, // Smaller scale change
           {
             scale: 1,
             opacity: 1,
@@ -137,17 +135,17 @@ const TimelineScrollAnimation = () => {
   }, []);
 
   return (
-    <div className="min-h-screen py-20">
-      <div className="container mx-auto">
-        <div ref={timelineRef} className="relative">
-          {/* Timeline line positioned more to the left */}
+    <div className=" pt-10">
+      <div className="container mx-auto px-4 py-5 overflow-hidden">
+        <div ref={timelineRef} className="relative overflow-visible">
+          {/* Timeline line - responsive positioning */}
           <div 
             ref={lineRef}
-            className="timeline-line absolute left-36 lg:left-48 top-0 w-1 bg-red-500 h-full z-10"
+            className="timeline-line absolute left-20 md:left-36 lg:left-40 top-0 w-1 bg-[#E84D2F] h-full z-10"
           ></div>
           
-          {/* Moving dot at the end of the line */}
-          <div className="timeline-dot absolute left-36.5 lg:left-48.5 w-4 h-4 bg-red-500 rounded-full transform -translate-x-1/2 z-20" 
+          {/* Moving dot - responsive positioning */}
+          <div className="timeline-dot absolute left-20.5 md:left-36 lg:left-40.5 w-4 h-4 bg-[#E84D2F] rounded-full transform -translate-x-1/2 z-20" 
                style={{top: '100%', marginTop: '-8px'}}></div>
           
           {/* Timeline items */}
@@ -155,28 +153,28 @@ const TimelineScrollAnimation = () => {
             {timelineData.map((item, index) => (
               <div key={index} className="timeline-item relative">
                 <div className="flex items-start">
-                  {/* Year - Left Side of the line */}
-                  <div className="year w-40 jomol text-right pr-14">
-                    <h2 className="text-4xl md:text-6xl font-bold text-gray-800 mb-2">
+                  {/* Year - Left Side of the line - responsive width and padding */}
+                  <div className="year w-24 md:w-40 jomol text-right pr-6 md:pr-14">
+                    <h2 className="text-3xl md:text-4xl lg:text-6xl font-bold text-gray-800 mb-2">
                       {item.year}
                     </h2>
                   </div>
                   
-                  {/* Content - Right Side of the line */}
-                  <div className="content lg:ms-7 flex-1 pl-2 lg:pl-8">
-                    <h3 className="text-2xl font-bold jomol text-gray-800 mb-4">
+                  {/* Content - Right Side of the line - responsive spacing */}
+                  <div className="content flex-1 pl-2 md:pl-4 lg:pl-8">
+                    <h3 className="text-xl md:text-2xl font-bold jomol text-gray-800 mb-4">
                       {item.title}
                     </h3>
-                    <p className="text-gray-600 roboto text-lg leading-relaxed mb-6">
+                    <p className="text-gray-600 roboto text-base md:text-lg leading-relaxed mb-6">
                       {item.description}
                     </p>
                     
-                    {/* Image */}
+                    {/* Image - responsive sizing */}
                     <div className="timeline-image">
                       <img 
                         src={item.image} 
                         alt={`Timeline ${item.year}`}
-                        className="w-full max-w-md h-48 object-cover rounded-lg shadow-lg"
+                        className="w-full max-w-xs md:max-w-sm h-36 md:h-48 object-cover rounded-lg shadow-lg"
                       />
                     </div>
                   </div>

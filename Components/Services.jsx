@@ -43,7 +43,7 @@ export default function Services() {
         </p>
         <div className="grid grid-cols-1 lg:grid-cols-2 w-full">
             <div className="col-span-1">
-                <img className=" " src="/Img/Services_Pic.jpg"/>
+                <img className=" " src="/Img/Main_Serv.jpg"/>
             </div>
            
 

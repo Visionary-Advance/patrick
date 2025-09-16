@@ -9,7 +9,7 @@ export default function About() {
     <div className="col-span-1 overflow-hidden">
       <img
         className="w-full h-auto min-h-[300px] lg:h-[500px] object-cover"
-        src="/Img/History.jpg"
+        src="/Img/Grandpa.jpg"
       />
     </div>
     <div className="col-span-1 lg:ms-8">

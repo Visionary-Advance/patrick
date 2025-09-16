@@ -7,6 +7,7 @@ export default function FirstSteps() {
     { title: "Wildland Firefighter", location: "Redmond, OR" },
     { title: "Wildland Firefighter", location: "Ellensburg, WA" },
     { title: "Wildland Firefighter", location: "Boise, ID" },
+    { title: "Wildland Firefighter", location: "Asheville, NC" },
   ];
 
   return (
@@ -33,7 +34,7 @@ export default function FirstSteps() {
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between px-4 py-4 gap-3">
                     <h4 className="jomol text-lg sm:text-xl lg:text-2xl">{job.title} - {job.location}</h4>
                     <Link target="_blank" rel="nofollow" href={"https://patrick.hiringplatform.com/list/careers"}>
-                      <Button text={"Apply"} color={"bg-[#E84D2F] px-6 text-white"} />
+                      <Button text={"Apply"} color={"bg-black px-6 text-white"} />
                     </Link>
                   </div>
                 </div>

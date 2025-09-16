@@ -3,7 +3,7 @@ import TimelineScrollAnimation from "@/Components/TimelineScroll";
 export default function AboutPage() {
   return (
     <>
-      <div className="grid grid-cols-1  mb-16 mt-30 lg:grid-cols-2">
+      <div className="grid grid-cols-1  mb-16 mt-32 lg:mt-48 lg:grid-cols-2">
         <div className="col-span-1 lg:ms-44 ms-4 mx-auto md:mx-16 mb-5 lg:mb-0 ">
           <h2 className="jomol text-5xl">About</h2>
           <div className="h-0.5 bg-black/50 mt-2 w-16"></div>

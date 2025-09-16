@@ -35,7 +35,7 @@ const Footer = () => {
           <div>
             <h3 className="font-bold lg:mt-0 mt-5 text-lg mb-4">Resources</h3>
             <ul className="space-y-2">
-              <li><Link href="https://www.nwsa.org" className="hover:underline">NWSA</Link></li>
+              <li><Link href="http://nwsa.us/" className="hover:underline">NWSA</Link></li>
               <li><Link href="https://www.nefa.org" className="hover:underline">NEFA</Link></li>
               <li><Link href="https://www.nifc.gov" className="hover:underline">NIFC</Link></li>
               <li><Link href="https://gacc.nifc.gov" className="hover:underline">GACC</Link></li>
@@ -47,10 +47,9 @@ const Footer = () => {
           <div className='mt-2'>
             
             <ul className="space-y-2">
-              <li><Link href="https://www.nwsa.org/training" className="hover:underline">NWSA Training</Link></li>
+              
               <li><Link href="https://www.wffoundation.org" className="hover:underline">Wildland Firefighter Foundation</Link></li>
               <li><Link href="https://www.blm.gov" className="hover:underline">BLM</Link></li>
-              <li><Link href="https://www.roman.gov" className="hover:underline">ROMAN</Link></li>
               <li><Link href="https://www.fs.usda.gov" className="hover:underline">US Forest Service</Link></li>
               <li><Link href="https://weather.com" className="hover:underline">The Weather Channel</Link></li>
             </ul>

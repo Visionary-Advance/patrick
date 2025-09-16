@@ -19,23 +19,47 @@ const TimelineScrollAnimation = () => {
       image: "https://images.unsplash.com/photo-1574263867128-a3d5c1b1deac?w=500&h=300&fit=crop"
     },
     {
-      year: "1980",
-      title: "Expansion Era",
+      year: "1975",
+      title: "Contract Prescribed Burning",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque,",
       image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=300&fit=crop"
     },
     {
-      year: "2005",
-      title: "Modern Development",
+      year: "1980",
+      title: "OR State Agreement",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque, sit amet lacinia nisi sodales. Vestibulum id orci velit. Vivamus sollicitudin viverra ipsum, non gravida libero. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididun",
       image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=300&fit=crop"
     },
     {
-      year: "2020",
-      title: "Digital Transformation",
+      year: "1989",
+      title: "Pyrotech fire in Movie Always",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque.",
-      image: "https://images.unsplash.com/photo-1518837695005-2083093ee35b?w=500&h=300&fit=crop"
-    }
+      image: "/Img/NWSA_Logo.jpg"
+    },
+    {
+      year: "1991",
+      title: "Creation of NWSA",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque.",
+      image: "/Img/NWSA_Logo.jpg"
+    },
+    {
+      year: "1993",
+      title: "Water Handling Agreement",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque.",
+      image: "/Img/NWSA_Logo.jpg"
+    },
+    {
+      year: "1995",
+      title: "National Contract",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque.",
+      image: "/Img/NWSA_Logo.jpg"
+    },
+    {
+      year: "1999",
+      title: "Moved Headquarters to Redmond Built Headquarters Building",
+      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque.",
+      image: "/Img/NWSA_Logo.jpg"
+    },
   ];
 
   useEffect(() => {
@@ -53,8 +77,8 @@ const TimelineScrollAnimation = () => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: timelineRef.current,
-          start: "top 80%",
-          end: "bottom bottom",
+          start: "top 60%",
+          end: "bottom 80%", // Changed from "bottom bottom" to give more space
           scrub: 1,
         }
       });
@@ -174,7 +198,7 @@ const TimelineScrollAnimation = () => {
                       <img 
                         src={item.image} 
                         alt={`Timeline ${item.year}`}
-                        className="w-full max-w-xs md:max-w-sm h-36 md:h-48 object-cover rounded-lg shadow-lg"
+                        className="w-full max-w-xs md:max-w-sm h-36 md:h-48 object-contain rounded-lg shadow-lg"
                       />
                     </div>
                   </div>

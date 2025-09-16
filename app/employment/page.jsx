@@ -10,6 +10,7 @@ export default function Careers() {
     "Wildland Firefighter - Boise, ID",
     "Wildland Firefighter - Redmond, OR",
     "Wildland Firefighter - Ellensburg, WA",
+    "Wildland Firefighter - Asheville, NC",
   ];
   const [faqVisibility, setFaqVisibility] = useState({});
   
@@ -84,8 +85,7 @@ export default function Careers() {
               It takes a special kind of person to go head to head with a raging
               forest fire! Exciting outdoor job includes travel, expenses, and
               an experience of a lifetime. No experience required, training
-              provided. We provide all your gear except boots and a personal
-              bag. Must be 18yrs old. Fill out online job application by
+              provided. We provide all your gear except boots, gloves and a sleeping bag. Must be 18yrs old. Fill out online job application by
               clicking on the button below. Call us at: 1-800-782-4119. EEO
               
             </p>
@@ -114,8 +114,8 @@ export default function Careers() {
             PatRick Corp. continues to send emergency service crews and engines
             throughout the nation. PatRick Corp. is a leader in the private
             sector industry in both fire and fuels contracting. Rick Dice
-            created PatRick's motto "Where experience and professionalism makes
-            the difference, Since 1972". PatRick has continually requested
+            created PatRick's motto "Where experience and professionalism make
+            the difference" Since 1972. PatRick has continually requested
             higher standards and more compliance with existing agreements and or
             contracts. Today PatRick Corp. is a family run business with five
             offices and between 300-400 employees every year during fire season.
@@ -173,7 +173,7 @@ export default function Careers() {
                 <h3 className="text-xl lg:text-2xl font-medium text-black">
                   {location}
                 </h3>
-                <button className="bg-[#E84D2F] hover:bg-red-700 cursor-pointer text-white px-6 py-2 rounded-lg transition-colors duration-200 font-medium">
+                <button className="bg-black hover:bg-red-700 cursor-pointer text-white px-6 py-2 rounded-lg transition-colors duration-200 font-medium">
                   Apply
                 </button>
               </div>

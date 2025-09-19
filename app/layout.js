@@ -15,8 +15,27 @@ const geistMono = Geist_Mono({
 
 export const metadata = {
   title: "Patrick Environmetal",
-  description: `"Where Experience and Professionalism Make The Difference" Since 1971`
+  description: `"Where Experience and Professionalism Make The Difference" Since 1971`,
+
+  openGraph: {
+    title: "Patrick Wildfire - Professional Fire Suppression Services",
+    description: "Professional wildfire suppression and fire services with 52+ years of experience. Serving 20+ states with expert firefighting solutions.",
+    url: "https://patrick-coral.vercel.app", // Replace with your actual domain
+    siteName: "Patrick Wildfire",
+    images: [
+      {
+        url: "/og-image.png", // This is the image that will show when shared
+        width: 1200,
+        height: 630,
+        alt: "Patrick Wildfire - Professional Fire Suppression Services",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
 };
+
+
 
 export default function RootLayout({ children }) {
   return (

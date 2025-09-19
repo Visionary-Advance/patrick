@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react';
-import { Flame, MapPin, AlertTriangle, ChevronLeft, ChevronRight, Layers, ArrowLeft } from 'lucide-react';
+import { Flame, MapPin, AlertTriangle, ChevronLeft, ChevronRight, Layers, ArrowLeft, RefreshCw, Bug } from 'lucide-react';
 
 const InteractiveWildfireMap = () => {
   const [fires, setFires] = useState([]);
@@ -10,155 +10,268 @@ const InteractiveWildfireMap = () => {
   const [lastUpdate, setLastUpdate] = useState('');
   const [selectedFire, setSelectedFire] = useState(null);
   const [mapType, setMapType] = useState('satellite');
-  const [locationCache, setLocationCache] = useState({});
   const [selectedRegion, setSelectedRegion] = useState('USA');
   const [loadingProgress, setLoadingProgress] = useState('');
   const [leftPanelCollapsed, setLeftPanelCollapsed] = useState(true);
   const [rightPanelCollapsed, setRightPanelCollapsed] = useState(true);
   const [topPanelCollapsed, setTopPanelCollapsed] = useState(false);
   const [instructionsVisible, setInstructionsVisible] = useState(false);
-  const [cacheStats, setCacheStats] = useState({ hits: 0, misses: 0, size: 0 });
+  const [debugMode, setDebugMode] = useState(false);
+  const [debugLogs, setDebugLogs] = useState([]);
+  const [apiCallCount, setApiCallCount] = useState(0);
+  const [lastApiResponse, setLastApiResponse] = useState(null);
+  
   const mapRef = useRef(null);
   const mapInstanceRef = useRef(null);
   const markersRef = useRef([]);
 
-  // Get NASA FIRMS API key from environment variables
-  const MAP_KEY = process.env.REACT_APP_NASA_FIRMS_API_KEY || '189eab2d38f449abfe5ce4a50870c25a';
-  
-  // Cache configuration
-  const CACHE_DURATION = 10 * 60 * 1000; // 10 minutes in milliseconds
-  const CACHE_KEY_PREFIX = 'wildfire_data_';
-  const MAX_CACHE_SIZE = 50; // Maximum number of cached entries
 
-  // Memory cache for fire data
-  const fireDataCache = useRef(new Map());
 
-  // Create cache key based on parameters
-  const createCacheKey = (country, days, sensor) => {
-    return `${CACHE_KEY_PREFIX}${country}_${days}_${sensor}`;
-  };
-
-  // Check if cached data is still valid
-  const isCacheValid = (cachedData) => {
-    if (!cachedData || !cachedData.timestamp) return false;
-    const now = Date.now();
-    const age = now - cachedData.timestamp;
-    return age < CACHE_DURATION;
-  };
-
-  // Get data from cache
-  const getCachedData = (cacheKey) => {
+  // Enhanced fetch function with better error handling and debugging
+  const fetchFireDataDirect = async (country = 'USA', days = 1, sensor = 'VIIRS_SNPP_NRT') => {
+    const callNumber = apiCallCount + 1;
+    setApiCallCount(callNumber);
+    
+   
+    setLoadingProgress(`Fetching data for ${country} (${days} day${days > 1 ? 's' : ''})...`);
+    setLoading(true); // Make sure loading is set
+    setError(''); // Clear any previous errors
+    
     try {
-      // Check memory cache first
-      const memoryData = fireDataCache.current.get(cacheKey);
-      if (memoryData && isCacheValid(memoryData)) {
-        console.log(`Cache HIT (memory): ${cacheKey}`);
-        setCacheStats(prev => ({ ...prev, hits: prev.hits + 1 }));
-        return memoryData.data;
-      }
-
-      // Check sessionStorage cache
-      const sessionData = sessionStorage.getItem(cacheKey);
-      if (sessionData) {
-        const parsed = JSON.parse(sessionData);
-        if (isCacheValid(parsed)) {
-          console.log(`Cache HIT (session): ${cacheKey}`);
-          // Also store in memory for faster access
-          fireDataCache.current.set(cacheKey, parsed);
-          setCacheStats(prev => ({ ...prev, hits: prev.hits + 1 }));
-          return parsed.data;
-        } else {
-          // Remove expired cache
-          sessionStorage.removeItem(cacheKey);
+      const apiUrl = `/api/fires/${sensor}/${country}/${days}`;
+     
+      
+      const startTime = Date.now();
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+          'Accept': 'text/csv,application/json,text/plain',
+          'Cache-Control': 'no-cache'
         }
+      });
+      
+      const duration = Date.now() - startTime;
+     
+      
+      setLastApiResponse({
+        url: apiUrl,
+        status: response.status,
+        statusText: response.statusText,
+        duration: duration,
+        timestamp: new Date().toISOString(),
+        headers: Object.fromEntries(response.headers.entries())
+      });
+      
+      if (!response.ok) {
+        let errorData;
+        try {
+          const contentType = response.headers.get('content-type');
+          if (contentType && contentType.includes('application/json')) {
+            errorData = await response.json();
+          } else {
+            errorData = await response.text();
+          }
+        } catch (e) {
+          errorData = `Failed to read error response: ${e.message}`;
+        }
+        
+       
+        throw new Error(`API Error (${response.status}): ${JSON.stringify(errorData)}`);
       }
-
-      console.log(`Cache MISS: ${cacheKey}`);
-      setCacheStats(prev => ({ ...prev, misses: prev.misses + 1 }));
-      return null;
+      
+      const csvData = await response.text();
+     
+      
+      if (!csvData || csvData.length < 50) {
+        throw new Error(`Insufficient data received: ${csvData.length} characters`);
+      }
+      
+      setLoadingProgress('Parsing CSV data...');
+      const parsedFires = await parseCSVData(csvData);
+      
+     
+      setFires(parsedFires);
+      updateMapMarkers(parsedFires);
+      
+      setLastUpdate(new Date().toLocaleString());
+      setError('');
+      
     } catch (error) {
-      console.warn('Cache read error:', error);
-      return null;
+     
+      console.error('API failed:', error);
+      setError(`Failed to load fire data: ${error.message}`);
+    } finally {
+      // IMPORTANT: Always clear loading state
+      setLoading(false);
+      setLoadingProgress('');
+     
     }
   };
 
-  // Store data in cache
-  const setCachedData = (cacheKey, data) => {
+  // Enhanced CSV parsing with better error handling
+  const parseCSVData = async (csvText, regionName = '') => {
+  
+    
     try {
-      const cachedData = {
-        data: data,
-        timestamp: Date.now()
+      const lines = csvText.trim().split('\n');
+      if (lines.length < 2) {
+        throw new Error(`Insufficient CSV data: only ${lines.length} lines`);
+      }
+      
+      const headers = lines[0].split(',').map(h => h.trim());
+     
+      
+      const fires = [];
+      let invalidRows = 0;
+      
+      for (let i = 1; i < lines.length; i++) {
+        const values = lines[i].split(',').map(v => v.trim());
+        
+        if (values.length < headers.length) {
+          invalidRows++;
+          continue;
+        }
+        
+        const fire = {};
+        headers.forEach((header, index) => {
+          fire[header] = values[index] || '';
+        });
+        
+        // Validate required fields
+        if (!fire.latitude || !fire.longitude) {
+          invalidRows++;
+          continue;
+        }
+        
+        fire.lat = parseFloat(fire.latitude);
+        fire.lng = parseFloat(fire.longitude);
+        
+        if (isNaN(fire.lat) || isNaN(fire.lng)) {
+          invalidRows++;
+          continue;
+        }
+        
+        // Add enhanced fire information
+        fire.locationName = regionName || getSimpleStateFromCoords(fire.lat, fire.lng);
+        fire.sizeDescription = getFireSizeDescription(
+          fire.frp, 
+          fire.confidence, 
+          fire.bright_ti4 || fire.bright_ti5 || fire.brightness
+        );
+        fire.detailedFireInfo = getDetailedFireInfo(
+          fire.frp, 
+          fire.confidence, 
+          fire.bright_ti4 || fire.bright_ti5 || fire.brightness
+        );
+        fire.riskLevel = getRiskLevel(fire.confidence, fire.bright_ti4 || fire.bright_ti5 || fire.brightness);
+        fire.timeDescription = formatDetectionTime(fire.acq_date, fire.acq_time);
+        
+        fires.push(fire);
+      }
+      
+     
+      
+      
+      return fires;
+      
+    } catch (error) {
+      
+      throw new Error(`Failed to parse CSV data: ${error.message}`);
+    }
+  };
+
+  // Manual retry function
+  const handleManualRetry = () => {
+    
+    setError('');
+    fetchFireDataDirect(selectedRegion, 1);
+  };
+
+  
+
+  // Enhanced initialization
+  useEffect(() => {
+  
+    
+    if (!mapRef.current || mapInstanceRef.current) return;
+
+    // Load Leaflet CSS and JS
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+    document.head.appendChild(link);
+
+    const script = document.createElement('script');
+    script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+    script.onload = () => {
+      
+      initializeMap();
+    };
+    script.onerror = () => {
+      
+      setError('Failed to load map library');
+      setLoading(false); // Clear loading on error
+    };
+    document.head.appendChild(script);
+
+    return () => {
+      if (mapInstanceRef.current) {
+        mapInstanceRef.current.remove();
+        mapInstanceRef.current = null;
+      }
+    };
+  }, []);
+
+  const initializeMap = () => {
+    if (!window.L || mapInstanceRef.current) return;
+
+    try {
+      // Initialize map centered on USA
+      const map = window.L.map(mapRef.current, {
+        center: [39.8283, -98.5795],
+        zoom: 5,
+        zoomControl: true,
+        scrollWheelZoom: true,
+        doubleClickZoom: true,
+        dragging: true,
+        worldCopyJump: false,
+        maxBounds: [[-90, -180], [90, 180]],
+        maxBoundsViscosity: 1.0
+      });
+
+      // Add base layers
+      const satelliteLayer = window.L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; Esri',
+        maxZoom: 18
+      });
+
+      const streetLayer = window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors',
+        maxZoom: 18
+      });
+
+      // Add default layer
+      satelliteLayer.addTo(map);
+
+      // Store layer references
+      map.baseLayers = {
+        satellite: satelliteLayer,
+        street: streetLayer
       };
 
-      // Store in memory cache
-      fireDataCache.current.set(cacheKey, cachedData);
-
-      // Store in sessionStorage (with size limit)
-      try {
-        sessionStorage.setItem(cacheKey, JSON.stringify(cachedData));
-      } catch (storageError) {
-        console.warn('SessionStorage full, clearing old cache entries');
-        clearOldCacheEntries();
-        try {
-          sessionStorage.setItem(cacheKey, JSON.stringify(cachedData));
-        } catch (retryError) {
-          console.warn('Still unable to cache to sessionStorage:', retryError);
-        }
-      }
-
-      // Limit memory cache size
-      if (fireDataCache.current.size > MAX_CACHE_SIZE) {
-        const firstKey = fireDataCache.current.keys().next().value;
-        fireDataCache.current.delete(firstKey);
-      }
-
-      setCacheStats(prev => ({ 
-        ...prev, 
-        size: fireDataCache.current.size 
-      }));
-
-      console.log(`Data cached: ${cacheKey}`);
-    } catch (error) {
-      console.warn('Cache write error:', error);
-    }
-  };
-
-  // Clear expired cache entries
-  const clearOldCacheEntries = () => {
-    try {
-      const keysToRemove = [];
+      mapInstanceRef.current = map;
       
-      // Check sessionStorage
-      for (let i = 0; i < sessionStorage.length; i++) {
-        const key = sessionStorage.key(i);
-        if (key && key.startsWith(CACHE_KEY_PREFIX)) {
-          try {
-            const data = JSON.parse(sessionStorage.getItem(key));
-            if (!isCacheValid(data)) {
-              keysToRemove.push(key);
-            }
-          } catch (e) {
-            keysToRemove.push(key);
-          }
-        }
-      }
 
-      keysToRemove.forEach(key => sessionStorage.removeItem(key));
-
-      // Check memory cache
-      for (const [key, data] of fireDataCache.current.entries()) {
-        if (!isCacheValid(data)) {
-          fireDataCache.current.delete(key);
-        }
-      }
-
-      console.log(`Cleared ${keysToRemove.length} expired cache entries`);
+      // Fetch initial fire data
+      fetchFireDataDirect();
+      
     } catch (error) {
-      console.warn('Error clearing cache:', error);
+      
+      setError(`Failed to initialize map: ${error.message}`);
+      setLoading(false); // Clear loading on error
     }
   };
 
-  
   // Enhanced function to get detailed fire size and intensity information
   const getDetailedFireInfo = (frp, confidence, brightness) => {
     const power = parseFloat(frp) || 0;
@@ -202,9 +315,9 @@ const InteractiveWildfireMap = () => {
     }
     
     // Determine intensity based on brightness and confidence
-    if (conf === 'high' || bright > 340) {
+    if (conf === 'high' || conf === 'h' || bright > 340) {
       intensityLevel = 'Very High Intensity';
-    } else if (conf === 'nominal' || bright > 320) {
+    } else if (conf === 'nominal' || conf === 'n' || bright > 320) {
       intensityLevel = 'High Intensity';
     } else if (bright > 310) {
       intensityLevel = 'Moderate Intensity';
@@ -233,9 +346,9 @@ const InteractiveWildfireMap = () => {
     const conf = confidence;
     const bright = parseFloat(brightness) || 0;
     
-    if (conf === 'high' || bright > 340) {
+    if (conf === 'high' || conf === 'h' || bright > 340) {
       return { level: 'HIGH RISK', color: '#dc2626', description: 'Confirmed active fire - immediate attention needed' };
-    } else if (conf === 'nominal' || bright > 320) {
+    } else if (conf === 'nominal' || conf === 'n' || bright > 320) {
       return { level: 'MEDIUM RISK', color: '#ea580c', description: 'Likely fire activity - monitoring recommended' };
     } else {
       return { level: 'LOW RISK', color: '#ca8a04', description: 'Possible fire or heat source - verification needed' };
@@ -246,7 +359,7 @@ const InteractiveWildfireMap = () => {
   const formatDetectionTime = (date, time) => {
     try {
       const dateStr = date.replace(/-/g, '/');
-      const timeStr = time.padStart(4, '0');
+      const timeStr = time.toString().padStart(4, '0');
       const hours = timeStr.slice(0, 2);
       const minutes = timeStr.slice(2, 4);
       
@@ -300,269 +413,13 @@ const InteractiveWildfireMap = () => {
     return `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
   };
 
-  // Clean up cache on component unmount
-  useEffect(() => {
-    // Clear expired cache entries on mount
-    clearOldCacheEntries();
-    
-    return () => {
-      // Clean up on unmount (optional)
-      console.log('Component unmounting, cache preserved for next session');
-    };
-  }, []);
-
-  // Hide Claude interface elements for full-screen experience
-  useEffect(() => {
-    // Add CSS to hide header and footer
-    const style = document.createElement('style');
-    style.id = 'hide-claude-ui';
-    style.textContent = `
-      /* Hide Claude interface elements */
-      body {
-        overflow: hidden !important;
-      }
+  const updateMapMarkers = (fireData) => {
+    if (!mapInstanceRef.current || !window.L) {
       
-      /* Target common header/footer selectors */
-      header, 
-      .header,
-      [class*="header"],
-      [class*="Header"],
-      footer,
-      .footer,
-      [class*="footer"],
-      [class*="Footer"],
-      nav,
-      .nav,
-      [class*="nav"],
-      [class*="Nav"],
-      .top-bar,
-      .bottom-bar,
-      .site-header,
-      .site-footer {
-        display: none !important;
-        visibility: hidden !important;
-        height: 0 !important;
-        min-height: 0 !important;
-        max-height: 0 !important;
-        overflow: hidden !important;
-      }
-      
-      /* Force full viewport */
-      html, body {
-        margin: 0 !important;
-        padding: 0 !important;
-        width: 100% !important;
-        height: 100% !important;
-        overflow: hidden !important;
-      }
-      
-      /* Hide scrollbars */
-      ::-webkit-scrollbar {
-        display: none !important;
-      }
-      
-      /* Target iframe container if in one */
-      .artifact-container,
-      .artifact-frame,
-      iframe {
-        width: 100vw !important;
-        height: 100vh !important;
-        border: none !important;
-        margin: 0 !important;
-        padding: 0 !important;
-      }
-    `;
-    document.head.appendChild(style);
-    
-    // Try to hide parent elements if accessible
-    try {
-      if (window.parent && window.parent !== window) {
-        const parentDoc = window.parent.document;
-        const hideElements = parentDoc.querySelectorAll('header, footer, nav, .header, .footer, .nav, [class*="header"], [class*="footer"], [class*="nav"]');
-        hideElements.forEach(el => {
-          el.style.display = 'none';
-          el.style.visibility = 'hidden';
-          el.style.height = '0';
-          el.style.overflow = 'hidden';
-        });
-      }
-    } catch (e) {
-      // Cross-origin restrictions prevent this, which is normal
-      console.log('Cannot access parent elements due to cross-origin restrictions');
+      return;
     }
-    
-    return () => {
-      // Cleanup on unmount
-      const styleEl = document.getElementById('hide-claude-ui');
-      if (styleEl) {
-        styleEl.remove();
-      }
-    };
-  }, []);
-
-  // Initialize map
-  useEffect(() => {
-    if (!mapRef.current || mapInstanceRef.current) return;
-
-    // Load Leaflet CSS and JS
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
-    document.head.appendChild(link);
-
-    const script = document.createElement('script');
-    script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-    script.onload = () => {
-      initializeMap();
-    };
-    document.head.appendChild(script);
-
-    return () => {
-      if (mapInstanceRef.current) {
-        mapInstanceRef.current.remove();
-        mapInstanceRef.current = null;
-      }
-    };
-  }, []);
-
-  const initializeMap = () => {
-    if (!window.L || mapInstanceRef.current) return;
-
-    // Initialize map centered on USA
-    const map = window.L.map(mapRef.current, {
-      center: [39.8283, -98.5795],
-      zoom: 5,
-      zoomControl: true,
-      scrollWheelZoom: true,
-      doubleClickZoom: true,
-      dragging: true,
-      worldCopyJump: false,
-      maxBounds: [[-90, -180], [90, 180]],
-      maxBoundsViscosity: 1.0
-    });
-
-    // Add base layers
-    const satelliteLayer = window.L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
-      attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
-      maxZoom: 18
-    });
-
-    const streetLayer = window.L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      maxZoom: 18
-    });
-
-    const terrainLayer = window.L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-      attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)',
-      maxZoom: 17
-    });
-
-    // Add default layer
-    satelliteLayer.addTo(map);
-
-    // Store layer references
-    map.baseLayers = {
-      satellite: satelliteLayer,
-      street: streetLayer,
-      terrain: terrainLayer
-    };
-
-    mapInstanceRef.current = map;
-
-    // Fetch initial fire data for the USA
-    fetchFireDataByRegions();
-  };
-
-  // New approach: Fetch data by major regions to avoid timeouts
-  const fetchFireDataByRegions = async () => {
-    setLoading(true);
-    setError('');
-    setLoadingProgress('Starting data collection...');
-    
-    try {
-      // Try to get USA data directly first with a longer timeout
-      setLoadingProgress('Attempting direct USA data fetch...');
-      await fetchFireDataDirect('USA', 1);
-      
-    } catch (directError) {
-      console.warn('Direct USA fetch failed, trying fallback approach:', directError);
-      
-      
-     
-      
-      // Update map markers
-      updateMapMarkers(sampleFires);
-    } finally {
-      setLoading(false);
-      setTimeout(() => setLoadingProgress(''), 3000);
-    }
-  };
-
- 
-
-  // Remove all the client-side caching code and just call your API
-const fetchFireDataDirect = async (country = 'USA', days = 1, sensor = 'VIIRS_SNPP_NRT') => {
-  try {
-    setLoadingProgress('Fetching from server...');
-    
-    const response = await fetch(`/api/fires/${sensor}/${country}/${days}`);
-    const csvData = await response.text();
-    const parsedFires = await parseCSVData(csvData);
-    
-    setFires(parsedFires);
-    updateMapMarkers(parsedFires);
-  } catch (error) {
-    console.error('API failed:', error);
-  }
-};
 
   
-
-  const parseCSVData = async (csvText, regionName = '') => {
-    const lines = csvText.trim().split('\n');
-    if (lines.length < 2) return [];
-    
-    const headers = lines[0].split(',');
-    const fires = [];
-    
-    for (let i = 1; i < lines.length; i++) {
-      const values = lines[i].split(',');
-      if (values.length >= headers.length) {
-        const fire = {};
-        headers.forEach((header, index) => {
-          fire[header.trim()] = values[index] ? values[index].trim() : '';
-        });
-        
-        // Only include fires with valid coordinates
-        if (fire.latitude && fire.longitude) {
-          fire.lat = parseFloat(fire.latitude);
-          fire.lng = parseFloat(fire.longitude);
-          
-          // Add human-readable data
-          fire.locationName = regionName || getSimpleStateFromCoords(fire.lat, fire.lng);
-          fire.sizeDescription = getFireSizeDescription(
-            fire.frp, 
-            fire.confidence, 
-            fire.bright_ti4 || fire.brightness
-          );
-          fire.detailedFireInfo = getDetailedFireInfo(
-            fire.frp, 
-            fire.confidence, 
-            fire.bright_ti4 || fire.brightness
-          );
-          fire.riskLevel = getRiskLevel(fire.confidence, fire.bright_ti4 || fire.brightness);
-          fire.timeDescription = formatDetectionTime(fire.acq_date, fire.acq_time);
-          
-          fires.push(fire);
-        }
-      }
-    }
-    
-    return fires;
-  };
-
-  const updateMapMarkers = (fireData) => {
-    if (!mapInstanceRef.current || !window.L) return;
 
     // Clear existing markers
     markersRef.current.forEach(marker => {
@@ -580,12 +437,13 @@ const fetchFireDataDirect = async (country = 'USA', days = 1, sensor = 'VIIRS_SN
             .filter(fire => fire.riskLevel.level === 'MEDIUM RISK')
             .slice(0, 500)
         );
+     
     }
 
     // Add new markers
     displayFires.forEach((fire) => {
-      const color = getFireColor(fire.confidence, fire.bright_ti4 || fire.brightness);
-      const size = getFireSize(fire.confidence, fire.bright_ti4 || fire.brightness);
+      const color = getFireColor(fire.confidence, fire.bright_ti4 || fire.bright_ti5 || fire.brightness);
+      const size = getFireSize(fire.confidence, fire.bright_ti4 || fire.bright_ti5 || fire.brightness);
       
       // Create custom icon
       const fireIcon = window.L.divIcon({
@@ -676,15 +534,17 @@ const fetchFireDataDirect = async (country = 'USA', days = 1, sensor = 'VIIRS_SN
       `;
       document.head.appendChild(style);
     }
+
+   
   };
 
   const getFireColor = (confidence, brightness) => {
-    const conf = parseInt(confidence) || 0;
+    const conf = confidence;
     const bright = parseFloat(brightness) || 0;
     
-    if (conf >= 80 || confidence === 'high' || bright > 330) {
+    if (conf === 'high' || conf === 'h' || bright > 330) {
       return '#dc2626'; // red-600 - High risk
-    } else if (conf >= 50 || confidence === 'nominal' || bright > 310) {
+    } else if (conf === 'nominal' || conf === 'n' || bright > 310) {
       return '#ea580c'; // orange-600 - Medium risk
     } else {
       return '#ca8a04'; // yellow-600 - Low risk
@@ -692,12 +552,12 @@ const fetchFireDataDirect = async (country = 'USA', days = 1, sensor = 'VIIRS_SN
   };
 
   const getFireSize = (confidence, brightness) => {
-    const conf = parseInt(confidence) || 0;
+    const conf = confidence;
     const bright = parseFloat(brightness) || 0;
     
-    if (conf >= 80 || confidence === 'high' || bright > 330) {
+    if (conf === 'high' || conf === 'h' || bright > 330) {
       return 16;
-    } else if (conf >= 50 || confidence === 'nominal' || bright > 310) {
+    } else if (conf === 'nominal' || conf === 'n' || bright > 310) {
       return 12;
     } else {
       return 8;
@@ -728,25 +588,14 @@ const fetchFireDataDirect = async (country = 'USA', days = 1, sensor = 'VIIRS_SN
     // Add new layer
     map.baseLayers[type].addTo(map);
     setMapType(type);
-  };
-
-  const zoomToRegion = (bounds) => {
-    if (!mapInstanceRef.current) return;
-    mapInstanceRef.current.fitBounds(bounds);
-  };
-
-  const regionPresets = {
-    usa: { bounds: [[24.396308, -125.0], [49.384358, -66.93457]], name: 'United States' },
-    westCoast: { bounds: [[32.5, -125.0], [49.0, -114.0]], name: 'West Coast' },
-    california: { bounds: [[32.5, -124.5], [42.0, -114.0]], name: 'California' },
-    oregon: { bounds: [[41.9, -124.6], [46.3, -116.5]], name: 'Oregon' },
-    washington: { bounds: [[45.5, -124.8], [49.0, -116.9]], name: 'Washington' },
-    texas: { bounds: [[25.8, -106.6], [36.5, -93.5]], name: 'Texas' }
+    
   };
 
   return (
     <div className="w-full h-screen bg-gray-100 relative overflow-hidden">
-      {/* Collapsible Header */}
+    
+
+      {/* Enhanced Header */}
       {!topPanelCollapsed && (
         <div className="absolute top-0 left-0 w-full bg-gradient-to-r from-red-900 to-orange-800 text-white shadow-2xl z-[1001]">
           <div className="px-6 py-4">
@@ -756,16 +605,40 @@ const fetchFireDataDirect = async (country = 'USA', days = 1, sensor = 'VIIRS_SN
                 <div>
                   <h1 className="text-2xl font-bold">US Wildfire Monitor</h1>
                   <p className="text-red-100 text-sm">Real-time fire detection across America</p>
+                  {fires.length > 0 && (
+                    <p className="text-green-200 text-sm">✅ Showing {fires.length} active fire{fires.length !== 1 ? 's' : ''}</p>
+                  )}
                 </div>
               </div>
               
-             
+              <div className="flex items-center gap-2">
+               
+                
+                <button
+                  onClick={handleManualRetry}
+                  className="flex items-center gap-1 bg-blue-600 hover:bg-blue-500 px-3 py-1 rounded text-sm"
+                  disabled={loading}
+                >
+                  <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+                  Retry
+                </button>
+                
+                
+              </div>
             </div>
             
             {error && (
               <div className="mt-3 p-3 bg-red-600 bg-opacity-80 rounded-lg flex items-center gap-2">
                 <AlertTriangle className="w-5 h-5" />
-                <span className="text-sm">{error}</span>
+                <div className="flex-1">
+                  <span className="text-sm">{error}</span>
+                  <button 
+                    onClick={handleManualRetry}
+                    className="ml-2 underline hover:no-underline text-sm"
+                  >
+                    Try Again
+                  </button>
+                </div>
               </div>
             )}
             
@@ -786,7 +659,7 @@ const fetchFireDataDirect = async (country = 'USA', days = 1, sensor = 'VIIRS_SN
         {topPanelCollapsed ? '▼ Show Header' : '▲ Hide Header'}
       </button>
 
-      {/* Map Container with proper background */}
+      {/* Map Container */}
       <div
         ref={mapRef}
         className="w-full h-full bg-gray-900 absolute inset-0"
@@ -798,7 +671,7 @@ const fetchFireDataDirect = async (country = 'USA', days = 1, sensor = 'VIIRS_SN
         }}
       />
 
-      {/* Loading Overlay */}
+      {/* Loading Overlay - Only show when actually loading */}
       {loading && (
         <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center z-[2000]">
           <div className="bg-white rounded-lg p-6 flex items-center gap-3 max-w-md">
@@ -813,7 +686,7 @@ const fetchFireDataDirect = async (country = 'USA', days = 1, sensor = 'VIIRS_SN
         </div>
       )}
 
-      {/* Collapsible Left Panel - Go Back Button and Map Controls */}
+      {/* Enhanced Left Panel */}
       <div className={`absolute bottom-4 left-4 z-[1000] transition-transform duration-300 ${leftPanelCollapsed ? 'transform -translate-x-full' : ''}`}>
         <div className="space-y-2">
           <button
@@ -838,7 +711,6 @@ const fetchFireDataDirect = async (country = 'USA', days = 1, sensor = 'VIIRS_SN
               >
                 <option value="satellite">Satellite View</option>
                 <option value="street">Street Map</option>
-                <option value="terrain">Terrain Map</option>
               </select>
             </div>
             
@@ -862,9 +734,17 @@ const fetchFireDataDirect = async (country = 'USA', days = 1, sensor = 'VIIRS_SN
               <div className="text-xs text-gray-500 pt-2 border-t">
                 Total Detections: {fires.length}
               </div>
+              <div className="text-xs text-gray-500">
+                API Calls: {apiCallCount}
+              </div>
               {lastUpdate && (
                 <div className="text-xs text-gray-500">
                   Updated: {lastUpdate}
+                </div>
+              )}
+              {!loading && fires.length === 0 && (
+                <div className="text-xs text-yellow-600 pt-2">
+                  No fires currently detected. Try refreshing or check a different region.
                 </div>
               )}
             </div>
@@ -872,7 +752,7 @@ const fetchFireDataDirect = async (country = 'USA', days = 1, sensor = 'VIIRS_SN
         </div>
       </div>
 
-      {/* Left Panel Collapse Button */}
+      {/* Panel Collapse Buttons */}
       <button
         onClick={() => setLeftPanelCollapsed(!leftPanelCollapsed)}
         className="absolute bottom-4 left-2 bg-[#E32121] hover:bg-[#e32121dc] text-white p-2 rounded-full shadow-lg z-[1001] transition-all duration-200"
@@ -881,7 +761,7 @@ const fetchFireDataDirect = async (country = 'USA', days = 1, sensor = 'VIIRS_SN
         {leftPanelCollapsed ? <ChevronRight/> : <ChevronLeft/>}
       </button>
 
-      {/* Collapsible Fire Risk Guide - Bottom Right */}
+      {/* Right Panel - Fire Risk Guide */}
       <div className={`absolute bottom-4 right-4 z-[1000] transition-transform duration-300 ${rightPanelCollapsed ? 'transform translate-x-full' : ''}`}>
         <div className="bg-white rounded-lg shadow-lg p-4">
           <div className="text-sm font-semibold text-gray-800 mb-2 flex items-center gap-2">
@@ -918,7 +798,6 @@ const fetchFireDataDirect = async (country = 'USA', days = 1, sensor = 'VIIRS_SN
         </div>
       </div>
 
-      {/* Right Panel Collapse Button */}
       <button
         onClick={() => setRightPanelCollapsed(!rightPanelCollapsed)}
         className="absolute bottom-4 right-2 bg-[#E32121] hover:bg-[#e32121dc] text-white p-2 rounded-full shadow-lg z-[1001] transition-all duration-200"
@@ -927,43 +806,7 @@ const fetchFireDataDirect = async (country = 'USA', days = 1, sensor = 'VIIRS_SN
         {rightPanelCollapsed ? <ChevronLeft /> : <ChevronRight />}
       </button>
 
-      {/* Collapsible Map Instructions */}
-      {instructionsVisible && (
-        <div className={`absolute top-6 right-4 z-[1000] transition-transform duration-300 ${topPanelCollapsed ? 'transform -translate-y-2' : 'transform translate-y-16'}`}>
-          <div className="bg-white rounded-lg shadow-lg p-3 max-w-xs relative">
-            {/* Close button */}
-            <button
-              onClick={() => setInstructionsVisible(false)}
-              className="absolute top-1 right-1 text-gray-400 hover:text-gray-600 text-lg leading-none w-6 h-6 flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors duration-200"
-              title="Close instructions"
-            >
-              ×
-            </button>
-            
-            <div className="text-xs text-gray-600 pr-4">
-              <div className="font-semibold mb-1">Map Controls:</div>
-              <div>• Drag to pan</div>
-              <div>• Scroll or use 2 fingers to zoom</div>
-              <div>• Click fire markers for details</div>
-              
-              
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Show Instructions Button (when hidden) */}
-      {!instructionsVisible && (
-        <button
-          onClick={() => setInstructionsVisible(true)}
-          className={`absolute top-6 right-4 z-[1000] bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-full shadow-lg transition-all duration-300 ${topPanelCollapsed ? 'transform -translate-y-2' : 'transform translate-y-16'}`}
-          title="Show map instructions"
-        >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-        </button>
-      )}
+      
     </div>
   );
 };

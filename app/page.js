@@ -5,6 +5,7 @@ import LaFire from "@/Components/LaFire";
 import Services from "@/Components/Services";
 import ShareExp from "@/Components/ShareExp";
 import StatsGroup from "@/Components/Stats";
+import WFF from "@/Components/WFF";
 
 
 export default function Home() {
@@ -38,6 +39,8 @@ export default function Home() {
   <LaFire />
 
   <ShareExp />
+
+  <WFF />
 
   <FirstSteps />
   

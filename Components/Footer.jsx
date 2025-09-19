@@ -36,10 +36,10 @@ const Footer = () => {
             <h3 className="font-bold lg:mt-0 mt-5 text-lg mb-4">Resources</h3>
             <ul className="space-y-2">
               <li><Link href="http://nwsa.us/" className="hover:underline">NWSA</Link></li>
-              <li><Link href="https://www.nefa.org" className="hover:underline">NEFA</Link></li>
+               <li><Link href="https://www.blm.gov" className="hover:underline">BLM</Link></li>
               <li><Link href="https://www.nifc.gov" className="hover:underline">NIFC</Link></li>
               <li><Link href="https://gacc.nifc.gov" className="hover:underline">GACC</Link></li>
-              <li><Link href="https://www.noaa.gov" className="hover:underline">NOAA</Link></li>
+            
             </ul>
           </div>
 
@@ -49,9 +49,11 @@ const Footer = () => {
             <ul className="space-y-2">
               
               <li><Link href="https://www.wffoundation.org" className="hover:underline">Wildland Firefighter Foundation</Link></li>
-              <li><Link href="https://www.blm.gov" className="hover:underline">BLM</Link></li>
+             
               <li><Link href="https://www.fs.usda.gov" className="hover:underline">US Forest Service</Link></li>
               <li><Link href="https://weather.com" className="hover:underline">The Weather Channel</Link></li>
+               <li><Link href="https://inciweb.nwcg.gov" className="hover:underline">Inciweb</Link></li>
+              <li><Link href="https://www.nifc.gov/nicc" className="hover:underline">NW Interagency</Link></li>
             </ul>
           </div>
        
@@ -61,10 +63,9 @@ const Footer = () => {
           <div>
             <ul className="space-y-2">
               <li><Link href="https://www.oregon.gov/odf" className="hover:underline">ODF</Link></li>
-              <li><Link href="https://inciweb.nwcg.gov" className="hover:underline">Inciweb</Link></li>
-               
-              <li><Link href="https://www.nifc.gov/nicc" className="hover:underline">NW Interagency</Link></li>
-               <li><Link href="https://www.fs.usda.gov" className="hover:underline">USFS</Link></li>
+              <li><Link href="https://www.idl.idaho.gov/" className="hover:underline">IDL</Link></li>
+              <li><Link href="https://dnr.wa.gov/" className="hover:underline">DNR</Link></li>
+             
             </ul>
           </div>
           <div>
@@ -96,7 +97,7 @@ const Footer = () => {
         <div className="border-t border-1 border-white/90 my-2"></div>
         <div className='text-white text-center'>
           <p>Copyright © {getCurrentYear()} Patrick Envirionmental. All rights reserved.</p>
-          <p>Powered by <span className='text-[#008070] font-bold'><Link target='_blank' rel='nofollow' href={'https://visionaryadvance.com'}>Visionary Advance</Link></span></p>
+          <p>Powered by <span className=' '><Link target='_blank' rel='nofollow' href={'https://visionaryadvance.com'}>Visionary Advance</Link></span></p>
         </div>
       </div>
     </footer>

@@ -188,7 +188,7 @@ export default function ServicePage({ params }) {
                 className="text-white text-lg md:text-2xl font-normal leading-relaxed max-w-xl"
                 style={{ fontFamily: "Jomolhari, sans-serif" }}
               >
-                This is something that will let the user know we mean business
+                Take a look at how we can best serve your needs
               </p>
             </div>
           </div>

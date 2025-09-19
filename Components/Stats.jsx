@@ -1,6 +1,5 @@
 'use client'
 
-
 import { useEffect, useRef, useState } from 'react';
 
 export default function StatsGroup() {
@@ -86,7 +85,7 @@ export default function StatsGroup() {
           const elapsed = Date.now() - lineStartTime;
           const progress = Math.min(elapsed / lineDuration, 1);
           const easeOut = 1 - Math.pow(1 - progress, 3);
-          const currentWidth = 1 + ((targetWidth - 1) * easeOut); // Start from 1px, animate to 40px
+          const currentWidth = 1 + ((targetWidth - 1) * easeOut); // Start from 1px, animate to 65px
           
           line.style.width = Math.floor(currentWidth) + 'px';
           
@@ -134,10 +133,10 @@ export default function StatsGroup() {
 
   return (
     <div className="max-w-7xl mx-auto mt-10" ref={containerRef}>
-      <div className="flex flex-col  sm:flex-row justify-between items-start gap-8">
+      <div className="flex flex-col sm:flex-row justify-between items-center sm:items-start gap-8">
         {stats.map((stat, index) => (
           <div key={index} className="flex-1 flex flex-col items-center">
-            <div className="text-left">
+            <div className="text-center sm:text-left">
               <h3 
                 ref={el => statsRef.current[index] = el}
                 className="text-[#E84D2F] text-5xl jomol"
@@ -147,7 +146,7 @@ export default function StatsGroup() {
               <p className="jomol -mt-1">{stat.label}</p>
               <div 
                 ref={el => linesRef.current[index] = el}
-                className="bg-[#E84D2F] h-0.5"
+                className="bg-[#E84D2F] h-0.5 mx-auto sm:mx-0"
                 style={{ width: '1px', minHeight: '2px' }}
               ></div>
             </div>

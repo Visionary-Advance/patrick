@@ -16,7 +16,7 @@ const TimelineScrollAnimation = () => {
       year: "1971",
       title: "PatRick Was Created",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna",
-      image: "https://images.unsplash.com/photo-1574263867128-a3d5c1b1deac?w=500&h=300&fit=crop"
+      image: "/Img/Grandpa.jpg"
     },
     {
       year: "1975",
@@ -46,79 +46,79 @@ const TimelineScrollAnimation = () => {
       year: "1993",
       title: "Water Handling Agreement",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque.",
-      image: "/Img/NWSA_Logo.jpg"
+      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=300&fit=crop"
     },
     {
       year: "1995",
       title: "National Contract",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque.",
-      image: "/Img/NWSA_Logo.jpg"
+      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=300&fit=crop"
     },
     {
       year: "1999",
       title: "Moved Headquarters to Redmond Built Headquarters Building",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque.",
-      image: "/Img/NWSA_Logo.jpg"
+      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=300&fit=crop"
     },
     {
       year: "1999",
       title: "Shuttle Investigation",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque.",
-      image: "/Img/NWSA_Logo.jpg"
+      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=300&fit=crop"
     },
     {
       year: "1999",
       title: "Shuttle investigation",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque.",
-      image: "/Img/NWSA_Logo.jpg"
+      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=300&fit=crop"
     },
     {
       year: "2003",
       title: "Rick met with President Bush",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque.",
-      image: "/Img/NWSA_Logo.jpg"
+      image: "/Img/Rick_and_Bush.jpg"
     },
     {
       year: "2003",
       title: "Opened More Bases",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque.",
-      image: "/Img/NWSA_Logo.jpg"
+      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=300&fit=crop"
     },
     {
       year: "2003",
       title: "WA State Agreement",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque.",
-      image: "/Img/NWSA_Logo.jpg"
+      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=300&fit=crop"
     },
     {
       year: "2003",
       title: "First Hurricane Recovery",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque.",
-      image: "/Img/NWSA_Logo.jpg"
+      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=300&fit=crop"
     },
     {
       year: "2003",
       title: "Chippers and Mastication",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque.",
-      image: "/Img/NWSA_Logo.jpg"
+      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=300&fit=crop"
     },
     {
       year: "2003",
       title: "Idaho State agreement",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque.",
-      image: "/Img/NWSA_Logo.jpg"
+      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=300&fit=crop"
     },
     {
       year: "2003",
       title: "Rick Meets with Congress",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque.",
-      image: "/Img/NWSA_Logo.jpg"
+      image: "/Img/Rick_in_Congress.jpg"
     },
     {
       year: "2003",
       title: "NC Flooding Rehab",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque.",
-      image: "/Img/NWSA_Logo.jpg"
+      image: "/Img/Flood.jpg"
     },
     {
       year: "2025",
@@ -264,7 +264,7 @@ const TimelineScrollAnimation = () => {
                       <img 
                         src={item.image} 
                         alt={`Timeline ${item.year}`}
-                        className="w-full max-w-xs md:max-w-sm h-36 md:h-48 object-cover rounded-lg shadow-lg"
+                        className="w-full max-w-xs md:max-w-sm h-full object-cover rounded-lg shadow-lg"
                       />
                     </div>
                   </div>

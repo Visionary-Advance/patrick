@@ -42,23 +42,23 @@ export default function AboutPage() {
           <div className="h-0.5 lg:ms-44 ms-4 md:mx-16 bg-black/50 mt-2 w-16"></div>
 
 
-          <div className="grid grid-cols-1 mx-auto w-9/12 lg:grid-cols-3 ">
-         <div className="mt-10  mx-auto">
-            <img className="" src="/Img/Rick.jpg" alt="Rick Dice's Picture"/>
-            <h4 className="jomol text-2xl mt-2">Rick Dice</h4>
-            <p className="text- text-black/30">Founder</p>
-         </div>
-         <div className="mt-10  mx-auto">
-            <img className="" src="/Img/Rick.jpg" alt="Rick Dice's Picture"/>
-            <h4 className="jomol text-2xl mt-2">Rick Dice</h4>
-            <p className="text- text-black/30">Founder</p>
-         </div>
-         <div className="mt-10 mx-auto">
-            <img className="" src="/Img/Rick.jpg" alt="Rick Dice's Picture"/>
-            <h4 className="jomol text-2xl mt-2">Rick Dice</h4>
-            <p className="text- text-black/30">Founder</p>
-         </div>
-        </div>
+          <div className="grid grid-cols-1 mx-auto w-9/12 lg:grid-cols-3 pb-5 ">
+  <div className="mt-10 w-[300px] h-[300px] mx-auto">
+    <img className="w-[300px] h-[300px] object-cover" src="/Img/Rick.jpg" alt="Rick Dice's Picture"/>
+    <h4 className="jomol text-2xl mt-2">Rick Dice</h4>
+    <p className="text- text-black/30">President</p>
+  </div>
+  <div className="mt-10 w-[300px] h-[300px] mx-auto">
+    <img className="w-[300px] h-[300px] object-cover" src="/Img/Jeremy.jpg" alt="Jeremy Dice's Picture"/>
+    <h4 className="jomol text-2xl mt-2">Jeremy Dice</h4>
+    <p className="text- text-black/30">Vice President</p>
+  </div>
+  <div className="mt-10 w-[300px] h-[300px] mx-auto">
+    <img className="w-[300px] h-[300px] object-cover" src="/Img/Stephanie.jpg" alt="Stephanie Foxx's Picture"/>
+    <h4 className="jomol text-2xl mt-2">Stephanie Foxx</h4>
+    <p className="text- text-black/30">Base Manager</p>
+  </div>
+</div>
         </div>
         
       </div>

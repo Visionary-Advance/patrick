@@ -6,23 +6,46 @@ import Image from "next/image";
 const Gallery = () => {
   const allImages = [
     "/Img/Today.jpg",
-    "/Img/American_Flag.jpg",
-    "/Img/Good_Vibes_New_Shop.png",
-    "/Img/Truck_Working_Img.jpg",
-    "/Img/Truck_Pump.JPG",
-    "/Img/sunset.JPG",
-    "/Img/Gallery_5.png",
-    "/Img/Gallery_6.png",
-    "/Img/Gallery_7.png",
-    "/Img/Gallery_9.png",
-    "/Img/Gallery_10.png",
-    "/Img/Gallery_11.png",
-    "/Img/Gallery_12.png",
-    "/Img/Gallery_13.png",
-    "/Img/Gallery_14.png",
-    "/Img/Gallery_15.png",
-    "/Img/Gallery_16.png",
-    "/Img/House.png",
+    "/Img/Jessica.jpg",
+    "/Img/About_Img.jpg",
+    "/Img/Asheville_Office.jpg",
+    "/Img/Boise_Office.jpg",
+    "/Img/Brush.jpg",
+    "/Img/Canada.jpeg",
+    "/Img/carlthorn.jpg",
+    "/Img/Classroom.jpg",
+    "/Img/Consulting.JPG",
+    "/Img/Contact_Header.jpg",
+    "/Img/Difference.jpg",
+    "/Img/Ellensburg_Office.jpg",
+    "/Img/Emergency.jpg",
+    "/Img/First_Step.jpg",
+    "/Img/Flood.jpg",
+    "/Img/Grandpa.jpg",
+    "/Img/header.jpg",
+    "/Img/History.jpg",
+    "/Img/LaFire.jpg",
+    "/Img/Landing.JPG",
+    "/Img/Main_Serv.jpg",
+    "/Img/New_Header.jpg",
+    "/Img/Prescribed_Burn.jpg",
+    "/Img/Redmond_Office.jpg",
+    "/Img/Redmond_Packing.jpg",
+    "/Img/Redmond_Trucks.jpg",
+    "/Img/Rick_and_Bush.jpg",
+    "/Img/Rick_in_Congress.JPG",
+    "/Img/Service_Page_Header.jpg",
+    "/Img/Services_Pic.jpg",
+    "/Img/Snow.jpg",
+    "/Img/Snow_Plow.jpg",
+    "/Img/Springfield_Office.jpg",
+    "/Img/Tree_Brush.jpg",
+    "/Img/Trees.png",
+    "/Img/Updates.jpg",
+    "/Img/Video.jpg",
+    "/Img/WildFire_Img.jpg",
+    "/Img/WildFire_Img.png",
+    "/Img/WildfireMap.png",
   ];
 
   const IMAGES_PER_LOAD = 12;
@@ -123,10 +146,10 @@ const Gallery = () => {
             onClick={loadMoreImages}
             disabled={loading}
             className={`
-              px-8 py-3 rounded-lg font-medium text-white transition-all duration-200
-              ${loading 
-                ? 'bg-gray-400 cursor-not-allowed' 
-                : 'bg-blue-600 hover:bg-blue-700 hover:scale-105 active:scale-95'
+              px-8 py-3 rounded-lg jomol font-medium text-white transition-all duration-200
+              ${loading
+                ? 'bg-gray-400 cursor-not-allowed'
+                : 'bg-[#E84D2F] hover:bg-[#c23d22] hover:scale-105 active:scale-95 active:bg-[#a33419]'
               }
               shadow-lg hover:shadow-xl
             `}
@@ -145,7 +168,7 @@ const Gallery = () => {
               </div>
             )}
           </button>
-         
+
         </div>
       )}
 
@@ -156,40 +179,46 @@ const Gallery = () => {
         <div className="fixed inset-0 bg-black bg-opacity-90 flex items-center justify-center z-50">
           {/* Close Button */}
           <button
-            className="absolute top-4 right-4 text-white text-3xl hover:text-gray-300 transition-colors z-10"
+            className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 text-white transition-all z-10"
             onClick={closeSlideshow}
           >
-            ✕
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
           </button>
-          
+
           {/* Previous Button */}
           <button
-            className="absolute left-4 text-white text-3xl hover:text-gray-300 transition-colors z-10"
+            className="absolute left-4 w-12 h-12 flex items-center justify-center rounded-full bg-[#E84D2F] hover:bg-[#c23d22] active:bg-[#a33419] text-white transition-all shadow-lg hover:shadow-xl hover:scale-110 z-10"
             onClick={prevImage}
           >
-            ◀
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7" />
+            </svg>
           </button>
-          
+
           {/* Main Image */}
-          <div className="relative max-w-[90vw] max-h-[90vh]">
+          <div className="relative max-w-[70vw] max-h-[450px]">
             <img
               src={displayedImages[currentIndex]}
               alt="Slideshow"
-              className="max-w-full max-h-full rounded-lg object-contain"
+              className="max-w-full max-h-[450px] rounded-lg object-contain"
             />
-            
+
             {/* Image Counter */}
             <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm">
               {currentIndex + 1} of {displayedImages.length}
             </div>
           </div>
-          
+
           {/* Next Button */}
           <button
-            className="absolute right-4 text-white text-3xl hover:text-gray-300 transition-colors z-10"
+            className="absolute right-4 w-12 h-12 flex items-center justify-center rounded-full bg-[#E84D2F] hover:bg-[#c23d22] active:bg-[#a33419] text-white transition-all shadow-lg hover:shadow-xl hover:scale-110 z-10"
             onClick={nextImage}
           >
-            ▶
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+            </svg>
           </button>
         </div>
       )}

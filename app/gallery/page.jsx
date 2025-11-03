@@ -40,7 +40,6 @@ const Gallery = () => {
     "/Img/Snow_Plow.jpg",
     "/Img/Springfield_Office.jpg",
     "/Img/Tree_Brush.jpg",
-    "/Img/Trees.png",
     "/Img/Updates.jpg",
     "/Img/Video.jpg",
     "/Img/WildFire_Img.jpg",

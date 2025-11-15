@@ -10,6 +10,7 @@ const Gallery = () => {
     "/Img/About_Img.jpg",
     "/Img/Asheville_Office.jpg",
     "/Img/Boise_Office.jpg",
+    "/Img/Old_Pic.webp",
     "/Img/Brush.jpg",
     "/Img/Canada.jpeg",
     "/Img/carlthorn.jpg",

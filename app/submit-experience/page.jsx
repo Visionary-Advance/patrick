@@ -16,6 +16,8 @@ export default function SharePage() {
   });
 
   const [isDragOver, setIsDragOver] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState({ show: false, success: false, message: "" });
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -50,15 +52,85 @@ export default function SharePage() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", formData);
-    // Handle form submission here
+    setIsSubmitting(true);
+    setSubmitStatus({ show: false, success: false, message: "" });
+
+    try {
+      // Create FormData to handle file upload
+      const formDataToSend = new FormData();
+      formDataToSend.append('firstName', formData.firstName);
+      formDataToSend.append('lastName', formData.lastName);
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('phone', formData.phone);
+      formDataToSend.append('workedBefore', formData.workedBefore);
+      formDataToSend.append('experience', formData.experience);
+
+      if (formData.photo) {
+        formDataToSend.append('photo', formData.photo);
+      }
+
+      const response = await fetch('/api/submit-experience', {
+        method: 'POST',
+        body: formDataToSend,
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit experience');
+      }
+
+      setSubmitStatus({
+        show: true,
+        success: true,
+        message: "Thank you for sharing your experience! We'll be in touch soon."
+      });
+
+      // Reset form
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        phone: "",
+        workedBefore: "",
+        experience: "",
+        photo: null,
+      });
+
+      // Hide success message after 5 seconds
+      setTimeout(() => {
+        setSubmitStatus({ show: false, success: false, message: "" });
+      }, 5000);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmitStatus({
+        show: true,
+        success: false,
+        message: "Something went wrong. Please try again."
+      });
+
+      // Hide error message after 5 seconds
+      setTimeout(() => {
+        setSubmitStatus({ show: false, success: false, message: "" });
+      }, 5000);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
 
     <>
+    {/* Toast Notification */}
+    {submitStatus.show && (
+      <div className={`fixed top-4 right-4 p-4 rounded-md shadow-lg z-50 ${
+        submitStatus.success
+          ? "bg-green-500 text-white"
+          : "bg-red-500 text-white"
+      }`}>
+        <div className="text-sm">{submitStatus.message}</div>
+      </div>
+    )}
 
     <div className="mx-auto mt-40 mb-10 text-center text-black jomol">
         <h3 className="text-4xl">Share your experience with us!</h3>
@@ -225,7 +297,12 @@ export default function SharePage() {
 
           {/* Submit Button */}
           <div className="flex justify-center">
-           <Button type='submit' text={"SUBMIT"} color={"bg-[#E32121] w-full text-white"} />
+           <Button
+             type='submit'
+             text={isSubmitting ? "SUBMITTING..." : "SUBMIT"}
+             color={`bg-[#E32121] w-full text-white ${isSubmitting ? 'opacity-50 cursor-not-allowed' : ''}`}
+             disabled={isSubmitting}
+           />
           </div>
         </form>
       </div>

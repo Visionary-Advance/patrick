@@ -3,6 +3,11 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
+// Skeleton loader component with shimmer animation
+const ImageSkeleton = () => (
+  <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-shimmer bg-[length:200%_100%]"></div>
+);
+
 const Gallery = () => {
   const allImages = [
     "/Img/Today.jpg",
@@ -55,6 +60,7 @@ const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [loadedImages, setLoadedImages] = useState({});
 
   const loadMoreImages = () => {
     setLoading(true);
@@ -69,6 +75,10 @@ const Gallery = () => {
   };
 
   const hasMoreImages = currentLoadIndex < allImages.length;
+
+  const handleImageLoad = (index) => {
+    setLoadedImages(prev => ({ ...prev, [index]: true }));
+  };
 
   const openSlideshow = (index) => {
     setCurrentIndex(index);
@@ -106,7 +116,7 @@ const Gallery = () => {
   return (
     <>
       <div className="text-center mb-10 pt-32">
-        <h2 className="jomol text-xl lg:text-4xl">Gallery</h2>
+        <h2 className="jomol text-4xl">Gallery</h2>
         
       </div>
 
@@ -115,20 +125,24 @@ const Gallery = () => {
         {displayedImages.map((src, index) => (
           <div
             key={index}
-            className="relative aspect-square bg-gray-200 rounded-lg overflow-hidden cursor-pointer group transition-transform duration-200 hover:scale-105"
+            className="relative aspect-square rounded-lg overflow-hidden cursor-pointer group transition-transform duration-200 hover:scale-105"
             onClick={() => openSlideshow(index)}
           >
+            {/* Animated skeleton loader */}
+            {!loadedImages[index] && <ImageSkeleton />}
+
             <Image
               src={src}
               width={600}
               height={600}
               loading={index < IMAGES_PER_LOAD ? "eager" : "lazy"}
               alt={`Gallery image ${index + 1}`}
-              className="w-full h-full object-cover transition-opacity duration-200 group-hover:opacity-90"
-              blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
-              placeholder="blur"
+              className={`w-full h-full object-cover transition-all duration-300 group-hover:opacity-90 ${
+                loadedImages[index] ? 'opacity-100' : 'opacity-0'
+              }`}
+              onLoad={() => handleImageLoad(index)}
             />
-            <div className="absolute inset-0  bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-200 flex items-center justify-center">
+            <div className="absolute inset-0 bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-200 flex items-center justify-center">
               <div className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                 <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7" />

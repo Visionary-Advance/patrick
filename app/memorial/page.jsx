@@ -1,10 +1,8 @@
-import Link from "next/link";
 import React from "react";
 import { memorialData } from "@/lib/memorialData";
 
 const MemorialCard = ({ person }) => {
   return (
-    <Link href={`memorial/${person.id}`}>
     <article className="bg-white shadow-lg w-full max-w-[400px] mx-auto">
       <div className="aspect-square w-full overflow-hidden">
         <img
@@ -17,10 +15,9 @@ const MemorialCard = ({ person }) => {
         <h3 className="font-roboto text-3xl leading-[60px] font-normal text-black ">
           {person.name}
         </h3>
-       
+
       </div>
     </article>
-    </Link>
   );
 };
 

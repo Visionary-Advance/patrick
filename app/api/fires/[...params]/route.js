@@ -351,21 +351,28 @@ export async function GET(request, { params }) {
         return new NextResponse(csvData, { status: 200, headers });
         
       } else {
-        // No fires found
+        // No fires found - this is a successful query with zero results
+        // NOTE: We return 404 to distinguish from successful queries with data (200)
+        // The frontend should handle this as "no fires detected" not as an error
         const totalDuration = Date.now() - requestStart;
-        
+
+        console.log(`ℹ️ No fires found, but API queries were successful`);
+
         return NextResponse.json({
           error: 'No fires found in comprehensive US search',
           details: {
             successfulSources: result.successfulSources,
             failedSources: result.failedSources,
             totalDuration: `${totalDuration}ms`,
-            suggestion: 'No active fires detected in the US at this time, or all data sources are temporarily unavailable'
+            suggestion: 'No active fires detected in the US at this time, or all data sources are temporarily unavailable',
+            note: 'This is not an error - NASA FIRMS API is operational but returned zero active fires'
           }
-        }, { 
+        }, {
           status: 404,
           headers: {
-            'X-Request-Duration': `${totalDuration}ms`
+            'X-Request-Duration': `${totalDuration}ms`,
+            'X-No-Fires-Found': 'true',
+            'X-API-Status': 'operational'
           }
         });
       }

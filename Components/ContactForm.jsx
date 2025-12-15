@@ -34,8 +34,17 @@ export default function ContactForm() {
 
   const onSubmit = async (data) => {
     try {
-      // Here you would typically send the data to your server
-      console.log("Form submitted:", data);
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send message');
+      }
 
       showToast(
         "Message sent!",
@@ -44,6 +53,7 @@ export default function ContactForm() {
 
       form.reset();
     } catch (error) {
+      console.error('Error submitting form:', error);
       showToast(
         "Error",
         "Something went wrong. Please try again.",

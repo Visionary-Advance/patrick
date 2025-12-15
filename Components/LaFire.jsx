@@ -2,8 +2,8 @@ export default function LaFire() {
   return (
     <>
       <div className="bg-[#3b3b3b] mt-10 p-5 w-full">
-  <div className="max-w-[90%] grid grid-cols-1 lg:grid-cols-2 gap-8 mx-auto items-center">
-    <div className="col-span-1 ms-8">
+  <div className="max-w-[90%] grid grid-cols-1 lg:grid-cols-2 gap-8 mx-auto lg:items-center">
+    <div className="col-span-1 lg:ms-8">
       <h3 className="jomol text-3xl lg:text-4xl text-white">
         Heading up <span className="text-[#E84D2F]">North</span>
       </h3>

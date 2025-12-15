@@ -14,7 +14,7 @@ export default function ShareExp(){
             </h4>
             <p className="text-black mb-5 text-xl lg:text-xl">Submit a picture and your experience with us!</p>
             <Link className="" href={"/submit-experience"}>
-            <Button text={"Submit a Picture"} color={"text-white bg-[#E84D2F]"} />
+            <Button text={"Share your Experience"} color={"text-white bg-[#E84D2F]"} />
             </Link>
         </div>
         

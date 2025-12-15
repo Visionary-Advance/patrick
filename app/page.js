@@ -6,6 +6,7 @@ import Services from "@/Components/Services";
 import ShareExp from "@/Components/ShareExp";
 import StatsGroup from "@/Components/Stats";
 import WFF from "@/Components/WFF";
+import Link from "next/link";
 
 
 export default function Home() {
@@ -18,8 +19,12 @@ export default function Home() {
     <div className="absolute bottom-7 max-w-[110rem] mx-auto px-4 sm:px-6 lg:px-8">
     <h1 className="jomol text-white text-4xl">"Where Experience and Professionalism <br/> Make The Difference" Since 1971</h1>
     <div className=" mt-5 space-x-2">
+      <Link href={"/employment"}>
     <Button text={"Apply Now"} color={"bg-[#E84D2F] text-white"} />
+    </Link>
+    <Link href={"/about"}>
     <Button text={"Read More"} color={"bg-white text-black"}/>
+    </Link>
     </div>
     </div>
   </div>

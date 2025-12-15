@@ -158,7 +158,7 @@ const Header = () => {
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center">
               <div className="text-white text-xl font-bold">
-                <img className='w-20' src='/Img/Patrick_Logo.webp' alt='Patrick Logo'/>
+                <img className='w-20' src='/Img/Patrick_Logo_White.png' alt='Patrick Logo'/>
               </div>
             </Link>
           </div>

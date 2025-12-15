@@ -130,33 +130,59 @@ export default function ServicePage({ params }) {
   const resolvedParams = use(params);
   const service = servicesData.find(s => s.id === resolvedParams.id);
   const currentIndex = servicesData.findIndex(s => s.id === resolvedParams.id);
-  const [previousIndex, setPreviousIndex] = useState(currentIndex);
-  const [isAnimating, setIsAnimating] = useState(false);
+  const tabsContainerRef = useRef(null);
+  const underlineRef = useRef(null);
 
   if (!service) {
     notFound();
   }
 
-  useEffect(() => {
-    // Get the previous index from sessionStorage
-    const lastIndex = sessionStorage.getItem('lastServiceIndex');
-    if (lastIndex !== null) {
-      setPreviousIndex(parseInt(lastIndex));
-      setIsAnimating(true);
-      
-      // Reset animation state after animation completes
-      const timer = setTimeout(() => {
-        setIsAnimating(false);
-      }, 500);
-      
-      return () => clearTimeout(timer);
-    }
-  }, []);
+  // Update sliding underline position
+  const updateUnderlinePosition = () => {
+    if (tabsContainerRef.current && underlineRef.current) {
+      const activeTab = tabsContainerRef.current.children[currentIndex];
+      if (activeTab) {
+        const tabRect = activeTab.getBoundingClientRect();
+        const containerRect = tabsContainerRef.current.getBoundingClientRect();
 
-  const handleTabClick = (newIndex) => {
-    // Store the current index before navigation
-    sessionStorage.setItem('lastServiceIndex', currentIndex.toString());
+        // Calculate position relative to container
+        const leftPosition = activeTab.offsetLeft;
+        const width = tabRect.width;
+
+        underlineRef.current.style.width = `${width}px`;
+        underlineRef.current.style.transform = `translateX(${leftPosition}px)`;
+      }
+    }
   };
+
+  // Auto-scroll active tab into view on mobile and update underline
+  useEffect(() => {
+    if (tabsContainerRef.current) {
+      const activeTab = tabsContainerRef.current.children[currentIndex];
+      if (activeTab && window.innerWidth < 768) {
+        activeTab.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+          inline: 'center'
+        });
+      }
+    }
+
+    // Small delay to ensure DOM is ready
+    setTimeout(updateUnderlinePosition, 50);
+  }, [currentIndex]);
+
+  // Update underline on window resize
+  useEffect(() => {
+    updateUnderlinePosition();
+
+    const handleResize = () => {
+      updateUnderlinePosition();
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [currentIndex]);
 
   return (
     <div className="w-full">
@@ -202,16 +228,15 @@ export default function ServicePage({ params }) {
             {/* Service Navigation */}
             <div className="flex flex-col items-center mb-8">
               <div className="relative w-full max-w-6xl">
-                {/* Tab buttons container */}
-                <div className="grid grid-cols-2 md:grid-cols-6 w-full h-auto bg-transparent p-0">
+                {/* Tab buttons container - Horizontal scroll on mobile, grid on desktop */}
+                <div ref={tabsContainerRef} className="md:grid md:grid-cols-6 flex overflow-x-auto scrollbar-hide w-full h-auto bg-transparent p-0 snap-x snap-mandatory relative border-b border-gray-300">
                   {servicesData.map((serviceItem, index) => (
                     <Link
                       key={serviceItem.id}
                       href={`/services/${serviceItem.id}`}
-                      onClick={() => handleTabClick(index)}
-                      className={`flex items-center justify-center p-4 md:p-6 h-auto relative text-base md:text-lg lg:text-xl whitespace-pre-line leading-tight transition-all duration-300
+                      className={`flex items-center justify-center p-4 md:p-6 h-auto relative text-base md:text-lg lg:text-xl whitespace-pre-line leading-tight transition-all duration-300 flex-shrink-0 min-w-[140px] md:min-w-0 snap-start
         ${service.id === serviceItem.id
-          ? 'text-black font-medium border-r border-l border-gray-300 first:border-l first:rounded-l-lg last:rounded-r-lg'
+          ? 'text-black font-medium border-r border-l border-gray-300 md:first:border-l md:first:rounded-l-lg md:last:rounded-r-lg'
           : 'text-gray-400 hover:text-gray-600'}
         `}
                       style={{ fontFamily: "Jomolhari, sans-serif" }}
@@ -219,23 +244,14 @@ export default function ServicePage({ params }) {
                       <span className="text-center block">{serviceItem.title}</span>
                     </Link>
                   ))}
+
+                  {/* Single sliding underline */}
+                  <div
+                    ref={underlineRef}
+                    className="absolute bottom-0 left-0 h-0.5 bg-red-600 transition-all duration-500 ease-out"
+                    style={{ width: '0px', transform: 'translateX(0px)' }}
+                  />
                 </div>
-                
-                {/* Sliding underline */}
-                <div 
-                  className={`absolute bottom-0 h-0.5 bg-red-600 ${isAnimating ? 'transition-all duration-500 ease-out' : ''}`}
-                  style={{
-                    width: `${100 / servicesData.length}%`,
-                    left: `${(currentIndex * 100) / servicesData.length}%`,
-                    ...(isAnimating && {
-                      transform: `translateX(${((previousIndex - currentIndex) * 100)}%)`,
-                      animation: 'slideToPosition 0.5s ease-out forwards'
-                    })
-                  }}
-                />
-                
-                {/* Bottom border */}
-                <div className="absolute left-0 bottom-0 w-full h-px bg-gray-300 " />
               </div>
             </div>
 
@@ -283,21 +299,6 @@ export default function ServicePage({ params }) {
           </div>
         </section>
       )}
-
-      
-
-      {/* Add the CSS animation */}
-      <style jsx>{`
-        @keyframes slideToPosition {
-          from {
-            transform: translateX(${((previousIndex - currentIndex) * 100)}%);
-          }
-          to {
-            transform: translateX(0%);
-          }
-        }
-      `}</style>
-
 
       <FirstSteps />
     </div>

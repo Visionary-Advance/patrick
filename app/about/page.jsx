@@ -36,13 +36,13 @@ export default function AboutPage() {
 
          <TimelineScrollAnimation />
       </div>
-       <div className=" mb-16 mt-36 ">
+       <div className=" mb-16 mt-14 ">
         <div className="col-span-1   mx-auto mb-5 lg:mb-0 ">
           <h2 className="jomol lg:ms-44 ms-4 md:mx-16 text-5xl">Leadership</h2>
           <div className="h-0.5 lg:ms-44 ms-4 md:mx-16 bg-black/50 mt-2 w-16"></div>
 
 
-          <div className="grid grid-cols-1 mx-auto w-9/12 lg:grid-cols-3 pb-5 ">
+          <div className="grid grid-cols-1 gap-y-12 mx-auto w-9/12 lg:grid-cols-3 pb-5 ">
   <div className="mt-10 w-[300px] h-[300px] mx-auto">
     <img className="w-[300px] h-[300px] object-cover" src="/Img/Rick.jpg" alt="Rick Dice's Picture"/>
     <h4 className="jomol text-2xl mt-2">Rick Dice</h4>
@@ -57,6 +57,16 @@ export default function AboutPage() {
     <img className="w-[300px] h-[300px] object-cover" src="/Img/Stephanie.jpg" alt="Stephanie Foxx's Picture"/>
     <h4 className="jomol text-2xl mt-2">Stephanie Foxx</h4>
     <p className="text- text-black/30">Base Manager</p>
+  </div>
+  <div className="mt-10 w-[300px] h-[300px] mx-auto">
+    <img className="w-[300px] h-[300px] object-cover" src="/Img/Gerry_Pic.jpg" alt="Gerry Esser's Picture"/>
+    <h4 className="jomol text-2xl mt-2">Gerry Esser</h4>
+    <p className="text- text-black/30">Headquarters Office Administrator</p>
+  </div>
+  <div className="mt-10 w-[300px] h-[300px] mx-auto">
+    <img className="w-[300px] h-[300px] object-cover" src="/Img/Joel.jpg" alt="Stephanie Foxx's Picture"/>
+    <h4 className="jomol text-2xl mt-2">Joel Dice</h4>
+    <p className="text- text-black/30">Human Resources</p>
   </div>
 </div>
         </div>

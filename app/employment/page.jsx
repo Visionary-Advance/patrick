@@ -1,5 +1,6 @@
 'use client'
 
+import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
 
 export default function Careers() {
@@ -75,7 +76,7 @@ export default function Careers() {
   return (
     <div className=" ">
       {/* Hero Section */}
-      <section className="container mx-auto px-4 pt-56 py-16 ">
+      <section className="container mx-auto px-4 pt-36 lg:pt-56 py-16 ">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
             <h1 className="text-4xl lg:text-5xl jomol font-bold text-black leading-tight">
@@ -105,7 +106,7 @@ export default function Careers() {
 
       {/* About Section */}
       <section className="bg-[#E84D2F] text-white py-16 jomol ">
-        <div className="container mx-auto px-4 text-center">
+        <div className="container mx-auto px-4 lg:text-center">
           <h2 className="text-4xl lg:text-5xl font-bold mb-8">About</h2>
           <p className="text-lg lg:text-xl leading-relaxed max-w-5xl mx-auto mb-12">
             PatRick Environmental Inc. dba PatRick Corp. was established in 1971
@@ -128,7 +129,7 @@ export default function Careers() {
 
       {/* Firefighters Needed Section */}
       <section className="container max-w-5xl mx-auto px-4 jomol py-16 lg:py-24">
-        <div className="text-center mb-16">
+        <div className="lg:text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold text-black mb-8">
             Wildland Firefighters Needed
           </h2>
@@ -173,9 +174,11 @@ export default function Careers() {
                 <h3 className="text-xl lg:text-2xl font-medium text-black">
                   {location}
                 </h3>
+                <Link target='_blank' rel='nofollow' href={"https://patrick.hiringplatform.com/list/careers"}>
                 <button className="bg-black hover:bg-red-700 cursor-pointer text-white px-6 py-2 rounded-lg transition-colors duration-200 font-medium">
                   Apply
                 </button>
+                </Link>
               </div>
             </div>
           ))}
@@ -228,7 +231,7 @@ export default function Careers() {
       </section>
 
       {/* FAQ Section */}
-      <section className="max-w-5xl jomol mx-auto mt-10 mb-20">
+      <section className="max-w-5xl w-11/12 lg:w-full jomol mx-auto mt-10 mb-20">
         <h2 className="text-4xl font-bold mb-5">Frequently Asked Questions</h2>
         <div className="faq-section">
           {faqs.map((faq, index) => (

@@ -139,15 +139,16 @@ const TimelineScrollAnimation = () => {
       gsap.set(".content", { x: 15, opacity: 0 }); // Smaller initial offset
       
       // Animate the timeline line and dot together
+      // The line grows from top to bottom, with the bottom edge staying at 50vh (middle of screen)
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: timelineRef.current,
-          start: "top 60%",
-          end: "bottom 80%", // Changed from "bottom bottom" to give more space
+          start: "top 50%", // Start when timeline reaches middle of viewport
+          end: "bottom 50%", // End when bottom of timeline reaches middle of viewport
           scrub: 1,
         }
       });
-      
+
       tl.to(".timeline-line", {
         scaleY: 1,
         duration: 1,
@@ -228,15 +229,15 @@ const TimelineScrollAnimation = () => {
       <div className="container mx-auto px-4 py-5 overflow-hidden">
         <div ref={timelineRef} className="relative overflow-visible">
           {/* Timeline line - responsive positioning */}
-          <div 
+          <div
             ref={lineRef}
             className="timeline-line absolute left-20 md:left-36 lg:left-40 top-0 w-1 bg-[#E84D2F] h-full z-10"
           ></div>
-          
+
           {/* Moving dot - responsive positioning */}
-          <div className="timeline-dot absolute left-20.5 md:left-36 lg:left-40.5 w-4 h-4 bg-[#E84D2F] rounded-full transform -translate-x-1/2 z-20" 
+          <div className="timeline-dot absolute left-[5.12rem] md:left-36 lg:left-40.5 w-4 h-4 bg-[#E84D2F] rounded-full transform -translate-x-1/2 z-20"
                style={{top: '100%', marginTop: '-8px'}}></div>
-          
+
           {/* Timeline items */}
           <div className="space-y-24">
             {timelineData.map((item, index) => (
@@ -248,7 +249,7 @@ const TimelineScrollAnimation = () => {
                       {item.year}
                     </h2>
                   </div>
-                  
+
                   {/* Content - Right Side of the line - responsive spacing */}
                   <div className="content flex-1 pl-2 md:pl-4 lg:pl-8">
                     <h3 className="text-xl md:text-2xl font-bold jomol text-gray-800 mb-4">
@@ -257,11 +258,11 @@ const TimelineScrollAnimation = () => {
                     <p className="text-gray-600 roboto text-base md:text-lg leading-relaxed mb-6">
                       {item.description}
                     </p>
-                    
+
                     {/* Image - responsive sizing */}
                     <div className="timeline-image">
-                      <img 
-                        src={item.image} 
+                      <img
+                        src={item.image}
                         alt={`Timeline ${item.year}`}
                         className="w-full max-w-xs md:max-w-sm h-full object-cover rounded-lg shadow-lg"
                       />

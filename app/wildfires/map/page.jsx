@@ -74,8 +74,25 @@ const InteractiveWildfireMap = () => {
         } catch (e) {
           errorData = `Failed to read error response: ${e.message}`;
         }
-        
-       
+
+        // Check if this is a "no fires found" response (not an actual error)
+        if (response.status === 404 && errorData?.error?.includes('No fires found')) {
+          // This is not an error - just no active fires
+          setFires([]);
+          updateMapMarkers([]);
+          setLastUpdate(new Date().toLocaleString());
+          setError(''); // Clear any errors
+          setLoadingProgress('No active fires detected in this region at this time.');
+
+          // Show a helpful info message instead of an error
+          setTimeout(() => {
+            setLoadingProgress('');
+          }, 5000);
+
+          return; // Exit early, don't throw error
+        }
+
+        // This is a real error
         throw new Error(`API Error (${response.status}): ${JSON.stringify(errorData)}`);
       }
       
@@ -632,12 +649,33 @@ const InteractiveWildfireMap = () => {
                 <AlertTriangle className="w-5 h-5" />
                 <div className="flex-1">
                   <span className="text-sm">{error}</span>
-                  <button 
+                  <button
                     onClick={handleManualRetry}
                     className="ml-2 underline hover:no-underline text-sm"
                   >
                     Try Again
                   </button>
+                </div>
+              </div>
+            )}
+
+            {!error && !loading && fires.length === 0 && lastUpdate && (
+              <div className="mt-3 p-3 bg-yellow-600 bg-opacity-80 rounded-lg flex items-start gap-2">
+                <AlertTriangle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                <div className="flex-1">
+                  <span className="text-sm font-semibold">No active fires detected</span>
+                  <p className="text-sm mt-1">
+                    While our data shows no fires, we recommend checking other wildfire monitoring sources to be sure.
+                    <a
+                      href="https://fire.airnow.gov/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="ml-1 underline hover:no-underline font-semibold"
+                    >
+                      View AirNow Fire & Smoke Map →
+                    </a>
+                  </p>
+                  <div className="text-xs mt-2 opacity-90">NASA FIRMS API operational - last checked: {lastUpdate}</div>
                 </div>
               </div>
             )}

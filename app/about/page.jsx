@@ -27,7 +27,7 @@ export default function AboutPage() {
       {/* Divider */}
       <div className="bg-black/30 h-0.5 w-[20%] mx-auto"></div>
 
-{/* 
+
       <div className="lg:ms-44   md:mx-16 mb-5 lg:mb-0">
       <div className="w-11/12 mx-auto">
         <h2 className="jomol  text-5xl">History</h2>
@@ -35,7 +35,7 @@ export default function AboutPage() {
          </div>
 
          <TimelineScrollAnimation />
-      </div> */}
+      </div>
        <div className=" mb-16 mt-14 ">
         <div className="col-span-1   mx-auto mb-5 lg:mb-0 ">
           <h2 className="jomol lg:ms-44 ms-4 md:mx-16 text-5xl">Leadership</h2>

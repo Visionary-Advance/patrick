@@ -18,7 +18,7 @@ export default function WFF(){
         </div>
 
         <div className="col-span-1 flex items-center">
-            <p className="jomol text-2xl text-white">Proud supporters of the Wildland Firefighting Foundation for over 20 years. Supporting those who risk their lives to protect our communities and natural resources.</p>
+            <p className="jomol text-xl text-white">The Wildland Firefighter Foundation is dedicated to supporting the brave men and women who risk their lives to protect our forests, homes, and communities. We provide assistance to firefighters and their families in times of need. Our mission is to honor, support, and assist wildland firefighters and their families through financial aid, physical and emotional support, advocacy, and community.</p>
         </div>
         
         </div>

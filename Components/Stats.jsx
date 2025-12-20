@@ -22,7 +22,7 @@ export default function StatsGroup() {
       type: "normal"
     },
     {
-      number: 300,
+      number: 400,
       suffix: "+",
       label: "Employees",
       type: "normal"

@@ -15,15 +15,10 @@ export default function About() {
     <div className="col-span-1 lg:ms-8">
       <h3 className="jomol text-4xl lg:text-6xl">Our History</h3>
       <p className="jomol mt-2 text-lg lg:text-xl">
-        PatRick Environmental began in 1971 when Rick Dice set out to
-        build a company that would set new standards for wildland
-        firefighting. In 1974, PatRick officially incorporated, and Rick
-        later helped found the National Wildfire Suppression Association,
-        shaping the private wildfire industry into what it is today. Over
-        the decades, PatRick Environmental has grown from a small
-        operation into a trusted national leader, known for pioneering the
-        use of All-Terrain Suppression Vehicles to reach fires in the
-        toughest landscapes.
+      PatRick Environmental began in 1971 when Rick Dice set out to build a company that would set new standards for wildland firefighting. In 1974, PatRick officially incorporated, and Rick later helped found the National Wildfire Suppression Association, shaping the private wildfire industry into what it is today.
+      </p>
+      <p className="jomol mt-2 text-lg lg:text-xl">
+        From the beginning, PatRick Environmental was built on innovation. Rick Dice actually coined the term "wildland firefighter" and established the first private state and federal firefighting agreements. The company created professional standards that didn't exist before—developing the first employee Fire Folders and private contractor red cards, and publishing the first Wildland Firefighter magazine to serve the growing industry.
       </p>
     </div>
   </div>

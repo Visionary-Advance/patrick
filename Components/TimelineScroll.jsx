@@ -15,12 +15,11 @@ const TimelineScrollAnimation = () => {
     {
       year: "1971",
       title: "PatRick Was Created",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna",
       image: "/Img/Grandpa.jpg"
     },
     {
-      year: "1975",
-      title: "Contract Prescribed Burning",
+      year: "1971",
+      title: "First fire crew agreement with the Douglas Forest Protective Association",
       description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque,",
       image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=300&fit=crop"
     },

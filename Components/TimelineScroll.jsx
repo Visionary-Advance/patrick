@@ -37,18 +37,13 @@ const TimelineScrollAnimation = () => {
       year: "1973",
       title: "Best 50 Contract & Agency Partnerships",
       description: "PatRick Environmental secured the prestigious Best 50 Contract for crews and engines, which continued through the 1990s. Rick Dice began establishing relationships with state and federal agencies during this period—partnerships that continue to this day.",
-      image: "/Img/NWSA_Logo.jpg"
+     
     },
     {
       year: "1988",
       title: "Oregon state fire suppression agreement with Oregon Department of Forestry ODF",
       image: "/Img/BlackButte.jpg"
-      
-    },
-    {
-      year: "1988",
-      title: "National Contract",
-      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=300&fit=crop"
+
     },
     {
       year: "1988",
@@ -109,7 +104,7 @@ const TimelineScrollAnimation = () => {
     {
       year: "2003",
       title: "National Headquarters building built in Redmond, OR",
-      image: "/Img/Redmond_Office.jpg"
+      image: "/Img/Redmond_Close.jpg"
     },
     {
       year: "2003",
@@ -272,7 +267,7 @@ const TimelineScrollAnimation = () => {
                   </div>
 
                   {/* Content - Right Side of the line - responsive spacing */}
-                  <div className="content flex-1 pl-2 md:pl-4 lg:pl-8">
+                  <div className={`content flex-1 pl-2 md:pl-4 lg:pl-8 ${!item.image ? 'pb-16' : ''}`}>
                     <h3 className="text-xl md:text-2xl font-bold jomol text-gray-800 mb-4">
                       {item.title}
                     </h3>
@@ -281,13 +276,15 @@ const TimelineScrollAnimation = () => {
                     </p>
 
                     {/* Image - responsive sizing */}
-                    <div className="timeline-image">
-                      <img
-                        src={item.image}
-                        alt={`Timeline ${item.year}`}
-                        className="w-full max-w-xs md:max-w-sm h-full object-cover rounded-lg shadow-lg"
-                      />
-                    </div>
+                    {item.image && (
+                      <div className="timeline-image">
+                        <img
+                          src={item.image}
+                          alt={`Timeline ${item.year}`}
+                          className="w-full max-w-xs md:max-w-sm h-full object-cover rounded-lg shadow-lg"
+                        />
+                      </div>
+                    )}
 
                     {/* Motto - only for specific entries */}
                     {item.motto && (

@@ -90,9 +90,11 @@ export default function Careers() {
               clicking on the button below or email <a href='mailto:hqs@patrickfire.com'>HQS@patrickfire.com</a> EEO
               
             </p>
+             <Link target='_blank' rel='nofollow' href={"https://patrick.hiringplatform.com/list/careers"}>
             <button className="bg-[#E84D2F] cursor-pointer hover:bg-red-700 text-white px-8 py-3 text-lg rounded-lg transition-colors duration-200 font-medium">
               View
             </button>
+            </Link>
           </div>
           <div className="flex justify-center h-96">
             <img
@@ -121,9 +123,11 @@ export default function Careers() {
             contracts. Today PatRick Corp. is a family run business with five
             offices and between 300-400 employees every year during fire season.
           </p>
+          <Link target='_blank' rel='nofollow' href={"https://patrick.hiringplatform.com/list/careers"}>
           <button className="bg-white cursor-pointer text-black border-2 border-white hover:bg-gray-100 px-8 py-3 text-lg rounded-lg transition-colors duration-200 font-medium">
             Apply Now
           </button>
+          </Link>
         </div>
       </section>
 

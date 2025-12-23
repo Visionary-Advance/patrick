@@ -10,13 +10,11 @@ export default function AboutPage() {
           <p className="roboto mt-2 w-11/12 lg:w-8/12">
             Founded in 1971 by Rick Dice, PatRick Environmental has built a
             proud legacy of leadership in wildland firefighting, emergency
-            response, and environmental services. With deep roots in Redmond,
-            Oregon and offices across the U.S., we deliver highly trained crews,
+            response, and environmental services. With deep roots in Oregon and offices across the U.S., we deliver highly trained crews,
             specialized equipment, and decades of expertise to meet the nation’s
             growing wildfire and resource management needs. As a
-            Service-Disabled Veteran-Owned Small Business, we are committed to
-            excellence, safety, and innovation. Our passion for protecting
-            communities and natural resources drives everything we do
+            Veteran-Owned Small Business, we are committed to
+            excellence, safety, and innovation.
           </p>
         </div>
         <div className="col-span-1 lg:me-10 w-11/12 mx-auto md:mx-16 lg:mx-0 ">

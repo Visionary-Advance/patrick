@@ -1,5 +1,5 @@
 import Image from "next/image";
-
+import Link from "next/link";
 
 
 export default function WFF(){
@@ -12,9 +12,11 @@ export default function WFF(){
         <>
         <div className="bg-[#3b3b3b]">
         <div className="grid lg:grid-cols-2 grid-cols-1 w-11/12 lg:w-8/12 mx-auto py-5 ">
-        
+
         <div className="col-span-1">
-            <Image width={500} height={250} alt="Wildland Firefighting Foundation Logo" className="" src="/Img/WFF_Logo.png"/>
+            <Link href="https://wffoundation.org/" target="_blank" rel="noopener noreferrer">
+                <Image width={500} height={250} alt="Wildland Firefighting Foundation Logo" className="cursor-pointer" src="/Img/WFF_Logo.png"/>
+            </Link>
         </div>
 
         <div className="col-span-1 flex items-center">

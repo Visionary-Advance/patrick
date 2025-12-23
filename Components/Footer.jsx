@@ -85,10 +85,10 @@ const Footer = () => {
         
         {/* Social Media Icons */}
         <div className="flex justify-end space-x-2">
-          <Link href="https://facebook.com" className="hover:opacity-80">
+          <Link href="https://www.facebook.com/PatRickWildfire/" className="hover:opacity-80">
             <FaFacebook size={20} />
           </Link>
-          <Link href="https://instagram.com" className="hover:opacity-80">
+          <Link href="https://www.instagram.com/patrick_environmental/?hl=en" className="hover:opacity-80">
             <FaInstagram size={20} />
           </Link>
         </div>

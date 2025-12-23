@@ -20,111 +20,132 @@ const TimelineScrollAnimation = () => {
     {
       year: "1971",
       title: "First fire crew agreement with the Douglas Forest Protective Association",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque,",
-      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=300&fit=crop"
+      description: "DFPA",
+      
     },
     {
-      year: "1980",
-      title: "OR State Agreement",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque, sit amet lacinia nisi sodales. Vestibulum id orci velit. Vivamus sollicitudin viverra ipsum, non gravida libero. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididun",
-      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=300&fit=crop"
+      year: "1972",
+      title: "Contract Prescribed Burning",
+     
     },
     {
-      year: "1989",
-      title: "Pyrotech fire in Movie Always",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque.",
-      image: "/Img/Always.jpg"
+      year: "1973",
+      title: "Springfield, OR Base/Office Opened",
+      
     },
     {
-      year: "1991",
-      title: "Creation of NWSA",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque.",
+      year: "1973",
+      title: "Best 50 Contract & Agency Partnerships",
+      description: "PatRick Environmental secured the prestigious Best 50 Contract for crews and engines, which continued through the 1990s. Rick Dice began establishing relationships with state and federal agencies during this period—partnerships that continue to this day.",
       image: "/Img/NWSA_Logo.jpg"
     },
     {
-      year: "1993",
-      title: "Water Handling Agreement",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque.",
-      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=300&fit=crop"
+      year: "1988",
+      title: "Oregon state fire suppression agreement with Oregon Department of Forestry ODF",
+      image: "/Img/BlackButte.jpg"
+      
     },
     {
-      year: "1995",
+      year: "1988",
       title: "National Contract",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque.",
       image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=300&fit=crop"
     },
     {
-      year: "1999",
-      title: "Moved Headquarters to Redmond Built Headquarters Building",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque.",
-      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=300&fit=crop"
+      year: "1988",
+      title: `Pyrotech fire in the Movie "Always" `,
+      image: "/Img/Always.jpg"
     },
     {
-      year: "1999",
-      title: "Shuttle Investigation",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque.",
-      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=300&fit=crop"
+      year: "1988",
+      title: "Opened branch in Redmond, OR",
     },
     {
-      year: "1999",
-      title: "Shuttle investigation",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque.",
-      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=300&fit=crop"
+      year: "1988",
+      title: "Concept of National Wildfire Suppression Association",
+    },
+    {
+      year: "1991",
+      title: "Created NWSA",
+      image:"/Img/NWSA_Logo.jpg",
+      description:'Rick Dice, President'
+    },
+    {
+      year: "90's",
+      title: "Rick Dice started meeting with congress about fire policies and contracts and continues today.",
+      image:"/Img/Rick_In_Congress.jpg"
+    },
+    {
+      year: "1992",
+      title: "Moved to New Springfield Base",
+      image:"/Img/Springfield_Office.jpg"
+    },
+    {
+      year: "1996-2002",
+      title: "Created the first 'Wildland Firefighter Magazine'",
+      description: "Coined the word 'Wildland Firefighter'",
+      image: "/Img/Wildland_Magazine.jpg"
+    },
+    {
+      year: "2001",
+      title: "Opened a base in Ellensburg, WA",
+      image: "/Img/Ellensburg_Office.jpg"
+    },
+    {
+      year: "2002",
+      title: "Opened a base in Boise, ID",
+      image: "/Img/Boise_Office.jpg"
+    },
+    {
+      year: "2002",
+      title: "Opened a base in Asheville, NC",
+      image: "/Img/Asheville_Office.jpg"
+    },
+    {
+      year: "2002",
+      title: "First National Type 2IA Contract",
+      description: "Rick Dice helped create",
+      image: "/Img/National_2IA.jpg"
     },
     {
       year: "2003",
-      title: "Rick met with President Bush",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque.",
+      title: "National Headquarters building built in Redmond, OR",
+      image: "/Img/Redmond_Office.jpg"
+    },
+    {
+      year: "2003",
+      title: "Columbia Shuttle Recovery",
+      image: "/Img/Columbia_Shuttle.jpg"
+    },
+    {
+      year: "2004",
+      title: "Rick Dice met with President Bush",
       image: "/Img/Rick_and_Bush.jpg"
     },
     {
-      year: "2003",
-      title: "Opened More Bases",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque.",
-      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=300&fit=crop"
-    },
-    {
-      year: "2003",
-      title: "WA State Agreement",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque.",
-      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=300&fit=crop"
-    },
-    {
-      year: "2003",
-      title: "First Hurricane Recovery",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque.",
-      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=300&fit=crop"
-    },
-    {
-      year: "2003",
-      title: "Chippers and Mastication",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque.",
-      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=300&fit=crop"
-    },
-    {
-      year: "2003",
-      title: "Idaho State agreement",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque.",
-      image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&h=300&fit=crop"
-    },
-    {
-      year: "2003",
-      title: "Rick Meets with Congress",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque.",
-      image: "/Img/Rick_in_Congress.jpg"
-    },
-    {
-      year: "2003",
-      title: "NC Flooding Rehab",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque.",
+      year: "2004",
+      title: "First Hurricane Ivan Recovery and continues today when needed.",
       image: "/Img/Flood.jpg"
     },
     {
-      year: "2025",
-      title: "First time out of country firefighting - Canada",
-      description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quisque vehicula felis euismod arcu scelerisque.",
+      year: "2017",
+      title: "First Ice/Snow Storm Cleanup in Oregon",
+      image: "/Img/Ice_Cleanup.jpg"
+    },
+    {
+      year: "2020",
+      title: "Growing and Improving",
+      description: "We continue growing and keep improving with technology, equipment, safey, organization that apply to state and private fire agreements and prescribed fire contracts for crews, engines, tenders, chippers, mastication and excavator equipment",
+      image:"/Img/Continue.jpg",
+      motto: '"Where Experience and Professionalism Make the Difference" Since 1971.'
+
+    },
+    {
+      year: "2023",
+      title: "First International Crew to Canada ",
       image: "/Img/Canada.jpeg"
     },
+    
+    
   ];
 
   useEffect(() => {
@@ -267,6 +288,13 @@ const TimelineScrollAnimation = () => {
                         className="w-full max-w-xs md:max-w-sm h-full object-cover rounded-lg shadow-lg"
                       />
                     </div>
+
+                    {/* Motto - only for specific entries */}
+                    {item.motto && (
+                      <p className="text-gray-800 roboto text-base md:text-lg font-bold mt-4">
+                        {item.motto}
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>

@@ -87,7 +87,7 @@ export default function Careers() {
               forest fire! Exciting outdoor job includes travel, expenses, and
               an experience of a lifetime. No experience required, training
               provided. We provide all your gear except boots, gloves and a sleeping bag. Must be 18yrs old. Fill out online job application by
-              clicking on the button below. Call us at: 1-800-782-4119. EEO
+              clicking on the button below or email <a href='mailto:hqs@patrickfire.com'>HQS@patrickfire.com</a> EEO
               
             </p>
             <button className="bg-[#E84D2F] cursor-pointer hover:bg-red-700 text-white px-8 py-3 text-lg rounded-lg transition-colors duration-200 font-medium">
@@ -133,8 +133,8 @@ export default function Careers() {
           <h2 className="text-4xl lg:text-5xl font-bold text-black mb-8">
             Wildland Firefighters Needed
           </h2>
-          <p className="text-xl  text-black leading-relaxed max-w-5xl mx-auto">
-            We are excited to get the 2025 fire season underway. All bases will
+         <p className="text-xl  text-black leading-relaxed max-w-5xl mx-auto">
+            We are excited to get the {new Date().getFullYear()} fire season underway. All bases will
             be hosting a REFRESHER training in January for returning
             firefighters who are ready and available to start fighting fire. If
             you qualify for those criteria, please fill out an application. For
@@ -159,7 +159,7 @@ export default function Careers() {
               for a dispatch!
             </p>
             <p>• Must be able to travel out of state.</p>
-            <p>• Need to be located 2.5 hours or closer from a base for dispatch.</p>
+            <p>• Need to be located 2 hours or closer from a base for dispatch. The closer you live to a base, the faster you will be dispatched</p>
             <p>
               • Can be gone 14 - 30 days at a time working 10 - 16 hour shifts.
             </p>

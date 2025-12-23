@@ -56,12 +56,12 @@ export default function AboutPage() {
   <div className="mt-10 w-[300px] h-[300px] mx-auto">
     <img className="w-[300px] h-[300px] object-cover" src="/Img/Stephanie.jpg" alt="Stephanie Foxx's Picture"/>
     <h4 className="jomol text-2xl mt-2">Stephanie Foxx</h4>
-    <p className="text- text-black/30">Base Manager</p>
+    <p className="text- text-black/30">Corporate Secretary/Springfield Base Manager</p>
   </div>
   <div className="mt-10 w-[300px] h-[300px] mx-auto">
     <img className="w-[300px] h-[300px] object-cover" src="/Img/Gerry_Pic.jpg" alt="Gerry Esser's Picture"/>
     <h4 className="jomol text-2xl mt-2">Gerry Esser</h4>
-    <p className="text- text-black/30">Headquarters Office Administrator</p>
+    <p className="text- text-black/30">Company Office Administrator</p>
   </div>
   <div className="mt-10 w-[300px] h-[300px] mx-auto">
     <img className="w-[300px] h-[300px] object-cover" src="/Img/Joel.jpg" alt="Stephanie Foxx's Picture"/>

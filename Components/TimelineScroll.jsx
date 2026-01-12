@@ -34,12 +34,6 @@ const TimelineScrollAnimation = () => {
       
     },
     {
-      year: "1973",
-      title: "Best 50 Contract & Agency Partnerships",
-      description: "PatRick Environmental secured the prestigious Best 50 Contract for crews and engines, which continued through the 1990s. Rick Dice began establishing relationships with state and federal agencies during this period—partnerships that continue to this day.",
-     
-    },
-    {
       year: "1988",
       title: "Oregon state fire suppression agreement with Oregon Department of Forestry ODF",
       image: "/Img/BlackButte.jpg"
@@ -59,10 +53,10 @@ const TimelineScrollAnimation = () => {
       title: "Concept of National Wildfire Suppression Association",
     },
     {
-      year: "1991",
+      year: "1990",
       title: "Created NWSA",
       image:"/Img/NWSA_Logo.jpg",
-      description:'Rick Dice, President'
+      description:'Rick Dice was involved in the creation of NWSA and later became President for 30 years.'
     },
     {
       year: "90's",

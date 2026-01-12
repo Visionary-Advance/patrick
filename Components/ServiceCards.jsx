@@ -53,28 +53,46 @@ const cards = servicesData.map(service => ({
     };
   
     useEffect(() => {
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting && !hasAnimated) {
-              setHasAnimated(true);
-              animateBorders();
+      // Wait for images to load before setting up observer
+      const images = containerRef.current?.querySelectorAll('img') || [];
+      const imagePromises = Array.from(images).map(img => {
+        if (img.complete) return Promise.resolve();
+        return new Promise(resolve => {
+          img.onload = resolve;
+          img.onerror = resolve;
+        });
+      });
+
+      Promise.all(imagePromises).then(() => {
+        // Small delay to ensure layout is stable after images load
+        requestAnimationFrame(() => {
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting && !hasAnimated) {
+                  setHasAnimated(true);
+                  animateBorders();
+                }
+              });
+            },
+            {
+              threshold: 0.3,
+              rootMargin: '0px 0px -50px 0px'
             }
-          });
-        },
-        {
-          threshold: 0.3,
-          rootMargin: '0px 0px -50px 0px'
-        }
-      );
-  
-      if (containerRef.current) {
-        observer.observe(containerRef.current);
-      }
-  
+          );
+
+          if (containerRef.current) {
+            observer.observe(containerRef.current);
+          }
+
+          // Store observer for cleanup
+          containerRef.current._observer = observer;
+        });
+      });
+
       return () => {
-        if (containerRef.current) {
-          observer.unobserve(containerRef.current);
+        if (containerRef.current?._observer) {
+          containerRef.current._observer.disconnect();
         }
       };
     }, [hasAnimated]);

@@ -154,8 +154,8 @@ const TimelineScrollAnimation = () => {
         scrollTrigger: {
           trigger: timelineRef.current,
           start: "top 50%", // Start when timeline reaches middle of viewport
-          end: "bottom 50%", // End when bottom of timeline reaches middle of viewport
-          scrub: 1,
+          end: "bottom bottom", // End when bottom of timeline reaches bottom of viewport - much longer scroll distance
+          scrub: 2, // Increased scrub for smoother, slower growth
         }
       });
 

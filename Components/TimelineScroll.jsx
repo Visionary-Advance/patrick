@@ -138,12 +138,17 @@ const TimelineScrollAnimation = () => {
   ];
 
   useEffect(() => {
+    // Small delay to ensure DOM is fully ready
+    const timer = setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 100);
+
     const ctx = gsap.context(() => {
       // Set initial states with smaller mobile transforms
       gsap.set(".timeline-item", { opacity: 0, y: 50 });
       gsap.set(".timeline-line", { scaleY: 0, transformOrigin: "top center" });
       gsap.set(".timeline-dot", { opacity: 0 });
-      
+
       // Set initial states for year and content with smaller mobile transforms
       gsap.set(".year", { x: -15, opacity: 0 }); // Smaller initial offset
       gsap.set(".content", { x: 15, opacity: 0 }); // Smaller initial offset
@@ -231,7 +236,10 @@ const TimelineScrollAnimation = () => {
       });
     }, timelineRef);
 
-    return () => ctx.revert();
+    return () => {
+      clearTimeout(timer);
+      ctx.revert();
+    };
   }, []);
 
   return (

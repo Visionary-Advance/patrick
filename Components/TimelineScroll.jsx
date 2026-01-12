@@ -36,7 +36,7 @@ const TimelineScrollAnimation = () => {
     {
       year: "1988",
       title: "Oregon state fire suppression agreement with Oregon Department of Forestry ODF",
-      image: "/Img/BlackButte.jpg"
+      image: "/Img/BlackButte.JPG"
 
     },
     {
@@ -61,7 +61,7 @@ const TimelineScrollAnimation = () => {
     {
       year: "90's",
       title: "Rick Dice started meeting with congress about fire policies and contracts and continues today.",
-      image:"/Img/Rick_In_Congress.jpg"
+      image:"/Img/Rick_In_Congress.JPG"
     },
     {
       year: "1992",
@@ -72,7 +72,7 @@ const TimelineScrollAnimation = () => {
       year: "1996-2002",
       title: "Created the first 'Wildland Firefighter Magazine'",
       description: "Coined the word 'Wildland Firefighter'",
-      image: "/Img/Wildland_Magazine.jpg"
+      image: "/Img/Wildland_Magazine.JPG"
     },
     {
       year: "2001",
@@ -93,7 +93,7 @@ const TimelineScrollAnimation = () => {
       year: "2002",
       title: "First National Type 2IA Contract",
       description: "Rick Dice helped create",
-      image: "/Img/National_2IA.jpg"
+      image: "/Img/National_2IA.JPG"
     },
     {
       year: "2003",
@@ -103,7 +103,7 @@ const TimelineScrollAnimation = () => {
     {
       year: "2003",
       title: "Columbia Shuttle Recovery",
-      image: "/Img/Columbia_Shuttle.jpg"
+      image: "/Img/Columbia_Shuttle.JPG"
     },
     {
       year: "2004",
@@ -118,13 +118,13 @@ const TimelineScrollAnimation = () => {
     {
       year: "2017",
       title: "First Ice/Snow Storm Cleanup in Oregon",
-      image: "/Img/Ice_Cleanup.jpg"
+      image: "/Img/Ice_Cleanup.JPG"
     },
     {
       year: "2020",
       title: "Growing and Improving",
       description: "We continue growing and keep improving with technology, equipment, safey, organization that apply to state and private fire agreements and prescribed fire contracts for crews, engines, tenders, chippers, mastication and excavator equipment",
-      image:"/Img/Continue.jpg",
+      image:"/Img/Continue.JPG",
       motto: '"Where Experience and Professionalism Make the Difference" Since 1971.'
 
     },

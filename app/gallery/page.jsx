@@ -3,9 +3,11 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
-// Skeleton loader component with shimmer animation
+// Skeleton loader component with pulse animation (no spinner)
 const ImageSkeleton = () => (
-  <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-shimmer bg-[length:200%_100%]"></div>
+  <div className="absolute inset-0 bg-gray-200 animate-pulse">
+    <div className="absolute inset-0 bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 opacity-50"></div>
+  </div>
 );
 
 const Gallery = () => {
@@ -20,6 +22,7 @@ const Gallery = () => {
   const [loadedImages, setLoadedImages] = useState({});
   const [fetchError, setFetchError] = useState(null);
   const [initialLoading, setInitialLoading] = useState(true);
+  const [slideshowImageLoaded, setSlideshowImageLoaded] = useState(false);
 
   // Fetch images from Google Drive on component mount
   useEffect(() => {
@@ -67,6 +70,7 @@ const Gallery = () => {
   };
 
   const openSlideshow = (index) => {
+    setSlideshowImageLoaded(false);
     setCurrentIndex(index);
     setSelectedImage(displayedImages[index]);
   };
@@ -76,12 +80,14 @@ const Gallery = () => {
   };
 
   const nextImage = () => {
+    setSlideshowImageLoaded(false);
     const nextIndex = (currentIndex + 1) % displayedImages.length;
     setCurrentIndex(nextIndex);
     setSelectedImage(displayedImages[nextIndex]);
   };
 
   const prevImage = () => {
+    setSlideshowImageLoaded(false);
     const prevIndex = currentIndex === 0 ? displayedImages.length - 1 : currentIndex - 1;
     setCurrentIndex(prevIndex);
     setSelectedImage(displayedImages[prevIndex]);
@@ -103,16 +109,7 @@ const Gallery = () => {
     <>
       <div className="text-center mb-10 pt-32">
         <h2 className="jomol text-4xl">Gallery</h2>
-
       </div>
-
-      {/* Initial Loading State */}
-      {initialLoading && (
-        <div className="flex flex-col items-center justify-center py-20">
-          <div className="w-12 h-12 border-4 border-[#E84D2F] border-t-transparent rounded-full animate-spin mb-4"></div>
-          <p className="jomol text-gray-600">Loading gallery images...</p>
-        </div>
-      )}
 
       {/* Error State */}
       {fetchError && (
@@ -124,13 +121,28 @@ const Gallery = () => {
       )}
 
       {/* Image Grid */}
-      {!initialLoading && !fetchError && displayedImages.length === 0 && (
+      {!fetchError && displayedImages.length === 0 && !initialLoading && (
         <div className="text-center py-20">
           <p className="jomol text-gray-600 text-xl">No images found in the gallery folder</p>
         </div>
       )}
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-[1400px] mx-auto gap-4 p-4">
+        {/* Show skeleton placeholders during initial load */}
+        {initialLoading && (
+          <>
+            {[...Array(IMAGES_PER_LOAD)].map((_, index) => (
+              <div
+                key={`skeleton-${index}`}
+                className="relative aspect-square rounded-lg overflow-hidden"
+              >
+                <ImageSkeleton />
+              </div>
+            ))}
+          </>
+        )}
+
+        {/* Actual images */}
         {displayedImages.map((image, index) => (
           <div
             key={image.id || index}
@@ -146,8 +158,8 @@ const Gallery = () => {
               height={600}
               loading={index < IMAGES_PER_LOAD ? "eager" : "lazy"}
               alt={image.name || `Gallery image ${index + 1}`}
-              className={`w-full h-full object-cover transition-all duration-300 group-hover:opacity-90 ${
-                loadedImages[index] ? 'opacity-100' : 'opacity-0'
+              className={`w-full h-full object-cover transition-all duration-700 ease-out group-hover:opacity-90 ${
+                loadedImages[index] ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
               }`}
               onLoad={() => handleImageLoad(index)}
             />
@@ -160,6 +172,20 @@ const Gallery = () => {
             </div>
           </div>
         ))}
+
+        {/* Show skeleton placeholders for loading more images */}
+        {loading && (
+          <>
+            {[...Array(Math.min(IMAGES_PER_LOAD, allImages.length - currentLoadIndex))].map((_, index) => (
+              <div
+                key={`loading-skeleton-${index}`}
+                className="relative aspect-square rounded-lg overflow-hidden"
+              >
+                <ImageSkeleton />
+              </div>
+            ))}
+          </>
+        )}
       </div>
 
       {/* Load More Button */}
@@ -221,17 +247,30 @@ const Gallery = () => {
           </button>
 
           {/* Main Image */}
-          <div className="relative max-w-[70vw] max-h-[450px]">
+          <div className="relative max-w-[70vw] max-h-[450px] min-w-[300px] min-h-[300px]">
+            {/* Loading spinner for slideshow image */}
+            {!slideshowImageLoaded && (
+              <div className="absolute inset-0 flex items-center justify-center bg-black/20 rounded-lg">
+                <div className="relative">
+                  <div className="w-16 h-16 border-4 border-gray-400 border-t-[#E84D2F] rounded-full animate-spin"></div>
+                  <div className="absolute inset-0 w-16 h-16 border-4 border-transparent border-b-[#E84D2F] rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1s' }}></div>
+                </div>
+              </div>
+            )}
             <img
               src={displayedImages[currentIndex]?.fullSize}
               alt={displayedImages[currentIndex]?.name || "Slideshow"}
-              className="max-w-full max-h-[450px] rounded-lg object-contain"
+              className={`max-w-full max-h-[450px] rounded-lg object-contain transition-all duration-500 ${
+                slideshowImageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+              }`}
               referrerPolicy="no-referrer"
               crossOrigin="anonymous"
+              onLoad={() => setSlideshowImageLoaded(true)}
               onError={(e) => {
                 console.error('Failed to load full-size image:', e.target.src);
                 // Fallback to thumbnail if full-size fails
                 e.target.src = displayedImages[currentIndex]?.thumbnail;
+                setSlideshowImageLoaded(true);
               }}
             />
 

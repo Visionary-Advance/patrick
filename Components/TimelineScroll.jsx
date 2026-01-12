@@ -138,107 +138,130 @@ const TimelineScrollAnimation = () => {
   ];
 
   useEffect(() => {
-    // Small delay to ensure DOM is fully ready
-    const timer = setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 100);
+    let ctx = null;
 
-    const ctx = gsap.context(() => {
-      // Set initial states with smaller mobile transforms
-      gsap.set(".timeline-item", { opacity: 0, y: 50 });
-      gsap.set(".timeline-line", { scaleY: 0, transformOrigin: "top center" });
-      gsap.set(".timeline-dot", { opacity: 0 });
+    const initializeTimeline = () => {
+      ctx = gsap.context(() => {
+        // Set initial states with smaller mobile transforms
+        gsap.set(".timeline-item", { opacity: 0, y: 50 });
+        gsap.set(".timeline-line", { scaleY: 0, transformOrigin: "top center" });
+        gsap.set(".timeline-dot", { opacity: 0 });
 
-      // Set initial states for year and content with smaller mobile transforms
-      gsap.set(".year", { x: -15, opacity: 0 }); // Smaller initial offset
-      gsap.set(".content", { x: 15, opacity: 0 }); // Smaller initial offset
-      
-      // Animate the timeline line and dot together
-      // The line grows from top to bottom, with the bottom edge staying at 50vh (middle of screen)
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: timelineRef.current,
-          start: "top 50%", // Start when timeline reaches middle of viewport
-          end: "bottom bottom", // End when bottom of timeline reaches bottom of viewport - much longer scroll distance
-          scrub: 2, // Increased scrub for smoother, slower growth
-        }
-      });
+        // Set initial states for year and content with smaller mobile transforms
+        gsap.set(".year", { x: -15, opacity: 0 }); // Smaller initial offset
+        gsap.set(".content", { x: 15, opacity: 0 }); // Smaller initial offset
 
-      tl.to(".timeline-line", {
-        scaleY: 1,
-        duration: 1,
-        ease: "none",
-      })
-      .to(".timeline-dot", {
-        opacity: 1,
-        duration: 0.1,
-        ease: "none",
-      }, 0.1);
-
-      // Animate each timeline item
-      gsap.utils.toArray(".timeline-item").forEach((item, index) => {
-        gsap.to(item, {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: "power2.out",
+        // Animate the timeline line and dot together
+        // The line grows from top to bottom, with the bottom edge staying at 50vh (middle of screen)
+        const tl = gsap.timeline({
           scrollTrigger: {
-            trigger: item,
-            start: "top 85%",
-            end: "top 50%",
-            toggleActions: "play none none reverse",
+            trigger: timelineRef.current,
+            start: "top 50%", // Start when timeline reaches middle of viewport
+            end: "bottom bottom", // End when bottom of timeline reaches bottom of viewport - much longer scroll distance
+            scrub: 2, // Increased scrub for smoother, slower growth
+            invalidateOnRefresh: true, // Force recalculation on refresh
           }
         });
 
-        // Animate the year number with smaller transform
-        gsap.to(item.querySelector(".year"), {
-          x: 0,
+        tl.to(".timeline-line", {
+          scaleY: 1,
+          duration: 1,
+          ease: "none",
+        })
+        .to(".timeline-dot", {
           opacity: 1,
-          duration: 0.8,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: item,
-            start: "top 80%",
-            toggleActions: "play none none reverse",
-          }
-        });
+          duration: 0.1,
+          ease: "none",
+        }, 0.1);
 
-        // Animate the content with smaller transform
-        gsap.to(item.querySelector(".content"), {
-          x: 0,
-          opacity: 1,
-          duration: 0.8,
-          delay: 0.2,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: item,
-            start: "top 75%",
-            toggleActions: "play none none reverse",
-          }
-        });
-
-        // Animate the image
-        gsap.fromTo(item.querySelector(".timeline-image"), 
-          { scale: 0.9, opacity: 0 }, // Smaller scale change
-          {
-            scale: 1,
+        // Animate each timeline item
+        gsap.utils.toArray(".timeline-item").forEach((item, index) => {
+          gsap.to(item, {
             opacity: 1,
+            y: 0,
             duration: 0.8,
-            delay: 0.4,
             ease: "power2.out",
             scrollTrigger: {
               trigger: item,
-              start: "top 70%",
+              start: "top 85%",
+              end: "top 50%",
               toggleActions: "play none none reverse",
             }
-          }
-        );
+          });
+
+          // Animate the year number with smaller transform
+          gsap.to(item.querySelector(".year"), {
+            x: 0,
+            opacity: 1,
+            duration: 0.8,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: item,
+              start: "top 80%",
+              toggleActions: "play none none reverse",
+            }
+          });
+
+          // Animate the content with smaller transform
+          gsap.to(item.querySelector(".content"), {
+            x: 0,
+            opacity: 1,
+            duration: 0.8,
+            delay: 0.2,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: item,
+              start: "top 75%",
+              toggleActions: "play none none reverse",
+            }
+          });
+
+          // Animate the image
+          gsap.fromTo(item.querySelector(".timeline-image"),
+            { scale: 0.9, opacity: 0 }, // Smaller scale change
+            {
+              scale: 1,
+              opacity: 1,
+              duration: 0.8,
+              delay: 0.4,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: item,
+                start: "top 70%",
+                toggleActions: "play none none reverse",
+              }
+            }
+          );
+        });
+      }, timelineRef);
+    };
+
+    // Wait for all images to load
+    const images = Array.from(timelineRef.current?.querySelectorAll('img') || []);
+    const imageLoadPromises = images.map(img => {
+      if (img.complete) return Promise.resolve();
+      return new Promise(resolve => {
+        img.addEventListener('load', resolve);
+        img.addEventListener('error', resolve);
       });
-    }, timelineRef);
+    });
+
+    // Wait for fonts and images, then initialize
+    Promise.all([
+      document.fonts.ready,
+      ...imageLoadPromises
+    ]).then(() => {
+      // Add a small delay to ensure all layout calculations are complete
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          initializeTimeline();
+          ScrollTrigger.refresh();
+        });
+      });
+    });
 
     return () => {
-      clearTimeout(timer);
-      ctx.revert();
+      if (ctx) ctx.revert();
     };
   }, []);
 

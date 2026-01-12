@@ -272,7 +272,7 @@ const TimelineScrollAnimation = () => {
           {/* Timeline line - responsive positioning - initially hidden */}
           <div
             ref={lineRef}
-            className="timeline-line absolute left-20 md:left-36 lg:left-40 top-0 w-1 bg-[#E84D2F] h-full z-10 opacity-0"
+            className="timeline-line absolute left-20 md:left-36 lg:left-40 top-0 w-1 bg-[#E84D2F] h-full z-10"
             style={{ transform: 'scaleY(0)', transformOrigin: 'top center' }}
           ></div>
 

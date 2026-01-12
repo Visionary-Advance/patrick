@@ -269,30 +269,31 @@ const TimelineScrollAnimation = () => {
     <div className=" pt-10">
       <div className="container mx-auto px-4 py-5 overflow-hidden">
         <div ref={timelineRef} className="relative overflow-visible">
-          {/* Timeline line - responsive positioning */}
+          {/* Timeline line - responsive positioning - initially hidden */}
           <div
             ref={lineRef}
-            className="timeline-line absolute left-20 md:left-36 lg:left-40 top-0 w-1 bg-[#E84D2F] h-full z-10"
+            className="timeline-line absolute left-20 md:left-36 lg:left-40 top-0 w-1 bg-[#E84D2F] h-full z-10 opacity-0"
+            style={{ transform: 'scaleY(0)', transformOrigin: 'top center' }}
           ></div>
 
-          {/* Moving dot - responsive positioning */}
-          <div className="timeline-dot absolute left-[5.12rem] md:left-36 lg:left-40.5 w-4 h-4 bg-[#E84D2F] rounded-full transform -translate-x-1/2 z-20"
+          {/* Moving dot - responsive positioning - initially hidden */}
+          <div className="timeline-dot absolute left-[5.12rem] md:left-36 lg:left-40.5 w-4 h-4 bg-[#E84D2F] rounded-full transform -translate-x-1/2 z-20 opacity-0"
                style={{top: '100%', marginTop: '-8px'}}></div>
 
           {/* Timeline items */}
           <div className="space-y-24">
             {timelineData.map((item, index) => (
-              <div key={index} className="timeline-item relative">
+              <div key={index} className="timeline-item relative opacity-0" style={{ transform: 'translateY(50px)' }}>
                 <div className="flex items-start">
-                  {/* Year - Left Side of the line - responsive width and padding */}
-                  <div className="year w-24 md:w-40 jomol text-right pr-6 md:pr-14">
+                  {/* Year - Left Side of the line - responsive width and padding - initially hidden */}
+                  <div className="year w-24 md:w-40 jomol text-right pr-6 md:pr-14 opacity-0" style={{ transform: 'translateX(-15px)' }}>
                     <h2 className="text-3xl md:text-4xl lg:text-6xl font-bold text-gray-800 mb-2">
                       {item.year}
                     </h2>
                   </div>
 
-                  {/* Content - Right Side of the line - responsive spacing */}
-                  <div className={`content flex-1 pl-2 md:pl-4 lg:pl-8 ${!item.image ? 'pb-16' : ''}`}>
+                  {/* Content - Right Side of the line - responsive spacing - initially hidden */}
+                  <div className={`content flex-1 pl-2 md:pl-4 lg:pl-8 ${!item.image ? 'pb-16' : ''} opacity-0`} style={{ transform: 'translateX(15px)' }}>
                     <h3 className="text-xl md:text-2xl font-bold jomol text-gray-800 mb-4">
                       {item.title}
                     </h3>
@@ -300,9 +301,9 @@ const TimelineScrollAnimation = () => {
                       {item.description}
                     </p>
 
-                    {/* Image - responsive sizing */}
+                    {/* Image - responsive sizing - initially hidden */}
                     {item.image && (
-                      <div className="timeline-image">
+                      <div className="timeline-image opacity-0" style={{ transform: 'scale(0.9)' }}>
                         <img
                           src={item.image}
                           alt={`Timeline ${item.year}`}

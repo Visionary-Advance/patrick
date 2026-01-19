@@ -43,7 +43,7 @@ export default function Memorial() {
               Memorial
             </h1>
             <p className="jomol text-white text-lg md:text-2xl font-normal leading-relaxed max-w-xl">
-              Help us honor those who gave their lives in the act of service
+             Missed but never forgotten.
             </p>
           </div>
         </div>

@@ -23,7 +23,7 @@ const MemorialCard = ({ person }) => {
 
 export default function Memorial() {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-gray-50">
       {/* Hero Section */}
       <section
         className="relative h-[450px] bg-cover bg-center bg-no-repeat flex items-center"
@@ -43,7 +43,7 @@ export default function Memorial() {
               Memorial
             </h1>
             <p className="jomol text-white text-lg md:text-2xl font-normal leading-relaxed max-w-xl">
-              Help us honor those who gave their lives in the act of service
+             Missed but never forgotten.
             </p>
           </div>
         </div>
@@ -60,6 +60,10 @@ export default function Memorial() {
           </div>
         </div>
       </section>
+
+      <div className="text-center max-w-2xl text-4xl mx-auto py-20 px-4 jomol ">
+        <p>This page is currently under construction and changes will be made soon.</p>
+      </div>
     </main>
   );
 }

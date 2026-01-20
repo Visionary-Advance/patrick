@@ -3,64 +3,53 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
-// Skeleton loader component with shimmer animation
+// Skeleton loader component with pulse animation (no spinner)
 const ImageSkeleton = () => (
-  <div className="absolute inset-0 bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-shimmer bg-[length:200%_100%]"></div>
+  <div className="absolute inset-0 bg-gray-200 animate-pulse">
+    <div className="absolute inset-0 bg-gradient-to-br from-gray-100 via-gray-200 to-gray-300 opacity-50"></div>
+  </div>
 );
 
 const Gallery = () => {
-  const allImages = [
-    "/Img/Today.jpg",
-    "/Img/Jessica.jpg",
-    "/Img/About_Img.jpg",
-    "/Img/Asheville_Office.jpg",
-    "/Img/Boise_Office.jpg",
-    "/Img/Old_Pic.webp",
-    "/Img/Brush.jpg",
-    "/Img/Canada.jpeg",
-    "/Img/carlthorn.jpg",
-    "/Img/Classroom.jpg",
-    "/Img/Consulting.JPG",
-    "/Img/Contact_Header.jpg",
-    "/Img/Difference.jpg",
-    "/Img/Ellensburg_Office.jpg",
-    "/Img/Emergency.jpg",
-    "/Img/First_Step.jpg",
-    "/Img/Flood.jpg",
-    "/Img/Grandpa.jpg",
-    "/Img/header.jpg",
-    "/Img/History.jpg",
-    "/Img/LaFire.jpg",
-    "/Img/Landing.JPG",
-    "/Img/Main_Serv.jpg",
-    "/Img/New_Header.jpg",
-    "/Img/Prescribed_Burn.jpg",
-    "/Img/Redmond_Office.jpg",
-    "/Img/Redmond_Packing.jpg",
-    "/Img/Redmond_Trucks.jpg",
-    "/Img/Rick_and_Bush.jpg",
-    "/Img/Rick_in_Congress.JPG",
-    "/Img/Service_Page_Header.jpg",
-    "/Img/Services_Pic.jpg",
-    "/Img/Snow.jpg",
-    "/Img/Snow_Plow.jpg",
-    "/Img/Springfield_Office.jpg",
-    "/Img/Tree_Brush.jpg",
-    "/Img/Updates.jpg",
-    "/Img/Video.jpg",
-    "/Img/WildFire_Img.jpg",
-    "/Img/WildFire_Img.png",
-    "/Img/WildfireMap.png",
-  ];
-
   const IMAGES_PER_LOAD = 12;
 
-  const [displayedImages, setDisplayedImages] = useState(allImages.slice(0, IMAGES_PER_LOAD));
+  const [allImages, setAllImages] = useState([]);
+  const [displayedImages, setDisplayedImages] = useState([]);
   const [currentLoadIndex, setCurrentLoadIndex] = useState(IMAGES_PER_LOAD);
   const [selectedImage, setSelectedImage] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(false);
   const [loadedImages, setLoadedImages] = useState({});
+  const [fetchError, setFetchError] = useState(null);
+  const [initialLoading, setInitialLoading] = useState(true);
+  const [slideshowImageLoaded, setSlideshowImageLoaded] = useState(false);
+
+  // Fetch images from Google Drive on component mount
+  useEffect(() => {
+    const fetchImages = async () => {
+      try {
+        setInitialLoading(true);
+        const response = await fetch('/api/gallery');
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || 'Failed to fetch images');
+        }
+
+        // Store full image objects instead of just URLs
+        setAllImages(data.images);
+        setDisplayedImages(data.images.slice(0, IMAGES_PER_LOAD));
+        setCurrentLoadIndex(IMAGES_PER_LOAD);
+      } catch (error) {
+        console.error('Error fetching gallery images:', error);
+        setFetchError(error.message);
+      } finally {
+        setInitialLoading(false);
+      }
+    };
+
+    fetchImages();
+  }, []);
 
   const loadMoreImages = () => {
     setLoading(true);
@@ -81,6 +70,7 @@ const Gallery = () => {
   };
 
   const openSlideshow = (index) => {
+    setSlideshowImageLoaded(false);
     setCurrentIndex(index);
     setSelectedImage(displayedImages[index]);
   };
@@ -90,12 +80,14 @@ const Gallery = () => {
   };
 
   const nextImage = () => {
+    setSlideshowImageLoaded(false);
     const nextIndex = (currentIndex + 1) % displayedImages.length;
     setCurrentIndex(nextIndex);
     setSelectedImage(displayedImages[nextIndex]);
   };
 
   const prevImage = () => {
+    setSlideshowImageLoaded(false);
     const prevIndex = currentIndex === 0 ? displayedImages.length - 1 : currentIndex - 1;
     setCurrentIndex(prevIndex);
     setSelectedImage(displayedImages[prevIndex]);
@@ -117,14 +109,43 @@ const Gallery = () => {
     <>
       <div className="text-center mb-10 pt-32">
         <h2 className="jomol text-4xl">Gallery</h2>
-        
       </div>
 
+      {/* Error State */}
+      {fetchError && (
+        <div className="max-w-2xl mx-auto p-6 bg-red-50 border border-red-200 rounded-lg text-center">
+          <p className="jomol text-red-800 mb-2">Unable to load gallery images</p>
+          <p className="text-sm text-red-600">{fetchError}</p>
+          <p className="text-sm text-gray-600 mt-4">Please check that Google Drive API credentials are configured in .env.local</p>
+        </div>
+      )}
+
       {/* Image Grid */}
+      {!fetchError && displayedImages.length === 0 && !initialLoading && (
+        <div className="text-center py-20">
+          <p className="jomol text-gray-600 text-xl">No images found in the gallery folder</p>
+        </div>
+      )}
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-[1400px] mx-auto gap-4 p-4">
-        {displayedImages.map((src, index) => (
+        {/* Show skeleton placeholders during initial load */}
+        {initialLoading && (
+          <>
+            {[...Array(IMAGES_PER_LOAD)].map((_, index) => (
+              <div
+                key={`skeleton-${index}`}
+                className="relative aspect-square rounded-lg overflow-hidden"
+              >
+                <ImageSkeleton />
+              </div>
+            ))}
+          </>
+        )}
+
+        {/* Actual images */}
+        {displayedImages.map((image, index) => (
           <div
-            key={index}
+            key={image.id || index}
             className="relative aspect-square rounded-lg overflow-hidden cursor-pointer group transition-transform duration-200 hover:scale-105"
             onClick={() => openSlideshow(index)}
           >
@@ -132,13 +153,13 @@ const Gallery = () => {
             {!loadedImages[index] && <ImageSkeleton />}
 
             <Image
-              src={src}
+              src={image.thumbnail}
               width={600}
               height={600}
               loading={index < IMAGES_PER_LOAD ? "eager" : "lazy"}
-              alt={`Gallery image ${index + 1}`}
-              className={`w-full h-full object-cover transition-all duration-300 group-hover:opacity-90 ${
-                loadedImages[index] ? 'opacity-100' : 'opacity-0'
+              alt={image.name || `Gallery image ${index + 1}`}
+              className={`w-full h-full object-cover transition-all duration-700 ease-out group-hover:opacity-90 ${
+                loadedImages[index] ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
               }`}
               onLoad={() => handleImageLoad(index)}
             />
@@ -151,6 +172,20 @@ const Gallery = () => {
             </div>
           </div>
         ))}
+
+        {/* Show skeleton placeholders for loading more images */}
+        {loading && (
+          <>
+            {[...Array(Math.min(IMAGES_PER_LOAD, allImages.length - currentLoadIndex))].map((_, index) => (
+              <div
+                key={`loading-skeleton-${index}`}
+                className="relative aspect-square rounded-lg overflow-hidden"
+              >
+                <ImageSkeleton />
+              </div>
+            ))}
+          </>
+        )}
       </div>
 
       {/* Load More Button */}
@@ -212,11 +247,31 @@ const Gallery = () => {
           </button>
 
           {/* Main Image */}
-          <div className="relative max-w-[70vw] max-h-[450px]">
+          <div className="relative max-w-[70vw] max-h-[450px] min-w-[300px] min-h-[300px]">
+            {/* Loading spinner for slideshow image */}
+            {!slideshowImageLoaded && (
+              <div className="absolute inset-0 flex items-center justify-center bg-black/20 rounded-lg">
+                <div className="relative">
+                  <div className="w-16 h-16 border-4 border-gray-400 border-t-[#E84D2F] rounded-full animate-spin"></div>
+                  <div className="absolute inset-0 w-16 h-16 border-4 border-transparent border-b-[#E84D2F] rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1s' }}></div>
+                </div>
+              </div>
+            )}
             <img
-              src={displayedImages[currentIndex]}
-              alt="Slideshow"
-              className="max-w-full max-h-[450px] rounded-lg object-contain"
+              src={displayedImages[currentIndex]?.fullSize}
+              alt={displayedImages[currentIndex]?.name || "Slideshow"}
+              className={`max-w-full max-h-[450px] rounded-lg object-contain transition-all duration-500 ${
+                slideshowImageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+              }`}
+              referrerPolicy="no-referrer"
+              crossOrigin="anonymous"
+              onLoad={() => setSlideshowImageLoaded(true)}
+              onError={(e) => {
+                console.error('Failed to load full-size image:', e.target.src);
+                // Fallback to thumbnail if full-size fails
+                e.target.src = displayedImages[currentIndex]?.thumbnail;
+                setSlideshowImageLoaded(true);
+              }}
             />
 
             {/* Image Counter */}

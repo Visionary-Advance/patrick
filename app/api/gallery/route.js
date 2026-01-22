@@ -17,7 +17,7 @@ export async function GET() {
     const query = `'${FOLDER_ID}' in parents and mimeType contains 'image/'`;
     const encodedQuery = encodeURIComponent(query);
 
-    const url = `https://www.googleapis.com/drive/v3/files?q=${encodedQuery}&key=${API_KEY}&fields=files(id,name,mimeType,thumbnailLink,webContentLink,createdTime)&orderBy=createdTime desc&pageSize=100`;
+    const url = `https://www.googleapis.com/drive/v3/files?q=${encodedQuery}&key=${API_KEY}&fields=files(id,name,description,mimeType,thumbnailLink,webContentLink,createdTime)&orderBy=createdTime desc&pageSize=100`;
 
     console.log('Fetching from Google Drive API...');
     console.log('Folder ID:', FOLDER_ID);
@@ -56,6 +56,7 @@ export async function GET() {
     const images = data.files?.map(file => ({
       id: file.id,
       name: file.name,
+      description: file.description || null,
       thumbnail: `https://drive.google.com/thumbnail?id=${file.id}&sz=w600`,
       fullSize: `https://lh3.googleusercontent.com/d/${file.id}`,
       mimeType: file.mimeType,

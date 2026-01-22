@@ -157,7 +157,7 @@ const Gallery = () => {
               width={600}
               height={600}
               loading={index < IMAGES_PER_LOAD ? "eager" : "lazy"}
-              alt={image.name || `Gallery image ${index + 1}`}
+              alt={image.description || image.name || `Gallery image ${index + 1}`}
               className={`w-full h-full object-cover transition-all duration-700 ease-out group-hover:opacity-90 ${
                 loadedImages[index] ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
               }`}
@@ -247,37 +247,48 @@ const Gallery = () => {
           </button>
 
           {/* Main Image */}
-          <div className="relative max-w-[70vw] max-h-[450px] min-w-[300px] min-h-[300px]">
-            {/* Loading spinner for slideshow image */}
-            {!slideshowImageLoaded && (
-              <div className="absolute inset-0 flex items-center justify-center bg-black/20 rounded-lg">
-                <div className="relative">
-                  <div className="w-16 h-16 border-4 border-gray-400 border-t-[#E84D2F] rounded-full animate-spin"></div>
-                  <div className="absolute inset-0 w-16 h-16 border-4 border-transparent border-b-[#E84D2F] rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1s' }}></div>
+          <div className="relative flex flex-col items-center">
+            <div className="relative max-w-[70vw] max-h-[450px] min-w-[300px] min-h-[300px]">
+              {/* Loading spinner for slideshow image */}
+              {!slideshowImageLoaded && (
+                <div className="absolute inset-0 flex items-center justify-center bg-black/20 rounded-lg">
+                  <div className="relative">
+                    <div className="w-16 h-16 border-4 border-gray-400 border-t-[#E84D2F] rounded-full animate-spin"></div>
+                    <div className="absolute inset-0 w-16 h-16 border-4 border-transparent border-b-[#E84D2F] rounded-full animate-spin" style={{ animationDirection: 'reverse', animationDuration: '1s' }}></div>
+                  </div>
                 </div>
+              )}
+              <img
+                src={displayedImages[currentIndex]?.fullSize}
+                alt={displayedImages[currentIndex]?.description || displayedImages[currentIndex]?.name || "Slideshow"}
+                className={`max-w-full max-h-[450px] rounded-lg object-contain transition-all duration-500 ${
+                  slideshowImageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
+                }`}
+                referrerPolicy="no-referrer"
+                crossOrigin="anonymous"
+                onLoad={() => setSlideshowImageLoaded(true)}
+                onError={(e) => {
+                  console.error('Failed to load full-size image:', e.target.src);
+                  // Fallback to thumbnail if full-size fails
+                  e.target.src = displayedImages[currentIndex]?.thumbnail;
+                  setSlideshowImageLoaded(true);
+                }}
+              />
+
+              {/* Image Counter */}
+              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm">
+                {currentIndex + 1} of {displayedImages.length}
+              </div>
+            </div>
+
+            {/* Image Description */}
+            {displayedImages[currentIndex]?.description && (
+              <div className="mt-4 max-w-[70vw] text-center">
+                <p className="text-white text-sm md:text-base bg-black/40 px-4 py-2 rounded-lg">
+                  {displayedImages[currentIndex].description}
+                </p>
               </div>
             )}
-            <img
-              src={displayedImages[currentIndex]?.fullSize}
-              alt={displayedImages[currentIndex]?.name || "Slideshow"}
-              className={`max-w-full max-h-[450px] rounded-lg object-contain transition-all duration-500 ${
-                slideshowImageLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-95'
-              }`}
-              referrerPolicy="no-referrer"
-              crossOrigin="anonymous"
-              onLoad={() => setSlideshowImageLoaded(true)}
-              onError={(e) => {
-                console.error('Failed to load full-size image:', e.target.src);
-                // Fallback to thumbnail if full-size fails
-                e.target.src = displayedImages[currentIndex]?.thumbnail;
-                setSlideshowImageLoaded(true);
-              }}
-            />
-
-            {/* Image Counter */}
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 bg-black bg-opacity-50 text-white px-3 py-1 rounded-full text-sm">
-              {currentIndex + 1} of {displayedImages.length}
-            </div>
           </div>
 
           {/* Next Button */}

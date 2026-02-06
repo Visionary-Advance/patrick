@@ -19,7 +19,7 @@ export async function POST(request) {
     // Send email using Resend
     const { data, error } = await resend.emails.send({
       from: 'noreply@mail.visionaryadvance.com', // Update this with your verified domain
-      to: ['info@patrickfire.com'], // Update with your actual email
+      to: ['hqs@patrickfire.com'], // Update with your actual email
       replyTo: email,
       subject: `New Contact Form Submission from ${firstName} ${lastName}`,
       html: `

@@ -1,3 +1,34 @@
+export default function FirstSteps() {
+  return (
+    <div className="relative">
+      <img
+        className="absolute inset-0 w-full h-full object-cover object-top -z-50"
+        src="/Img/First_Step.jpg"
+      />
+      <div className="absolute inset-0 bg-black/50"></div>
+
+      <div className="relative z-30 px-4 py-16 sm:py-20 lg:py-24">
+        <div className="max-w-2xl mx-auto text-center">
+          <h3 className="jomol text-white text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 leading-snug">
+            Employment Applications are Under Construction
+          </h3>
+          <p className="text-white text-xl sm:text-2xl leading-relaxed">
+            Please come back and apply in 3-4 weeks.
+          </p>
+          <p className="text-white text-xl sm:text-2xl mt-4">
+            Thank you
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/*
+===========================================
+ORIGINAL PAGE CONTENT - WILL BE RESTORED SOON
+===========================================
+
 import Link from "next/link";
 import Button from "./Button";
 
@@ -46,3 +77,5 @@ export default function FirstSteps() {
     </>
   );
 }
+
+*/

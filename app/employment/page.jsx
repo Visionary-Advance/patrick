@@ -1,10 +1,33 @@
+export default function Careers() {
+  return (
+    <div className="min-h-screen flex items-center justify-center px-4">
+      <div className="text-center max-w-2xl mx-auto">
+        <h1 className="text-4xl lg:text-5xl jomol font-bold text-black mb-8">
+          Under Construction
+        </h1>
+        <p className="text-xl lg:text-2xl text-black leading-relaxed">
+          Please come back and apply in 3-4 weeks.
+        </p>
+        <p className="text-xl lg:text-2xl text-black mt-4">
+          Thank you
+        </p>
+      </div>
+    </div>
+  );
+}
+
+/*
+===========================================
+ORIGINAL PAGE CONTENT - WILL BE RESTORED SOON
+===========================================
+
 'use client'
 
 import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
 
 export default function Careers() {
- 
+
 
   const jobLocations = [
     "Wildland Firefighter - Springfield, OR",
@@ -14,14 +37,14 @@ export default function Careers() {
     "Wildland Firefighter - Asheville, NC",
   ];
   const [faqVisibility, setFaqVisibility] = useState({});
-  
-    
-    const faqRefs = useRef([]);
-  
- 
-  
 
-  
+
+    const faqRefs = useRef([]);
+
+
+
+
+
     useEffect(() => {
       Object.keys(faqVisibility).forEach((key) => {
         if (faqVisibility[key]) {
@@ -31,11 +54,11 @@ export default function Careers() {
         }
       });
     }, [faqVisibility]);
-  
+
     const toggleDropdown = () => {
       setDropdownVisible(!isDropdownVisible);
     };
-  
+
     const toggleFaq = (index) => {
       setFaqVisibility((prevState) => ({
         ...prevState,
@@ -71,11 +94,11 @@ export default function Careers() {
     },
   ];
 
-  
+
 
   return (
     <div className=" ">
-      {/* Hero Section */}
+      {/* Hero Section *}
       <section className="container mx-auto px-4 pt-36 lg:pt-56 py-16 ">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
@@ -88,7 +111,7 @@ export default function Careers() {
               an experience of a lifetime. No experience required, training
               provided. We provide all your gear except boots, gloves and a sleeping bag. Must be 18yrs old. Fill out online job application by
               clicking on the button below or email <a href='mailto:hqs@patrickfire.com'>HQS@patrickfire.com</a> EEO
-              
+
             </p>
              <Link target='_blank' rel='nofollow' href={"https://patrick.hiringplatform.com/list/careers"}>
             <button className="bg-[#E84D2F] cursor-pointer hover:bg-red-700 text-white px-8 py-3 text-lg rounded-lg transition-colors duration-200 font-medium">
@@ -106,7 +129,7 @@ export default function Careers() {
         </div>
       </section>
 
-      {/* About Section */}
+      {/* About Section *}
       <section className="bg-[#E84D2F] text-white py-16 jomol ">
         <div className="container mx-auto px-4 lg:text-center">
           <h2 className="text-4xl lg:text-5xl font-bold mb-8">About</h2>
@@ -131,7 +154,7 @@ export default function Careers() {
         </div>
       </section>
 
-      {/* Firefighters Needed Section */}
+      {/* Firefighters Needed Section *}
       <section className="container max-w-5xl mx-auto px-4 jomol py-16 lg:py-24">
         <div className="lg:text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold text-black mb-8">
@@ -170,7 +193,7 @@ export default function Careers() {
           </div>
         </div>
 
-        {/* Job Listings */}
+        {/* Job Listings *}
         <div className="space-y-4 mb-16 jomol">
           {jobLocations.map((location, index) => (
             <div key={index} className="bg-white rounded-lg shadow-lg">
@@ -189,7 +212,7 @@ export default function Careers() {
         </div>
       </section>
 
-      {/* Gallery Section */}
+      {/* Gallery Section *}
       <section className="container max-w-7xl mx-auto px-4 py-16">
         <div className="grid md:grid-cols-3 gap-6">
           <img
@@ -210,7 +233,7 @@ export default function Careers() {
         </div>
       </section>
 
-      {/* Employee Experiences */}
+      {/* Employee Experiences *}
       <section className="container mx-auto px-4 py-16 lg:py-24 jomol">
         <div className="text-center">
           <h2 className="text-4xl lg:text-5xl font-bold text-black mb-12">
@@ -234,7 +257,7 @@ export default function Careers() {
         </div>
       </section>
 
-      {/* FAQ Section */}
+      {/* FAQ Section *}
       <section className="max-w-5xl w-11/12 lg:w-full jomol mx-auto mt-10 mb-20">
         <h2 className="text-4xl font-bold mb-5">Frequently Asked Questions</h2>
         <div className="faq-section">
@@ -262,3 +285,5 @@ export default function Careers() {
     </div>
   );
 }
+
+*/

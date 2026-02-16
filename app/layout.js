@@ -15,20 +15,22 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Patrick Environmetal",
+  title: "Patrick Environmental",
   description: `"Where Experience and Professionalism Make The Difference" Since 1971`,
-
+  alternates: {
+    canonical: 'https://www.patrickfire.com',
+  },
   openGraph: {
-    title: "Patrick Wildfire - Professional Fire Suppression Services",
+    title: "Patrick Environmental - Professional Fire Suppression Services",
     description: "Professional wildfire suppression and fire services with 52+ years of experience. Serving 20+ states with expert firefighting solutions.",
-    url: "https://patrick-coral.vercel.app", // Replace with your actual domain
-    siteName: "Patrick Wildfire",
+    url: "https://www.patrickfire.com",
+    siteName: "Patrick Environmental",
     images: [
       {
-        url: "/og-image.png", // This is the image that will show when shared
+        url: "https://www.patrickfire.com/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Patrick Wildfire - Professional Fire Suppression Services",
+        alt: "Patrick Environmental - Professional Fire Suppression Services",
       },
     ],
     locale: "en_US",

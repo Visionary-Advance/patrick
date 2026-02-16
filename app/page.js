@@ -8,6 +8,14 @@ import StatsGroup from "@/Components/Stats";
 import WFF from "@/Components/WFF";
 import Link from "next/link";
 
+export const metadata = {
+  alternates: {
+    canonical: 'https://www.patrickfire.com',
+  },
+  openGraph: {
+    url: 'https://www.patrickfire.com',
+  },
+};
 
 export default function Home() {
   return (

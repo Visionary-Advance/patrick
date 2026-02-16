@@ -1,7 +1,15 @@
 import ServiceCards from "@/Components/ServiceCards";
 
-
-
+export const metadata = {
+  title: 'Services | Patrick Environmental',
+  description: 'Professional environmental services including wildland fire suppression, emergency response, brush trimming, consulting, and more.',
+  alternates: {
+    canonical: 'https://www.patrickfire.com/services',
+  },
+  openGraph: {
+    url: 'https://www.patrickfire.com/services',
+  },
+};
 
 export default function ServicesPage(){
 

@@ -1,5 +1,16 @@
 import TimelineScrollAnimation from "@/Components/TimelineScroll";
 
+export const metadata = {
+  title: 'About | Patrick Environmental',
+  description: 'Founded in 1971, PatRick Environmental has built a proud legacy of leadership in wildland firefighting, emergency response, and environmental services.',
+  alternates: {
+    canonical: 'https://www.patrickfire.com/about',
+  },
+  openGraph: {
+    url: 'https://www.patrickfire.com/about',
+  },
+};
+
 export default function AboutPage() {
   return (
     <>

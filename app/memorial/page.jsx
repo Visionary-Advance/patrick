@@ -1,6 +1,17 @@
 import React from "react";
 import { memorialData } from "@/lib/memorialData";
 
+export const metadata = {
+  title: 'Memorial | Patrick Environmental',
+  description: 'Honoring the memory of fallen firefighters. Missed but never forgotten.',
+  alternates: {
+    canonical: 'https://www.patrickfire.com/memorial',
+  },
+  openGraph: {
+    url: 'https://www.patrickfire.com/memorial',
+  },
+};
+
 const MemorialCard = ({ person }) => {
   return (
     <article className="bg-white shadow-lg w-full max-w-[400px] mx-auto">

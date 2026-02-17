@@ -31,6 +31,7 @@ const TimelineScrollAnimation = () => {
     {
       year: "1973",
       title: "Springfield, OR Base/Office Opened",
+      image:"/Img/Rick_and_Norma.JPG"
       
     },
     {

@@ -69,10 +69,12 @@ const fetchComprehensiveUSData = async (requestedSensor, days) => {
       console.log(`🗺️ Fetching ${regionName}...`);
       
       const region = US_REGIONS[regionName];
-      const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
-      
+
       // Area API: /api/area/csv/{api_key}/{source}/{area_extent}/{dayrange}/{date}
-      const areaUrl = `https://firms.modaps.eosdis.nasa.gov/api/area/csv/${MAP_KEY}/${requestedSensor}/${region.bounds}/${days}/${today}`;
+      // Use yesterday's date as the end date because NASA FIRMS has a ~24h processing
+      // delay, so today's date typically returns 0 results.
+      const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+      const areaUrl = `https://firms.modaps.eosdis.nasa.gov/api/area/csv/${MAP_KEY}/${requestedSensor}/${region.bounds}/${days}/${yesterday}`;
       
       console.log(`🔗 Area URL: ${areaUrl.replace(MAP_KEY, '[API_KEY]')}`);
       

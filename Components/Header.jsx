@@ -53,6 +53,7 @@ const Header = () => {
 
   const navItems = [
     { name: 'Home', href: '/' },
+    { name: 'Employee Login', href: 'https://patrickfire.embera.co/login', external: true },
     { name: 'About', href: '/about' },
     { name: 'Services', href: '/services' },
     { name: 'Wildfires', href: '/wildfires' },
@@ -212,13 +213,25 @@ const Header = () => {
                   </div>
                 ) : (
                   // Regular nav item
-                  <Link
-                    href={item.href}
-                    className="text-white jomol hover:text-gray-200 px-3 py-2 text-lg font-medium transition-colors duration-200 relative group"
-                  >
-                    {item.name}
-                    <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center"></span>
-                  </Link>
+                  item.external ? (
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-white jomol hover:text-gray-200 px-3 py-2 text-lg font-medium transition-colors duration-200 relative group"
+                    >
+                      {item.name}
+                      <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center"></span>
+                    </a>
+                  ) : (
+                    <Link
+                      href={item.href}
+                      className="text-white jomol hover:text-gray-200 px-3 py-2 text-lg font-medium transition-colors duration-200 relative group"
+                    >
+                      {item.name}
+                      <span className="absolute inset-x-0 bottom-0 h-0.5 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-center"></span>
+                    </Link>
+                  )
                 )}
               </div>
             ))}
@@ -316,13 +329,25 @@ const Header = () => {
                       </AnimatePresence>
                     </div>
                   ) : (
-                    <Link
-                      href={item.href}
-                      onClick={closeMobileMenu}
-                      className="text-white jomol text-3xl font-medium hover:text-gray-200 transition-colors duration-200 block"
-                    >
-                      {item.name}
-                    </Link>
+                    item.external ? (
+                      <a
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={closeMobileMenu}
+                        className="text-white jomol text-3xl font-medium hover:text-gray-200 transition-colors duration-200 block"
+                      >
+                        {item.name}
+                      </a>
+                    ) : (
+                      <Link
+                        href={item.href}
+                        onClick={closeMobileMenu}
+                        className="text-white jomol text-3xl font-medium hover:text-gray-200 transition-colors duration-200 block"
+                      >
+                        {item.name}
+                      </Link>
+                    )
                   )}
                 </motion.div>
               ))}

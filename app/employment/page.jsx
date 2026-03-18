@@ -1,70 +1,9 @@
-export default function Careers() {
-  return (
-    <div className="min-h-screen flex items-center justify-center px-4">
-      <div className="text-center max-w-2xl mx-auto">
-        <h1 className="text-4xl lg:text-5xl jomol font-bold text-black mb-8">
-          Under Construction
-        </h1>
-        <p className="text-xl lg:text-2xl text-black leading-relaxed">
-          Please come back and apply in 3-4 weeks.
-        </p>
-        <p className="text-xl lg:text-2xl text-black mt-4">
-          Thank you
-        </p>
-      </div>
-    </div>
-  );
-}
-
-/*
-===========================================
-ORIGINAL PAGE CONTENT - WILL BE RESTORED SOON
-===========================================
-
 'use client'
 
 import Link from 'next/link';
 import { useState, useRef, useEffect } from 'react';
 
 export default function Careers() {
-
-
-  const jobLocations = [
-    "Wildland Firefighter - Springfield, OR",
-    "Wildland Firefighter - Boise, ID",
-    "Wildland Firefighter - Redmond, OR",
-    "Wildland Firefighter - Ellensburg, WA",
-    "Wildland Firefighter - Asheville, NC",
-  ];
-  const [faqVisibility, setFaqVisibility] = useState({});
-
-
-    const faqRefs = useRef([]);
-
-
-
-
-
-    useEffect(() => {
-      Object.keys(faqVisibility).forEach((key) => {
-        if (faqVisibility[key]) {
-          faqRefs.current[key].style.maxHeight = `${faqRefs.current[key].scrollHeight}px`;
-        } else {
-          faqRefs.current[key].style.maxHeight = "0px";
-        }
-      });
-    }, [faqVisibility]);
-
-    const toggleDropdown = () => {
-      setDropdownVisible(!isDropdownVisible);
-    };
-
-    const toggleFaq = (index) => {
-      setFaqVisibility((prevState) => ({
-        ...prevState,
-        [index]: !prevState[index],
-      }));
-    };
 
   const faqs = [
     {
@@ -94,11 +33,29 @@ export default function Careers() {
     },
   ];
 
+  const [faqVisibility, setFaqVisibility] = useState({});
+  const faqRefs = useRef([]);
 
+  useEffect(() => {
+    Object.keys(faqVisibility).forEach((key) => {
+      if (faqVisibility[key]) {
+        faqRefs.current[key].style.maxHeight = `${faqRefs.current[key].scrollHeight}px`;
+      } else {
+        faqRefs.current[key].style.maxHeight = "0px";
+      }
+    });
+  }, [faqVisibility]);
+
+  const toggleFaq = (index) => {
+    setFaqVisibility((prevState) => ({
+      ...prevState,
+      [index]: !prevState[index],
+    }));
+  };
 
   return (
     <div className=" ">
-      {/* Hero Section *}
+      {/* Hero Section */}
       <section className="container mx-auto px-4 pt-36 lg:pt-56 py-16 ">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
@@ -111,13 +68,12 @@ export default function Careers() {
               an experience of a lifetime. No experience required, training
               provided. We provide all your gear except boots, gloves and a sleeping bag. Must be 18yrs old. Fill out online job application by
               clicking on the button below or email <a href='mailto:hqs@patrickfire.com'>HQS@patrickfire.com</a> EEO
-
             </p>
-             <Link target='_blank' rel='nofollow' href={"https://patrick.hiringplatform.com/list/careers"}>
+             <a target='_blank' rel='noopener noreferrer' href="https://patrickfire.embera.co/job-application/">
             <button className="bg-[#E84D2F] cursor-pointer hover:bg-red-700 text-white px-8 py-3 text-lg rounded-lg transition-colors duration-200 font-medium">
-              View
+              Apply Now
             </button>
-            </Link>
+            </a>
           </div>
           <div className="flex justify-center h-96">
             <img
@@ -129,7 +85,7 @@ export default function Careers() {
         </div>
       </section>
 
-      {/* About Section *}
+      {/* About Section */}
       <section className="bg-[#E84D2F] text-white py-16 jomol ">
         <div className="container mx-auto px-4 lg:text-center">
           <h2 className="text-4xl lg:text-5xl font-bold mb-8">About</h2>
@@ -146,15 +102,15 @@ export default function Careers() {
             contracts. Today PatRick Corp. is a family run business with five
             offices and between 300-400 employees every year during fire season.
           </p>
-          <Link target='_blank' rel='nofollow' href={"https://patrick.hiringplatform.com/list/careers"}>
+          <a target='_blank' rel='noopener noreferrer' href="https://patrickfire.embera.co/job-application/">
           <button className="bg-white cursor-pointer text-black border-2 border-white hover:bg-gray-100 px-8 py-3 text-lg rounded-lg transition-colors duration-200 font-medium">
             Apply Now
           </button>
-          </Link>
+          </a>
         </div>
       </section>
 
-      {/* Firefighters Needed Section *}
+      {/* Firefighters Needed Section */}
       <section className="container max-w-5xl mx-auto px-4 jomol py-16 lg:py-24">
         <div className="lg:text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold text-black mb-8">
@@ -193,31 +149,35 @@ export default function Careers() {
           </div>
         </div>
 
-        {/* Job Listings *}
-        <div className="space-y-4 mb-16 jomol">
-          {jobLocations.map((location, index) => (
-            <div key={index} className="bg-white rounded-lg shadow-lg">
-              <div className="flex items-center justify-between p-6">
-                <h3 className="text-xl lg:text-2xl font-medium text-black">
-                  {location}
-                </h3>
-                <Link target='_blank' rel='nofollow' href={"https://patrick.hiringplatform.com/list/careers"}>
-                <button className="bg-black hover:bg-red-700 cursor-pointer text-white px-6 py-2 rounded-lg transition-colors duration-200 font-medium">
-                  Apply
-                </button>
-                </Link>
+        {/* Job Listing Card */}
+        <div className="mb-16">
+          <a href="https://patrickfire.embera.co/job-application/" target="_blank" rel="noopener noreferrer" className="block group">
+            <div className="relative bg-white shadow-lg shadow-black/20 overflow-hidden">
+              <div className="absolute left-0 top-0 w-[4px] h-full bg-[#E84D2F]"></div>
+              <div className="p-6 pl-8">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                  <div>
+                    <h3 className="jomol text-xl lg:text-2xl text-black group-hover:text-[#E84D2F] transition-colors duration-300">
+                      Wildland Firefighter
+                    </h3>
+                    <p className="roboto text-sm text-gray-600 mt-1">All Locations &bull; Full Season</p>
+                  </div>
+                  <span className="bg-[#E84D2F] group-hover:bg-red-700 text-white px-6 py-2 jomol text-lg transition-colors duration-200 text-center shrink-0">
+                    Apply Now
+                  </span>
+                </div>
               </div>
             </div>
-          ))}
+          </a>
         </div>
       </section>
 
-      {/* Gallery Section *}
+      {/* Gallery Section */}
       <section className="container max-w-7xl mx-auto px-4 py-16">
         <div className="grid md:grid-cols-3 gap-6">
           <img
             src="/Img/Classroom.jpg"
-            alt="New Crew learning fire saftey"
+            alt="New Crew learning fire safety"
             className="w-full h-80 object-cover rounded-lg shadow-lg"
           />
           <img
@@ -233,7 +193,7 @@ export default function Careers() {
         </div>
       </section>
 
-      {/* Employee Experiences *}
+      {/* Employee Experiences */}
       <section className="container mx-auto px-4 py-16 lg:py-24 jomol">
         <div className="text-center">
           <h2 className="text-4xl lg:text-5xl font-bold text-black mb-12">
@@ -241,7 +201,7 @@ export default function Careers() {
           </h2>
           <div className="relative max-w-6xl mx-auto">
             <div className="text-[#E84D2F] text-8xl lg:text-9xl font-bold absolute -top-8 -left-4 lg:-left-8">
-              "
+              &ldquo;
             </div>
             <p className="text-2xl  text-black leading-relaxed italic px-8 lg:px-16">
               This is hands down my favorite job. I woke up every morning
@@ -251,13 +211,13 @@ export default function Careers() {
               that I can apply to any aspect of my life.
             </p>
             <div className="text-[#E84D2F]  text-8xl lg:text-9xl font-bold absolute -bottom-8 -right-4 lg:-right-8">
-              "
+              &rdquo;
             </div>
           </div>
         </div>
       </section>
 
-      {/* FAQ Section *}
+      {/* FAQ Section */}
       <section className="max-w-5xl w-11/12 lg:w-full jomol mx-auto mt-10 mb-20">
         <h2 className="text-4xl font-bold mb-5">Frequently Asked Questions</h2>
         <div className="faq-section">
@@ -285,5 +245,3 @@ export default function Careers() {
     </div>
   );
 }
-
-*/

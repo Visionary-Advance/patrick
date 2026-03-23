@@ -44,17 +44,17 @@ export default function Memorial() {
         }}
       >
         {/* Dark overlay */}
-        <div className="absolute inset-0 bg-black/40"></div>
+        <div className="absolute inset-0 bg-black/50"></div>
 
         {/* Content */}
         <div className="relative z-10 h-full w-full ">
          
-            <div className="max-w-2xl absolute bottom-5 left-5">
+            <div className=" absolute bottom-5 left-5">
             <h1 className="text-white text-3xl md:text-4xl font-normal mb-4 md:mb-2 jomol ">
               Memorial
             </h1>
-            <p className="jomol text-white text-lg md:text-2xl font-normal leading-relaxed max-w-xl">
-             Missed but never forgotten.
+            <p className="jomol text-white text-lg md:text-2xl font-normal leading-relaxed me-10">
+             Missed but never forgotten. We honor the members of the PatRick family who passed away during their time as employees or after retirement. While they did not lose their lives on the fire line, their contribution helped shape PatRick into what it is today. We remember them with gratitude and keep them in our hearts.
             </p>
           </div>
         </div>

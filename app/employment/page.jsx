@@ -67,7 +67,7 @@ export default function Careers() {
               forest fire! Exciting outdoor job includes travel, expenses, and
               an experience of a lifetime. No experience required, training
               provided. We provide all your gear except boots, gloves and a sleeping bag. Must be 18yrs old. Fill out online job application by
-              clicking on the button below or email <a href='mailto:hqs@patrickfire.com'>HQS@patrickfire.com</a> EEO
+              clicking on the button below. EEO
             </p>
              <a target='_blank' rel='noopener noreferrer' href="https://patrickfire.embera.co/job-application/">
             <button className="bg-[#E84D2F] cursor-pointer hover:bg-red-700 text-white px-8 py-3 text-lg rounded-lg transition-colors duration-200 font-medium">

@@ -20,7 +20,7 @@ export default function FirstSteps() {
               team that believes in helping you succeed.
             </p>
             <div className="mt-10 max-w-xl mx-auto">
-              <a href="https://patrickfire.embera.co/job-application/" target="_blank" rel="noopener noreferrer" className="block group">
+              <a href="/employment" className="block group">
                 <div className="relative bg-white shadow-lg shadow-black/30 overflow-hidden">
                   <div className="absolute left-0 top-0 w-[4px] h-full bg-[#E84D2F]"></div>
                   <div className="p-6 pl-8">

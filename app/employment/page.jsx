@@ -291,7 +291,7 @@ export default function Careers() {
             <p>Click the link below to get started. During the application process, you will need to:</p>
             <div className="space-y-2 ml-2">
               <p>• Upload your resume – <strong className="text-[#E84D2F]">Mandatory to apply</strong></p>
-              <p>• Submit IS-100 and IS-700 certificates (PDF format)</p>
+              <p>• Submit IS-100 and IS-700 certificates (PDF format) – <strong className="text-[#E84D2F]">Mandatory to apply</strong></p>
             </div>
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-5 mt-4">
               <p className="font-semibold text-blue-900 mb-2">Free ICS Course Alternative</p>

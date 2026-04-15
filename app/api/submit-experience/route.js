@@ -1,9 +1,20 @@
 import { Resend } from 'resend';
 import { NextResponse } from 'next/server';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+async function verifyRecaptcha(token) {
+  const secret = process.env.RECAPTCHA_SECRET_KEY;
+  if (!secret) return true; // skip verification if key not configured yet
+  const res = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: `secret=${secret}&response=${token}`,
+  });
+  const data = await res.json();
+  return data.success && data.score >= 0.5;
+}
 
 export async function POST(request) {
+  const resend = new Resend(process.env.RESEND_API_KEY);
   try {
     const formData = await request.formData();
 
@@ -14,6 +25,7 @@ export async function POST(request) {
     const workedBefore = formData.get('workedBefore');
     const experience = formData.get('experience');
     const photo = formData.get('photo');
+    const recaptchaToken = formData.get('recaptchaToken');
 
     // Validate required fields
     if (!firstName || !lastName || !phone || !workedBefore || !experience) {
@@ -21,6 +33,17 @@ export async function POST(request) {
         { error: 'Required fields are missing' },
         { status: 400 }
       );
+    }
+
+    // Verify reCAPTCHA
+    if (recaptchaToken) {
+      const isHuman = await verifyRecaptcha(recaptchaToken);
+      if (!isHuman) {
+        return NextResponse.json(
+          { error: 'reCAPTCHA verification failed. Please try again.' },
+          { status: 400 }
+        );
+      }
     }
 
     // Prepare email configuration

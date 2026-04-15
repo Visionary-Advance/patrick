@@ -3,7 +3,8 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useState } from "react";
+import { useState, useCallback } from "react";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 const formSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -15,6 +16,7 @@ const formSchema = z.object({
 
 export default function ContactForm() {
   const [toast, setToast] = useState({ show: false, title: "", description: "", variant: "" });
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
   const form = useForm({
     resolver: zodResolver(formSchema),
@@ -34,12 +36,18 @@ export default function ContactForm() {
 
   const onSubmit = async (data) => {
     try {
+      if (!executeRecaptcha) {
+        showToast("Error", "reCAPTCHA not ready. Please try again.", "error");
+        return;
+      }
+      const recaptchaToken = await executeRecaptcha('contact_form');
+
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ ...data, recaptchaToken }),
       });
 
       if (!response.ok) {

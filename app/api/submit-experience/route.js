@@ -26,7 +26,7 @@ export async function POST(request) {
     // Prepare email configuration
     const emailConfig = {
       from: 'noreply@mail.visionaryadvance.com', // Update this with your verified domain
-      to: ['hqs@patrickfire.com'], // Update with your actual email
+      to: ['info@patrickfire.com'], // Update with your actual email
       replyTo: email !== 'Not provided' ? email : undefined,
       subject: `New Experience Submission from ${firstName} ${lastName}`,
       html: `

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Upload } from "lucide-react";
 import Button from "@/Components/Button";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 
 export default function SharePage() {
   const [formData, setFormData] = useState({
@@ -18,6 +19,7 @@ export default function SharePage() {
   const [isDragOver, setIsDragOver] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState({ show: false, success: false, message: "" });
+  const { executeRecaptcha } = useGoogleReCaptcha();
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -58,8 +60,16 @@ export default function SharePage() {
     setSubmitStatus({ show: false, success: false, message: "" });
 
     try {
+      if (!executeRecaptcha) {
+        setSubmitStatus({ show: true, success: false, message: "reCAPTCHA not ready. Please try again." });
+        setIsSubmitting(false);
+        return;
+      }
+      const recaptchaToken = await executeRecaptcha('submit_experience');
+
       // Create FormData to handle file upload
       const formDataToSend = new FormData();
+      formDataToSend.append('recaptchaToken', recaptchaToken);
       formDataToSend.append('firstName', formData.firstName);
       formDataToSend.append('lastName', formData.lastName);
       formDataToSend.append('email', formData.email);

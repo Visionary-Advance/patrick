@@ -8,7 +8,8 @@
       "Bash(grep:*)",
       "Bash(curl:*)",
       "Bash(taskkill:*)",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(npm list *)"
     ],
     "deny": [],
     "ask": []

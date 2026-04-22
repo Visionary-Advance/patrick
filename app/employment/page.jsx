@@ -279,6 +279,44 @@ export default function Careers() {
           </div>
         </div>
 
+        {/* PDF Certificate Help */}
+        <div className="mb-12 bg-yellow-50 border border-yellow-300 rounded-lg p-6">
+          <div className="flex items-start gap-3 mb-4">
+            <span className="text-yellow-600 text-2xl shrink-0">&#9888;</span>
+            <h3 className="text-xl lg:text-2xl font-bold text-black">
+              Having trouble uploading your IS-100 or IS-700 certificate?
+            </h3>
+          </div>
+          <p className="text-gray-800 mb-4">
+            Many applicants run into issues because their certificate file is labeled <strong>.pdf</strong> but was not saved as a true PDF document. Here is how to make sure your certificate uploads correctly:
+          </p>
+          <div className="space-y-3 text-gray-800">
+            <div className="flex items-start gap-2">
+              <span className="text-[#E84D2F] font-bold shrink-0">1.</span>
+              <p><strong>After completing your IS-100 or IS-700 course</strong>, go to the certificate page and look for a <strong>&ldquo;Download Certificate&rdquo;</strong> or <strong>&ldquo;Save as PDF&rdquo;</strong> button — do not use your browser&apos;s Print function.</p>
+            </div>
+            <div className="flex items-start gap-2">
+              <span className="text-[#E84D2F] font-bold shrink-0">2.</span>
+              <p><strong>If you only see a &ldquo;Print&rdquo; option</strong>, choose <strong>Print &rarr; Save as PDF</strong> (not a physical printer). On Chrome/Edge, select &ldquo;Save as PDF&rdquo; as the destination.</p>
+            </div>
+            <div className="flex items-start gap-2">
+              <span className="text-[#E84D2F] font-bold shrink-0">3.</span>
+              <p><strong>Do not rename a .jpg or screenshot file to .pdf.</strong> Files must be actual PDF documents, not images with a renamed extension.</p>
+            </div>
+            <div className="flex items-start gap-2">
+              <span className="text-[#E84D2F] font-bold shrink-0">4.</span>
+              <p><strong>To verify your file is a real PDF</strong>: open it — if it displays in a PDF viewer (like Adobe Acrobat or your browser&apos;s PDF viewer) and shows proper certificate text, it is valid.</p>
+            </div>
+          </div>
+          <p className="mt-4 text-gray-700 text-sm">
+            If you are still having trouble, try completing your course through{' '}
+            <a href="https://www.safetyunlimited.com" target="_blank" rel="noopener noreferrer" className="text-[#E84D2F] underline font-semibold hover:text-red-700">
+              Safety Unlimited
+            </a>
+            {' '}and download the certificate directly from their platform.
+          </p>
+        </div>
+
         {/* Apply Today */}
         <div className="mb-12 relative">
           <div className="text-center mb-8">

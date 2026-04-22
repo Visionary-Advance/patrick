@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/Components/Header";
 import Footer from "@/Components/Footer";
 import { Analytics } from "@vercel/analytics/next"
+import RecaptchaProvider from "@/Components/RecaptchaProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -47,10 +48,12 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning={true}
       >
-        <Header />
-        {children}
-        <Analytics />
-        <Footer />
+        <RecaptchaProvider>
+          <Header />
+          {children}
+          <Analytics />
+          <Footer />
+        </RecaptchaProvider>
       </body>
     </html>
   );

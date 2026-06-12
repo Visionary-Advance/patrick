@@ -62,7 +62,7 @@ const TimelineScrollAnimation = () => {
     {
       year: "90's",
       title: "Rick Dice started meeting with congress about fire policies and contracts and continues today.",
-      image:"/Img/Rick_In_Congress.JPG"
+      image:"/Img/Rick_in_Congress.JPG"
     },
     {
       year: "1992",

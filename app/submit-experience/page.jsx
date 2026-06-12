@@ -143,7 +143,7 @@ export default function SharePage() {
     )}
 
     <div className="mx-auto mt-40 mb-10 text-center text-black jomol">
-        <h3 className="text-4xl">Share your experience with us!</h3>
+        <h1 className="text-4xl">Share your experience with us!</h1>
     </div>
     <div className=" flex items-center justify-center p-4">
       <div className="w-full max-w-4xl">

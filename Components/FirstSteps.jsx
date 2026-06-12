@@ -7,6 +7,7 @@ export default function FirstSteps() {
         <img
           className="absolute inset-0 w-full h-full object-cover object-top -z-50"
           src="/Img/First_Step.jpg"
+          alt="Wildland firefighters battling a wildfire at dusk"
         />
         <div className="absolute inset-0 bg-black/50"></div>
 

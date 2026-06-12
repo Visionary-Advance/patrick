@@ -1,15 +1,14 @@
 import Button from "@/Components/Button";
 import Link from "next/link";
+import { buildOpenGraph } from "@/lib/seo";
 
 export const metadata = {
   title: 'Wildfires | Patrick Environmental',
-  description: 'View active wildfire data and updates from Patrick Environmental.',
+  description: 'View active wildfire data, live maps, and the latest updates from Patrick Environmental to stay informed on current fire activity across the United States.',
   alternates: {
     canonical: 'https://www.patrickfire.com/wildfires',
   },
-  openGraph: {
-    url: 'https://www.patrickfire.com/wildfires',
-  },
+  openGraph: buildOpenGraph({ url: 'https://www.patrickfire.com/wildfires' }),
 };
 
 export default function WildfirePage(){

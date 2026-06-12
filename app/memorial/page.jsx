@@ -1,15 +1,14 @@
 import React from "react";
 import { memorialData } from "@/lib/memorialData";
+import { buildOpenGraph } from "@/lib/seo";
 
 export const metadata = {
   title: 'Memorial | Patrick Environmental',
-  description: 'Honoring the memory of fallen firefighters. Missed but never forgotten.',
+  description: 'Honoring the memory of fallen PatRick Environmental firefighters and family members. Missed but never forgotten — we remember their service with gratitude.',
   alternates: {
     canonical: 'https://www.patrickfire.com/memorial',
   },
-  openGraph: {
-    url: 'https://www.patrickfire.com/memorial',
-  },
+  openGraph: buildOpenGraph({ url: 'https://www.patrickfire.com/memorial' }),
 };
 
 const MemorialCard = ({ person }) => {

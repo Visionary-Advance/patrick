@@ -1,4 +1,5 @@
 import ServiceCards from "@/Components/ServiceCards";
+import { buildOpenGraph } from "@/lib/seo";
 
 export const metadata = {
   title: 'Services | Patrick Environmental',
@@ -6,9 +7,7 @@ export const metadata = {
   alternates: {
     canonical: 'https://www.patrickfire.com/services',
   },
-  openGraph: {
-    url: 'https://www.patrickfire.com/services',
-  },
+  openGraph: buildOpenGraph({ url: 'https://www.patrickfire.com/services' }),
 };
 
 export default function ServicesPage(){
@@ -20,7 +19,7 @@ export default function ServicesPage(){
         <>
         
         <div className="w-11/12 mx-auto mt-36 mb-20">
-            <h3 className="jomol -mb-10 text-center text-3xl">Our Services</h3>
+            <h1 className="jomol -mb-10 text-center text-3xl">Our Services</h1>
             <ServiceCards />
         </div>
         

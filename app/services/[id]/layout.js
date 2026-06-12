@@ -1,4 +1,5 @@
 import { servicesData } from '@/lib/servicesData';
+import { buildOpenGraph } from '@/lib/seo';
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
@@ -6,13 +7,11 @@ export async function generateMetadata({ params }) {
   const title = service ? service.content.heading : 'Services';
   return {
     title: `${title} | PatRick Environmental Services`,
-    description: service ? service.shortDesc : 'Professional environmental services including wildland fire suppression, emergency response, brush trimming, consulting, and more.',
+    description: service ? (service.metaDescription || service.shortDesc) : 'Professional environmental services including wildland fire suppression, emergency response, brush trimming, consulting, and more.',
     alternates: {
       canonical: `https://www.patrickfire.com/services/${id}`,
     },
-    openGraph: {
-      url: `https://www.patrickfire.com/services/${id}`,
-    },
+    openGraph: buildOpenGraph({ url: `https://www.patrickfire.com/services/${id}` }),
   };
 }
 

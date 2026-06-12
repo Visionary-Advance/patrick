@@ -9,7 +9,10 @@
       "Bash(curl:*)",
       "Bash(taskkill:*)",
       "Bash(npm run *)",
-      "Bash(npm list *)"
+      "Bash(npm list *)",
+      "Read(//c/Users/brand/**)",
+      "Bash(awk '$5 > 1000000 {print $5, $9}')",
+      "Bash(cd *)"
     ],
     "deny": [],
     "ask": []

@@ -10,6 +10,7 @@ export default function About() {
       <img
         className="w-full h-auto min-h-[300px] lg:h-[500px] object-cover"
         src="/Img/Old_Pic.webp"
+        alt="Historic photo of PatRick Environmental's early wildland firefighting crews"
       />
     </div>
     <div className="col-span-1 lg:ms-8">
@@ -43,8 +44,9 @@ export default function About() {
     </div>
     <div className="col-span-1 overflow-hidden order-1 lg:order-2 lg:ms-8">
       <img 
-        className="w-full h-auto min-h-[300px] lg:h-[410px] object-cover" 
-        src="/Img/Today.jpg" 
+        className="w-full h-auto min-h-[300px] lg:h-[410px] object-cover"
+        src="/Img/Today.jpg"
+        alt="PatRick Environmental wildland fire crew working on the fireline today"
       />
     </div>
   </div>

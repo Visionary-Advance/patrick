@@ -1,4 +1,5 @@
 import TimelineScrollAnimation from "@/Components/TimelineScroll";
+import { buildOpenGraph } from "@/lib/seo";
 
 export const metadata = {
   title: 'About | Patrick Environmental',
@@ -6,9 +7,7 @@ export const metadata = {
   alternates: {
     canonical: 'https://www.patrickfire.com/about',
   },
-  openGraph: {
-    url: 'https://www.patrickfire.com/about',
-  },
+  openGraph: buildOpenGraph({ url: 'https://www.patrickfire.com/about' }),
 };
 
 export default function AboutPage() {
@@ -16,7 +15,7 @@ export default function AboutPage() {
     <>
       <div className="flex flex-col lg:flex-row items-center gap-8 mb-16 mt-32 lg:mt-48 max-w-7xl mx-auto px-4 md:px-16">
         <div className="flex-1 lg:max-w-xl">
-          <h2 className="jomol text-5xl">About</h2>
+          <h1 className="jomol text-5xl">About</h1>
           <div className="h-0.5 bg-black/50 mt-2 w-16"></div>
           <p className="roboto mt-2">
             Founded in 1971 by Rick Dice, a 5th generation wildland firefighter, PatRick Environmental has built a
@@ -29,7 +28,7 @@ export default function AboutPage() {
           </p>
         </div>
         <div className="flex-1 w-full lg:max-w-xl">
-            <img className="h-96 w-full object-cover rounded-lg" src="/Img/About_Img.jpg"/>
+            <img className="h-96 w-full object-cover rounded-lg" src="/Img/About_Img.jpg" alt="PatRick Environmental team and equipment in the field"/>
         </div>
       </div>
 

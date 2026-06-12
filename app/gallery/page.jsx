@@ -108,7 +108,7 @@ const Gallery = () => {
   return (
     <>
       <div className="text-center mb-10 pt-32">
-        <h2 className="jomol text-4xl">Gallery</h2>
+        <h1 className="jomol text-4xl">Gallery</h1>
       </div>
 
       {/* Error State */}

@@ -7,14 +7,14 @@ import ShareExp from "@/Components/ShareExp";
 import StatsGroup from "@/Components/Stats";
 import WFF from "@/Components/WFF";
 import Link from "next/link";
+import { buildOpenGraph } from "@/lib/seo";
 
 export const metadata = {
+  description: 'PatRick Environmental delivers professional wildland fire suppression, emergency response, and environmental services, trusted across the U.S. since 1971.',
   alternates: {
     canonical: 'https://www.patrickfire.com',
   },
-  openGraph: {
-    url: 'https://www.patrickfire.com',
-  },
+  openGraph: buildOpenGraph({ url: 'https://www.patrickfire.com' }),
 };
 
 export default function Home() {

@@ -43,7 +43,7 @@ export default function Services() {
         </p>
         <div className="grid grid-cols-1 lg:grid-cols-2 w-full">
             <div className="col-span-1">
-                <img className=" " src="/Img/Main_Serv.jpg"/>
+                <img className=" " src="/Img/Main_Serv.jpg" alt="PatRick Environmental crew providing wildfire suppression services"/>
             </div>
            
 

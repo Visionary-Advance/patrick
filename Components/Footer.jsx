@@ -12,7 +12,7 @@ const Footer = () => {
           {/* Logo and Tagline Section */}
           <div className="lg:col-span-1 mb-10">
             <div className="flex items-center mb-4">
-             <img className='w-20' src='/Img/Patrick_Logo_White.png'/>
+             <img className='w-20' src='/Img/Patrick_Logo_White.png' alt='Patrick Environmental logo'/>
             </div>
             <p className="text-lg leading-relaxed me-10">
               "Where Experience and <br/>Professionalism <br/> Make the Difference" Since 1971
@@ -27,6 +27,7 @@ const Footer = () => {
               <li><Link href="/about" className="hover:underline">About</Link></li>
               <li><Link href="/wildfires" className="hover:underline">Wildfires</Link></li>
               <li><Link href="/employment" className="hover:underline">Employment</Link></li>
+              <li><Link href="/gallery" className="hover:underline">Gallery</Link></li>
               <li><Link href="/memorial" className="hover:underline">Memorial</Link></li>
             </ul>
           </div>

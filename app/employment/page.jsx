@@ -332,12 +332,22 @@ export default function Careers() {
               <p>• Submit IS-100 and IS-700 certificates (PDF format) – <strong className="text-[#E84D2F]">Mandatory to apply</strong></p>
             </div>
             <div className="bg-blue-50 border border-blue-200 rounded-lg p-5 mt-4">
-              <p className="font-semibold text-blue-900 mb-2">Free ICS Course Alternative</p>
+              <p className="font-semibold text-blue-900 mb-2">Where to Complete Your Free ICS Courses</p>
               <p className="text-gray-800">
-                We have identified a potential alternative to the FEMA site for required coursework.{' '}
-                <strong>Safety Unlimited</strong> offers free online ICS-100 and ICS-700 classes.
+                <strong>FEMA is back online!</strong> The official FEMA training site is the
+                recommended place to complete your required coursework. ICS-100, ICS-200, and
+                ICS-700 are available again as free online courses:
               </p>
-              <p className="text-gray-800 mt-2">To enroll, students will need to:</p>
+              <p className="mt-2 ml-2">
+                <a href="https://training.fema.gov/nims/" target="_blank" rel="noopener noreferrer" className="text-[#E84D2F] font-semibold underline hover:text-red-700 transition-colors">
+                  training.fema.gov/nims
+                </a>
+              </p>
+              <p className="text-gray-800 mt-4">
+                <strong>If the FEMA site is temporarily down</strong>, you can also use{' '}
+                <strong>Safety Unlimited</strong>, which offers free online ICS-100 and ICS-700
+                classes. To enroll, students will need to:
+              </p>
               <div className="space-y-1 ml-2 mt-1">
                 <p className="text-gray-800">• Create an account</p>
                 <p className="text-gray-800">• Set up a username and password</p>

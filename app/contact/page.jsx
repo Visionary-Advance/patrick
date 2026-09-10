@@ -3,6 +3,7 @@
 import Button from "@/Components/Button";
 import ContactForm from "@/Components/ContactForm";
 import Link from "next/link";
+import { offices as officeList } from "@/lib/officeData";
 import React, { useState, useRef, useEffect } from "react";
 import { FaPhoneAlt, FaArrowAltCircleDown } from "react-icons/fa";
 import { IoMailOpen } from "react-icons/io5";
@@ -29,48 +30,7 @@ export default function Contact() {
   };
 
 
-   const offices = [
-    {
-      id: 1,
-      name: "Redmond Office",
-      image: "/Img/Redmond_Office.jpg",
-      address: "1199 NE Hemlock Ave,<br/>Redmond, OR 97756",
-      phone: "541-923-0703",
-      imageRight: false
-    },
-    {
-      id: 2,
-      name: "Springfield Office", 
-      image: "/Img/Springfield_Office.jpg",
-      address: "1322 N 30th <br/> Springfield, OR 97478",
-      phone: "541-746-7528",
-      imageRight: true
-    },
-    {
-      id: 3,
-      name: "Boise Office",
-      image: "/Img/Boise_Office.jpg", 
-      address: "2049 W. Commerce Ave. <br/> Boise, ID 83705",
-      phone: "208-376-2667",
-      imageRight: false
-    },
-    {
-      id: 4,
-      name: "Ellensburg Office",
-      image: "/Img/Ellensburg_Office.jpg",
-      address: "1043 W. University Way <br/> Ellensburg, WA 98926", 
-      phone: "509-925-1300",
-      imageRight: true
-    },
-    {
-      id: 5,
-      name: "Leicester Office",
-      image: "/Img/Asheville_Office.jpg",
-      address: "3187 New Leicester Hwy <br/> Leicester, NC 28748",
-      phone: "828-683-2182", 
-      imageRight: false
-    }
-  ];
+   const offices = officeList;
   
 
   return (

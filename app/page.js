@@ -10,6 +10,7 @@ import Link from "next/link";
 import { buildOpenGraph } from "@/lib/seo";
 
 export const metadata = {
+  title: 'PatRick Environmental | Wildland Fire Suppression Since 1971',
   description: 'PatRick Environmental delivers professional wildland fire suppression, emergency response, and environmental services, trusted across the U.S. since 1971.',
   alternates: {
     canonical: 'https://www.patrickfire.com',

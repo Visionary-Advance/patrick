@@ -61,6 +61,9 @@ export default function Careers() {
           <div className="space-y-8">
             <h1 className="text-4xl lg:text-5xl jomol font-bold text-black leading-tight">
               Ready To Make a Difference?
+              <span className="block text-2xl lg:text-3xl text-[#E84D2F] mt-3">
+                Wildland Firefighter Jobs &mdash; No Experience Required
+              </span>
             </h1>
             <p className="text-xl roboto lg:text-xl text-black leading-relaxed">
               It takes a special kind of person to go head to head with a raging

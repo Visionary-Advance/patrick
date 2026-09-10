@@ -1,4 +1,5 @@
 import { buildOpenGraph } from '@/lib/seo';
+import { jsonLd, localBusinessSchema } from '@/lib/schema';
 
 export const metadata = {
   title: 'Contact | Patrick Environmental',
@@ -10,5 +11,13 @@ export const metadata = {
 };
 
 export default function ContactLayout({ children }) {
-  return children;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(localBusinessSchema()) }}
+      />
+      {children}
+    </>
+  );
 }

@@ -1,8 +1,9 @@
 import { buildOpenGraph } from '@/lib/seo';
+import { jsonLd, jobPostingSchema } from '@/lib/schema';
 
 export const metadata = {
-  title: 'Employment | Patrick Environmental',
-  description: 'Join Patrick Environmental. Apply for wildland firefighting, emergency response, and environmental services positions.',
+  title: 'Wildland Firefighter Jobs | PatRick Environmental',
+  description: 'Wildland firefighter jobs at PatRick Environmental. $33–$40/hour, no experience required, training provided. Now hiring for the 2026 fire season.',
   alternates: {
     canonical: 'https://www.patrickfire.com/employment',
   },
@@ -10,5 +11,13 @@ export const metadata = {
 };
 
 export default function EmploymentLayout({ children }) {
-  return children;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: jsonLd(jobPostingSchema()) }}
+      />
+      {children}
+    </>
+  );
 }

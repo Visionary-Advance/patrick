@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useState, useCallback } from "react";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import { trackEvent } from '@/lib/analytics';
 
 const formSchema = z.object({
   firstName: z.string().min(1, "First name is required"),
@@ -54,6 +55,8 @@ export default function ContactForm() {
         throw new Error('Failed to send message');
       }
 
+      trackEvent('generate_lead', { form_name: 'contact' });
+
       showToast(
         "Message sent!",
         "Thank you for your message. We'll get back to you soon."
@@ -62,6 +65,7 @@ export default function ContactForm() {
       form.reset();
     } catch (error) {
       console.error('Error submitting form:', error);
+      trackEvent('form_error', { form_name: 'contact' });
       showToast(
         "Error",
         "Something went wrong. Please try again.",

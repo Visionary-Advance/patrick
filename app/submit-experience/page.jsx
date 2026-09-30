@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Upload } from "lucide-react";
 import Button from "@/Components/Button";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
+import { trackEvent } from '@/lib/analytics';
 
 export default function SharePage() {
   const [formData, setFormData] = useState({
@@ -89,6 +90,12 @@ export default function SharePage() {
       if (!response.ok) {
         throw new Error('Failed to submit experience');
       }
+
+      trackEvent('submit_experience', {
+        form_name: 'submit_experience',
+        worked_before: formData.workedBefore,
+        has_photo: Boolean(formData.photo),
+      });
 
       setSubmitStatus({
         show: true,

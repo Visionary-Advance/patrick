@@ -1,6 +1,7 @@
 'use client'
 
 import React, { useState, useEffect, useRef } from 'react';
+import { trackEvent } from '@/lib/analytics';
 import { Flame, MapPin, AlertTriangle, ChevronLeft, ChevronRight, Layers, ArrowLeft, RefreshCw, Bug } from 'lucide-react';
 
 const InteractiveWildfireMap = () => {
@@ -109,6 +110,7 @@ const InteractiveWildfireMap = () => {
      
       setFires(parsedFires);
       updateMapMarkers(parsedFires);
+      trackEvent('fire_map_loaded', { region: country, days, sensor, fire_count: parsedFires.length });
       
       setLastUpdate(new Date().toLocaleString());
       setError('');
@@ -116,6 +118,7 @@ const InteractiveWildfireMap = () => {
     } catch (error) {
      
       console.error('API failed:', error);
+      trackEvent('fire_map_error', { region: country, error_message: error.message.slice(0, 100) });
       setError(`Failed to load fire data: ${error.message}`);
     } finally {
       // IMPORTANT: Always clear loading state
@@ -199,6 +202,7 @@ const InteractiveWildfireMap = () => {
 
   // Manual retry function
   const handleManualRetry = () => {
+    trackEvent('fire_map_retry', { region: selectedRegion });
     
     setError('');
     fetchFireDataDirect(selectedRegion, 1);
@@ -480,7 +484,10 @@ const InteractiveWildfireMap = () => {
 
       // Create marker
       const marker = window.L.marker([fire.lat, fire.lng], { icon: fireIcon })
-        .on('click', () => setSelectedFire(fire));
+        .on('click', () => {
+          setSelectedFire(fire);
+          trackEvent('fire_select', { latitude: fire.lat, longitude: fire.lng });
+        });
 
       // Add popup with enhanced fire information
       const riskBadge = `
@@ -594,6 +601,7 @@ const InteractiveWildfireMap = () => {
 
   const changeMapType = (type) => {
     if (!mapInstanceRef.current) return;
+    trackEvent('fire_map_type_change', { map_type: type });
     
     const map = mapInstanceRef.current;
     

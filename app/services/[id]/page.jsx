@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { useEffect, useState, useRef, use } from 'react';
 import FirstSteps from '@/Components/FirstSteps';
+import { trackEvent } from '@/lib/analytics';
 
 function ServiceStats({ stats }) {
   const statsRef = useRef([]);
@@ -154,6 +155,10 @@ export default function ServicePage({ params }) {
       }
     }
   };
+
+  useEffect(() => {
+    trackEvent('service_view', { service_id: service.id, service_name: service.title });
+  }, [service.id]);
 
   // Auto-scroll active tab into view on mobile and update underline
   useEffect(() => {

@@ -3,7 +3,9 @@ import "./globals.css";
 import Header from "@/Components/Header";
 import Footer from "@/Components/Footer";
 import { Analytics } from "@vercel/analytics/next"
+import { GoogleAnalytics } from "@next/third-parties/google";
 import RecaptchaProvider from "@/Components/RecaptchaProvider";
+import AnalyticsEvents from "@/Components/AnalyticsEvents";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -52,9 +54,13 @@ export default function RootLayout({ children }) {
           <Header />
           {children}
           <Analytics />
+          <AnalyticsEvents />
           <Footer />
         </RecaptchaProvider>
       </body>
+      {process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID && (
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID} />
+      )}
     </html>
   );
 }

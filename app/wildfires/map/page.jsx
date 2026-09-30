@@ -118,7 +118,7 @@ const InteractiveWildfireMap = () => {
     } catch (error) {
      
       console.error('API failed:', error);
-      trackEvent('fire_map_error', { region: country, error_message: error.message.slice(0, 100) });
+      trackEvent('fire_map_error', { region: country });
       setError(`Failed to load fire data: ${error.message}`);
     } finally {
       // IMPORTANT: Always clear loading state

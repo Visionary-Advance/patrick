@@ -11,15 +11,13 @@ export default function AnalyticsEvents() {
       if (!link) return;
 
       const href = link.getAttribute('href');
-      const params = {
-        page_path: window.location.pathname,
-        link_text: link.textContent.trim().slice(0, 100),
-      };
+      // Only the page path is sent: no link text, numbers or addresses, so nothing GA treats as PII.
+      const params = { page_path: window.location.pathname };
 
       if (href.startsWith('tel:')) {
-        trackEvent('phone_click', { ...params, phone_number: href.replace('tel:', '') });
+        trackEvent('phone_click', params);
       } else if (href.startsWith('mailto:')) {
-        trackEvent('email_click', { ...params, email_address: href.replace('mailto:', '').split('?')[0] });
+        trackEvent('email_click', params);
       } else if (href.includes('embera.co/job-application')) {
         trackEvent('job_application_click', params);
       } else if (href === '/contact' || href.startsWith('/contact?') || href.startsWith('/contact#')) {
